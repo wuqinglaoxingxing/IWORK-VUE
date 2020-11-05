@@ -1,18 +1,32 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld/>
+    <ElInput></ElInput>
+    <SyxCalendar syxData="date"></SyxCalendar>
+    <SyxUpload file="file" :isMultiple="true"></SyxUpload>
+    {{file}}
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import SyxCalendar from './components/syx-calendar.vue'
+import SyxUpload from './components/syx-upload.vue'
 
 export default {
   name: 'App',
+  // 注册
   components: {
-    HelloWorld
-  }
+    HelloWorld,
+    SyxCalendar,
+    SyxUpload
+  },
+  data() {
+    return {
+      date:'12138',
+      file:[],
+    };
+  },
 }
 </script>
 
