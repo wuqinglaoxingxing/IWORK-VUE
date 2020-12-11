@@ -1,42 +1,104 @@
 <template>
   <div id="app">
-    <HelloWorld/>
+    <div class="top">
+      <top></top>
+    </div>
+    <div class="content">
+      <div class="leftSide">
+        <leftSide></leftSide>
+      </div>
+      <div class="rightSide">
+        <rightSide></rightSide>
+      </div>
+    </div>
+    <!-- <HelloWorld/>
     <ElInput></ElInput>
-    <SyxCalendar syxData="date"></SyxCalendar>
-    <SyxUpload file="file" :isMultiple="true"></SyxUpload>
+    <IworkCalendar iworkData="date" :format="format" :level="level" :isInitNow="false"></IworkCalendar>
+    <IworkUpload file="file" :isMultiple="false" :isHand="true" @upload="upload"></IworkUpload>
     {{file}}
+    {{date}} -->
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import SyxCalendar from './components/syx-calendar.vue'
-import SyxUpload from './components/syx-upload.vue'
+import top from "@/top.vue";
+import leftSide from "@/left-side.vue";
+import rightSide from "@/right-side.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   // 注册
   components: {
-    HelloWorld,
-    SyxCalendar,
-    SyxUpload
+    top,
+    leftSide,
+    rightSide,
   },
   data() {
     return {
-      date:'12138',
-      file:[],
+      date: "12138",
+      format: "yyyy/MM/dd",
+      level: 3, //Y,M,D
+      file: [],
     };
   },
-}
+  created(){
+    let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+    if(flag){
+      this.$store.state.currentEquipment = flag
+    }
+  },
+  watch: {
+    file: function(n, o) {
+      console.log(n);
+    },
+  },
+  methods: {
+    upload(a, b) {
+      console.log(a);
+      console.log(b);
+      console.log("upload");
+    },
+  },
+};
 </script>
 
 <style>
+body {
+  overflow: hidden;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-size: 14px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  width: 100%;
+}
+.top {
+  width: 100%;
+  height: 6vh;
+  background: rebeccapurple;
+}
+.content {
+  display: flex;
+  height: 94vh;
+}
+.leftSide {
+  position: relative;
+  width: 20%;
+  height: 100%;
+  border-right: 1px #ccc solid;
+  overflow: hidden;
+}
+.rightSide {
+  width: 80%;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
 }
 </style>

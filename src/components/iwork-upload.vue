@@ -1,19 +1,28 @@
 <template>
-  <div class="syx-upload-wrapper">
+  <div class="iwork-upload-wrapper">
     <input
-      ref="syxUploadInput"
-      class="syx-upload-input"
+      ref="iworkUploadInput"
+      class="iwork-upload-input"
       type="text"
       name="fileName"
       v-model="fileName"
       @keydown="forbiddenInput($event)"
     />
     <span
-      class="syx-upload-span"
+      v-if="!isHand"
+      class="iwork-upload-span iwork-upload-not-hand-span"
       @click="importFile"
       @mousedown="preventFocus($event)"
     >
-      <i class="syx-upload-i"></i>
+      <i class="iwork-upload-upload"></i>
+    </span>
+    <span
+      v-if="isHand"
+      class="iwork-upload-span iwork-upload-hand-span"
+      @mousedown="preventFocus($event)"
+    >
+      <i class="iwork-upload-upload" @click="importFile"></i>
+      <i class="iwork-upload-hand" @click="uploadNow"></i>
     </span>
     <input
       type="file"
@@ -23,46 +32,14 @@
       :multiple="isMultiple"
     />
     <div
-      class="syx-upload-multiple-wrapper"
+      class="iwork-upload-multiple-wrapper"
       @mousedown="preventFocus($event)"
-      v-show="isMultiple"
+      v-show="isMultiple&&fileResource.length>1"
     >
-      <ul class="syx-upload-multiple-ul">
-        <li class="syx-upload-multiple-li">
-          <span class="syx-upload-multiple-left">1111</span>
-          <span class="syx-upload-multiple-right">X</span>
-        </li>
-        <li class="syx-upload-multiple-li">
-          <span class="syx-upload-multiple-left">1111</span>
-          <span class="syx-upload-multiple-right">X</span>
-        </li>
-        <li class="syx-upload-multiple-li">
-          <span class="syx-upload-multiple-left">1111</span>
-          <span class="syx-upload-multiple-right">X</span>
-        </li>
-        <li class="syx-upload-multiple-li">
-          <span class="syx-upload-multiple-left">1111</span>
-          <span class="syx-upload-multiple-right">X</span>
-        </li>
-        <li class="syx-upload-multiple-li">
-          <span class="syx-upload-multiple-left">1111</span>
-          <span class="syx-upload-multiple-right">X</span>
-        </li>
-        <li class="syx-upload-multiple-li">
-          <span class="syx-upload-multiple-left">1111</span>
-          <span class="syx-upload-multiple-right">X</span>
-        </li>
-        <li class="syx-upload-multiple-li">
-          <span class="syx-upload-multiple-left">1111</span>
-          <span class="syx-upload-multiple-right">X</span>
-        </li>
-        <li class="syx-upload-multiple-li">
-          <span class="syx-upload-multiple-left">1111</span>
-          <span class="syx-upload-multiple-right">X</span>
-        </li>
-        <li class="syx-upload-multiple-li">
-          <span class="syx-upload-multiple-left">1111</span>
-          <span class="syx-upload-multiple-right">X</span>
+      <ul class="iwork-upload-multiple-ul">
+        <li class="iwork-upload-multiple-li" v-for="(item,index) of fileResource" :key="index">
+          <span class="iwork-upload-multiple-left">{{item.name}}</span>
+          <span class="iwork-upload-multiple-right" @click="delFileResourceOne(index)">X</span>
         </li>
       </ul>
     </div>
@@ -70,13 +47,21 @@
 </template>
 <script>
 export default {
-  name: "SyxUpload",
+  name: "IworkUpload",
   props: {
+    id:{
+      type:Number,
+      default:new Date().getTime()
+    },
     isMultiple: {
       type: Boolean,
       default: true,
     },
-    file: {},
+    isHand:{
+      Boolean:Boolean,
+      default:true
+    },
+    file: {}
   },
   data() {
     return {
@@ -87,6 +72,9 @@ export default {
   },
   watch: {
     fileResource(n, o) {
+      if(this.isMultiple&&n instanceof FileList){
+        n = Array.prototype.slice.call(this.fileResource);
+      }
       this.$parent[this.file] = n;
     },
   },
@@ -120,8 +108,14 @@ export default {
     // 导入文件
     importFile() {
       let fileInput = this.$refs.fileInput;
-      this.$refs.syxUploadInput.focus();
+      this.$refs.iworkUploadInput.focus();
+      // 清除数据，让change事件触发
+      fileInput.value = "";
       fileInput.click();
+    },
+    // 立即上传
+    uploadNow(){
+      this.$emit("upload",this.fileResource,this.id);
     },
     // 获取文件
     getFile() {
@@ -135,14 +129,24 @@ export default {
         this.fileResource = file;
       }
     },
+    // 删除多选的文件
+    delFileResourceOne(fileIndex){
+      this.fileResource = Array.prototype.slice.call(this.fileResource);
+      this.fileResource.splice(fileIndex,1);
+      // var  formData = new FormData();
+      // for(var i=0;i<this.fileResource.length;i++){
+      //   formData.append('file', this.fileResource[i], this.fileResource[i].name);
+      // }
+      // console.log(formData.get('file'))
+    }
   },
 };
 </script>
 <style lang="scss" scoped>
-.syx-upload-wrapper {
+.iwork-upload-wrapper {
   position: relative;
   font-size: 14px;
-  .syx-upload-input {
+  .iwork-upload-input {
     position: relative;
     display: inline-block;
     width: 100%;
@@ -160,19 +164,21 @@ export default {
       box-shadow 0.2s ease-in-out;
     outline: #57a3f3;
   }
-  .syx-upload-input:hover,
-  .syx-upload-input:focus {
+  .iwork-upload-input:hover,
+  .iwork-upload-input:focus {
     border-color: #57a3f3;
   }
-  .syx-upload-span {
+  .iwork-upload-span{
     position: absolute;
     display: block;
     right: 0;
     top: 0;
     height: 100%;
+  }
+  .iwork-upload-not-hand-span {
     width: 30px;
     cursor: pointer;
-    .syx-upload-i {
+    .iwork-upload-upload {
       position: absolute;
       top: 0;
       left: 0;
@@ -182,11 +188,28 @@ export default {
       background-position: center;
     }
   }
-  .syx-upload-multiple-wrapper {
+  .iwork-upload-hand-span {
+    width: 60px;
+    cursor: pointer;
+    i{
+      display: inline-block;
+      width: 50%;
+      height: 100%;
+    }
+    .iwork-upload-upload {
+      background: url(../assets/upload.png) no-repeat;
+      background-position: center;
+    }
+    .iwork-upload-hand {
+      background: url(../assets/hand.png) no-repeat;
+      background-position: center;
+    }
+  }
+  .iwork-upload-multiple-wrapper {
     position: absolute;
     margin-top: 5px;
     width: 216px;
-    height: 120px;
+    height: 130px;
     border: 1px #cccccc solid;
     border-radius: 3px;
     box-shadow: #bbbbbb 0px 0px 20px 2px;
@@ -194,31 +217,40 @@ export default {
     background: white;
     overflow: scroll;
     text-align: left;
-    .syx-upload-multiple-ul {
+    .iwork-upload-multiple-ul {
       width: 100%;
       position: absolute;
       margin: 0;
       padding: 0px 0px;
       list-style: none;
-      .syx-upload-multiple-li {
+      .iwork-upload-multiple-li {
         width: 100%;
         position: relative;
         height: 25px;
         line-height: 25px;
         color: #666666;
-        .syx-upload-multiple-left {
+        .iwork-upload-multiple-left {
           position: absolute;
           left: 8px;
+          display: inline-block;
+          width: 80%;
+          height: 25px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
           cursor: default;
         }
-        .syx-upload-multiple-right {
+        .iwork-upload-multiple-right {
           position: absolute;
           right: 8px;
           cursor: pointer;
         }
       }
-      .syx-upload-multiple-li:hover{
+      .iwork-upload-multiple-li:hover{
         background-color: #D4E7FA;
+      }
+      .iwork-upload-multiple-li:not(:last-child){
+        border-bottom: 1px #dcdee2 solid;
       }
     }
   }

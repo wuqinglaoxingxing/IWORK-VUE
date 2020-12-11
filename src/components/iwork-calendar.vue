@@ -1,22 +1,22 @@
 <template>
-  <div class="syx-calendar-wrap">
+  <div class="iwork-calendar-wrap">
     <input
       type="text"
-      class="syx-calendar-input"
+      class="iwork-calendar-input"
       @click="calendarClick"
       @blur="calendarBlur"
-      v-model="date"
-      ref="syxCalendarInput"
+      v-model="dateShow"
+      ref="iworkCalendarInput"
     />
-    <span class="syx-calendar-span" @click="openCalendar">
-      <i class="syx-calendar-i"></i>
+    <span class="iwork-calendar-span" @click="openCalendar">
+      <i class="iwork-calendar-i"></i>
     </span>
     <div
-      class="syx-picker-panel-body-wrapper"
+      class="iwork-picker-panel-body-wrapper"
       @mousedown="preventFocus($event)"
       v-show="openCalendarFlg"
     >
-      <div class="syx-picker-panel-body">
+      <div class="iwork-picker-panel-body">
         <div class="picker-panel-header">
           <span
             class="picker-btn picker-prev-btn-arrow-double"
@@ -114,20 +114,39 @@
 </template>
 <script>
 export default {
-  props: ["syx-data"],
+  props: {
+    iworkData: {
+      type: String,
+    },
+    format: {
+      type: String,
+      default: "yyyy-MM-dd",
+    },
+    level: {
+      type: Number,
+      default: 3,
+    },
+    isInitNow: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       openCalendarFlg: false,
       months: 12,
       weekDay: ["日", "一", "二", "三", "四", "五", "六"],
-      currentLevel: 3, //1 表示年 2 表示月 3 表示日
+      currentLevel: this.level, //1 表示年 2 表示月 3 表示日
       year: new Date().getFullYear(),
       month: new Date().getMonth() + 1,
       day: new Date().getDate(),
+      isInit: this.isInitNow,
+      dateShow: "", //日期变量，计算属性不能修改
     };
   },
   computed: {
-    days: function () {
+    // 日期计算
+    days: function() {
       let days = [];
       let weekDay = this.getWeekByMonth(this.year, this.month);
       let lastDays = this.getDaysByYearAndMonthWithLastOrNext(
@@ -148,7 +167,8 @@ export default {
       }
       return days;
     },
-    years: function () {
+    // 年份计算
+    years: function() {
       let startYear = parseInt(this.year / 10) * 10;
       let endYear = startYear + 9;
       let year = [];
@@ -157,17 +177,60 @@ export default {
       }
       return year;
     },
-    date: function () {
-      return this.year + "-" + this.month + "-" + this.day;
+    // 设置当前时间
+    date: function() {
+      // 设置初始值日期为当前时间
+      if (!this.isInit) {
+        return "";
+      }
+      // 日期格式化并返回
+      var dataStr = this.format;
+      if (this.year && this.level >= 1) {
+        dataStr = dataStr.replace("yyyy", this.year);
+      } else {
+        dataStr = dataStr.replace("yyyy", "");
+      }
+      if (this.month && this.level >= 2) {
+        dataStr = dataStr.replace("MM", this.month);
+      } else {
+        dataStr = dataStr.replace("/MM", "");
+      }
+      if (this.day && this.level >= 3) {
+        dataStr = dataStr.replace("dd", this.day);
+      } else {
+        dataStr = dataStr.replace("/dd", "");
+      }
+      if (!this.year && !this.month && !this.day) {
+        dataStr = "";
+      }
+      return dataStr;
     },
   },
   watch: {
+    // 监听月份,让月份长度变成2
+    month(n, o) {
+      if (n && n < 10) {
+        this.month = (n + "").padStart(2, "0");
+      }
+    },
+    // 监听日,让月份长度变成2
+    day(n, o) {
+      if (n && n < 10) {
+        this.day = (n + "").padStart(2, "0");
+      }
+    },
+    // 将当前时间传给父组件,改变父组件的值
     date(n, o) {
-      this.$parent[this.syxData] = n;
+      this.dateShow = n;
+      this.$parent[this.iworkData] = n;
+    },
+    dateShow(n, o) {
+      console.log(n)
     },
   },
   created() {
-    this.$parent[this.syxData] = this.date;
+    // 初始化给父组件传值,改变父组件的值
+    this.$parent[this.iworkData] = this.date;
   },
   methods: {
     // 获取当前月份第一天星期几
@@ -208,18 +271,64 @@ export default {
     },
     // 日历失去焦点
     calendarBlur() {
+      // 让文字可以显示出来
+      this.isInit = true;
+      // 关闭日历
       this.closeCalendar();
+      // 校验手动输入的日历
+      let yearFormatLen = this.format.replaceAll(/[^y]/gi,"").length;
+      // 将不是数字的字符去除
+      this.dateShow = this.dateShow.replaceAll(/\D/gi,"")
+      switch(this.level){
+        case 1:
+          if(yearFormatLen<=this.dateShow.length){
+            var year = this.dateShow.substring(0,yearFormatLen);
+            this.year = year;
+          }
+          this.dateShow = this.date;
+          break;
+        case 2:
+          if(this.dateShow.length>=6){
+            var year = this.dateShow.substring(0,yearFormatLen);
+            var month = this.dateShow.substring(yearFormatLen,6)
+            if(month<12&&month>0){
+              this.year = year;
+              this.month = month;
+            }
+          }
+          this.dateShow = this.date;
+          break;
+        case 3:
+          if(this.dateShow.length>=8){
+            var year = this.dateShow.substring(0,yearFormatLen);
+            var month = this.dateShow.substring(yearFormatLen,6)
+            var day = this.dateShow.substring(6,8)
+            if(month<12&&month>0){
+              var dayMax = this.getDaysByYearAndMonth(year,month);
+              if(day>0&&day<dayMax){
+                this.year = year;
+                this.month = month;
+                this.day = day;
+              }
+            }
+          }
+          this.dateShow = this.date;
+          break;
+        default:
+          break;
+      }
+
     },
     // 打开日历方法
     openCalendar() {
       this.openCalendarFlg = true;
-      this.$refs.syxCalendarInput.focus();
+      this.$refs.iworkCalendarInput.focus();
     },
     // 关闭日历方法
     closeCalendar() {
       this.openCalendarFlg = false;
       // 关闭后打开重置为第三等级(日)
-      this.currentLevel = 3;
+      this.currentLevel = this.level;
     },
     // 打开年分
     openYear() {
@@ -232,16 +341,30 @@ export default {
     // 选择月
     chooseMonth(month) {
       this.month = month;
-      this.currentLevel = 3;
+      if (this.level == 2) {
+        // 让文字可以显示出来
+        this.isInit = true;
+        this.closeCalendar();
+      } else {
+        this.currentLevel = 3;
+      }
     },
     // 选择年
     chooseYear(year) {
       this.year = year;
-      this.currentLevel = 2;
+      if (this.level == 1) {
+        // 让文字可以显示出来
+        this.isInit = true;
+        this.closeCalendar();
+      } else {
+        this.currentLevel = 2;
+      }
     },
     // 选择日
     chooseDay(e, dayObj) {
       e.stopPropagation();
+      // 让文字可以显示出来
+      this.isInit = true;
       this.closeCalendar();
       switch (dayObj.SYMBOL) {
         case "LAST":
@@ -259,35 +382,35 @@ export default {
     // 上一年,根据currentLevel判断
     preYear() {
       if (this.currentLevel == 1) {
-        this.year = this.year - 10;
+        this.year = parseInt(this.year) - 10;
       } else {
-        this.year = this.year - 1;
+        this.year = parseInt(this.year) - 1;
       }
     },
     // 下一年,根据currentLevel判断
     nextYear() {
       if (this.currentLevel == 1) {
-        this.year = this.year + 10;
+        this.year = parseInt(this.year) + 10;
       } else {
-        this.year = this.year + 1;
+        this.year = parseInt(this.year) + 1;
       }
     },
     // 上一月
     preMonth() {
       if (this.month > 1) {
-        this.month = this.month - 1;
+        this.month = parseInt(this.month) - 1;
       } else {
         this.month = 12;
-        this.year = this.year - 1;
+        this.year = parseInt(this.year) - 1;
       }
     },
     // 下一月
     nextMonth() {
       if (this.month < 12) {
-        this.month = this.month + 1;
+        this.month = parseInt(this.month) + 1;
       } else {
         this.month = 1;
-        this.year = this.year + 1;
+        this.year = parseInt(this.year) + 1;
       }
     },
     // 今天判断
@@ -326,10 +449,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.syx-calendar-wrap {
+.iwork-calendar-wrap {
   position: relative;
   font-size: 14px;
-  .syx-calendar-input {
+  .iwork-calendar-input {
     position: relative;
     display: inline-block;
     width: 100%;
@@ -344,13 +467,14 @@ export default {
     background-image: none;
     cursor: text;
     transition: border 0.2s ease-in-out, background 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out;
-    outline:  #57a3f3;
+      box-shadow 0.2s ease-in-out;
+    outline: #57a3f3;
   }
-  .syx-calendar-input:focus,.syx-calendar-input:hover{
+  .iwork-calendar-input:focus,
+  .iwork-calendar-input:hover {
     border-color: #57a3f3;
   }
-  .syx-calendar-span {
+  .iwork-calendar-span {
     position: absolute;
     display: block;
     right: 0;
@@ -358,7 +482,7 @@ export default {
     height: 100%;
     width: 30px;
     cursor: pointer;
-    .syx-calendar-i {
+    .iwork-calendar-i {
       position: absolute;
       top: 0;
       left: 0;
@@ -368,7 +492,7 @@ export default {
       background-position: center;
     }
   }
-  .syx-picker-panel-body-wrapper {
+  .iwork-picker-panel-body-wrapper {
     position: absolute;
     margin-top: 5px;
     width: 216px;
@@ -378,7 +502,7 @@ export default {
     box-shadow: #bbbbbb 0px 0px 20px 2px;
     z-index: 999;
     background: white;
-    .syx-picker-panel-body {
+    .iwork-picker-panel-body {
       .picker-panel-header {
         display: block;
         position: relative;
