@@ -49,10 +49,6 @@
 export default {
   name: "IworkUpload",
   props: {
-    id:{
-      type:Number,
-      default:new Date().getTime()
-    },
     isMultiple: {
       type: Boolean,
       default: true,
@@ -115,7 +111,7 @@ export default {
     },
     // 立即上传
     uploadNow(){
-      this.$emit("upload",this.fileResource,this.id);
+      this.$emit("upload",this.fileResource);
     },
     // 获取文件
     getFile() {

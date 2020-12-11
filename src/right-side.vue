@@ -10,7 +10,9 @@
           <router-view></router-view>
         </div>
       </div>
-      <div class="descView" style="height:1000px">
+      <div class="descView">
+         <div class="descView-code" v-text="descView.code"></div>
+         <div class="descView-params" v-html="descView.params"></div>
       </div>
     </div>
   </div>
@@ -43,13 +45,43 @@ export default {
         case "/iworkCalendar":
           this.descView = {
             title: "日历组件",
-            desc: "日历组件",
+            code: `<IworkCalendar :isInitNow="false" iworkData="date" :format="format" :level="level"></IworkCalendar>`,
+            params:`<pre>
+              isInitNow:是否使用初始化时间标志
+              iworkData:初始化时间,该属性生效需要依赖 isInitNow
+              format:格式化时间
+              level:日历选择等级  //1 表示可选择到年 2 表示可选择到月 3 表示可选择到日
+              备注:isInitNow 为false  iworkData不起作用且输入框为空
+                  isInitNow 为true   iworkData不为空 则使用iworkData 若iworkData为空,日期为当前日期
+              模拟数据:
+                    {
+                      date: "2020/01/01",   //子组件会自动将日期传给父组件
+                      format: "yyyy/MM/dd",
+                      level: 3, //Y,M,D
+                    }
+            </pre>`
           };
           break;
         case "/iworkUpload":
           this.descView = {
             title: "上传组件",
-            desc: "上传组件",
+            code: ` <IworkUpload file="file" :isMultiple="false" :isHand="true" @upload="upload"></IworkUpload>`,
+            params:`
+            <pre>
+              file:存储文件变量
+              isMultiple:是否允许多文件上传
+              isHand:是否有小手主动触发上传,与upload组合使用
+              upload:上传文件的回到函数,与isHand组合使用
+              备注:isInitNow 为false  iworkData不起作用且输入框为空
+                  isInitNow 为true   iworkData不为空 则使用iworkData 若iworkData为空,日期为当前日期
+              模拟数据:
+                    {
+                      file: [], ,   //选择的文件，子组件自动传递父组件，可能为数组，也可能为对象，取决于isMultiple
+                      isMultiple: false, //默认是单文件上传
+                      upload: function(file) { //file 上传的文件
+                      },
+                    }
+            </pre>`
           };
           break;
         default:
@@ -80,7 +112,7 @@ $rightWidth: calc(100% - 2%);
       width: 90%;
       background: #eeeefa;
       border-radius: 8px;
-      margin: 10vh auto;
+      margin: 5vh auto;
       text-indent: 10px;
       text-align: left;
       font-size: 18px;
@@ -92,7 +124,7 @@ $rightWidth: calc(100% - 2%);
     }
     .routerViewWrap {
       width: 90%;
-      margin: 10vh auto;
+      margin: 5vh auto;
       border: 1px #eeeefa solid;
       height: 200px;
       border-radius: 8px;
@@ -110,6 +142,13 @@ $rightWidth: calc(100% - 2%);
         margin: auto;
       }
     }
+    .descView{
+        width: 90%;
+        margin: 5vh auto;
+        border: 1px #eeeefa solid;
+        height: 200px;
+        border-radius: 8px;
+      }
   }
 }
 </style>

@@ -11,12 +11,6 @@
         <rightSide></rightSide>
       </div>
     </div>
-    <!-- <HelloWorld/>
-    <ElInput></ElInput>
-    <IworkCalendar iworkData="date" :format="format" :level="level" :isInitNow="false"></IworkCalendar>
-    <IworkUpload file="file" :isMultiple="false" :isHand="true" @upload="upload"></IworkUpload>
-    {{file}}
-    {{date}} -->
   </div>
 </template>
 
@@ -35,10 +29,6 @@ export default {
   },
   data() {
     return {
-      date: "12138",
-      format: "yyyy/MM/dd",
-      level: 3, //Y,M,D
-      file: [],
     };
   },
   created(){
@@ -46,18 +36,6 @@ export default {
     if(flag){
       this.$store.state.currentEquipment = flag
     }
-  },
-  watch: {
-    file: function(n, o) {
-      console.log(n);
-    },
-  },
-  methods: {
-    upload(a, b) {
-      console.log(a);
-      console.log(b);
-      console.log("upload");
-    },
   },
 };
 </script>

@@ -229,8 +229,18 @@ export default {
     },
   },
   created() {
-    // 初始化给父组件传值,改变父组件的值
-    this.$parent[this.iworkData] = this.date;
+    if(!this.iworkData){
+      console.warn("iworkData is not define")
+      return;
+    }
+    // 初始化设置日期
+    let date = this.$parent[this.iworkData].replace(/\D/g,"");
+     this.dateShow = this.date;
+    if(this.isInitNow&&date){
+      this.year = date.substring(0,4);
+      this.month = date.substring(4,6);
+      this.day = date.substring(6,8);
+    }
   },
   methods: {
     // 获取当前月份第一天星期几
