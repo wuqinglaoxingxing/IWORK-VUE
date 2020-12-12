@@ -162,12 +162,13 @@ $rightWidth: calc(100% - 2%);
         text-align: center;
         line-height: 40px;
         height: 40px;
-        color:blue;
+        color:var(--silverpurple);
         font-weight: 600;
       }
       .descViewParams{
         text-align: left;
         margin: 3vh 0;
+        color:var(--shunShengZi);
         pre{
           text-align: left;
         }

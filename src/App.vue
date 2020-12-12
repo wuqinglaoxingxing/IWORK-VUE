@@ -60,7 +60,7 @@ body {
 .top {
   width: 100%;
   height: 6vh;
-  background: rebeccapurple;
+  background: var(--daizi);
 }
 .content {
   display: flex;

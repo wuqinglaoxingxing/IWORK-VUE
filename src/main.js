@@ -7,7 +7,7 @@ import router from './router/index'
 // 引入vuex
 import store from './store/store'
 
-import './assets/theme/violet.css'
+// import './assets/theme/violet.css'
 
 Vue.config.productionTip = false
 Vue.use(csiiPlugins)
@@ -16,7 +16,8 @@ Vue.use(Router) // 引入路由
 String.prototype.replaceAll = function(s1, s2) {
   return this.replace(new RegExp(s1, "gmi"), s2);
 }
-
+// var aa = document.getElementById("css")
+// aa.setAttribute("href","../blue.css")
 new Vue({
   router,
   store,
