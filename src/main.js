@@ -7,6 +7,8 @@ import router from './router/index'
 // 引入vuex
 import store from './store/store'
 
+import './assets/theme/violet.css'
+
 Vue.config.productionTip = false
 Vue.use(csiiPlugins)
 Vue.use(Router) // 引入路由

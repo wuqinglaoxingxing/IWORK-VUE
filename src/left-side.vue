@@ -57,11 +57,11 @@ $leftWidth: calc(100% - 2%);
       cursor: default;
     }
     .linkActive {
-      background-color: #e6f7ff;
-      border-right-color: #1890ff;
+      background-color: var(--ouheselittle);
+      border-right-color: var(--unk);
       border-right-style: solid;
       border-right-width: calc(3%);
-      color: #1890ff;
+      color: var(--blueLotus);
     }
   }
 }

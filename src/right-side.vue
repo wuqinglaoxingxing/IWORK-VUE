@@ -58,14 +58,17 @@ export default {
               isInitNow:是否使用初始化时间标志
               iworkData:初始化时间,该属性生效需要依赖 isInitNow
               format:格式化时间
-              level:日历选择等级  //1 表示可选择到年 2 表示可选择到月 3 表示可选择到日
+              level:日历选择等级
               备注:isInitNow 为false  iworkData不起作用且输入框为空
                   isInitNow 为true   iworkData不为空 则使用iworkData 若iworkData为空,日期为当前日期
+                  iworkData  子组件会自动将日期传给父组件
+                  level      1 表示可选择到年 2 表示可选择到月 3 表示可选择到日
+
               模拟数据:
               {
-                date: "2020/01/01",   //子组件会自动将日期传给父组件
+                date: "2020/01/01", 
                 format: "yyyy/MM/dd",
-                level: 3, //Y,M,D
+                level: 3,
               }
             </pre>`,
           };
