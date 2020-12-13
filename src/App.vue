@@ -32,6 +32,21 @@ export default {
     };
   },
   created(){
+    // 获取主题
+    let colorItem = this.localStorage.getItem("colorItem");
+    if(!colorItem){
+      this.gmtds.changeColorTheme("theme","./violet.css");
+      this.localStorage.setItem("colorItem",this.staticVariable.VIOLET);
+    }else{
+      if(colorItem==this.staticVariable.VIOLET){
+        this.gmtds.changeColorTheme("theme","./violet.css");
+      }else if(colorItem==this.staticVariable.BLUE){
+        this.gmtds.changeColorTheme("theme","./blue.css");
+      }else if(colorItem==this.staticVariable.RED){
+        this.gmtds.changeColorTheme("theme","./red.css");
+      }
+    }
+
     let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
     if(flag){
       this.$store.state.currentEquipment = flag
@@ -60,7 +75,7 @@ body {
 .top {
   width: 100%;
   height: 6vh;
-  background: var(--daizi);
+  background: var(--sixth);
 }
 .content {
   display: flex;

@@ -49,6 +49,7 @@ $leftWidth: calc(100% - 2%);
   ul {
     width: $leftWidth;
     li {
+      font-weight: 500;
       height: 40px;
       line-height: 40px;
       border-right-color: transparent;
@@ -57,11 +58,11 @@ $leftWidth: calc(100% - 2%);
       cursor: default;
     }
     .linkActive {
-      background-color: var(--ouheselittle);
-      border-right-color: var(--unk);
+      background-color: var(--first);
+      border-right-color: var(--third);
       border-right-style: solid;
       border-right-width: calc(3%);
-      color: var(--blueLotus);
+      color: var(--fifth);
     }
   }
 }

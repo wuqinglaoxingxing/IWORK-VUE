@@ -1,12 +1,12 @@
 :root {
-    --ouheselittle: #ece1e5;
-    --ouhese: #DDC5CF;
-    --unk:#A9A2CB;
-    --lilac:#BDA1C8;
-    --blueLotus:#9465A5;
-    --daizi:#534161;
-    --grape:#4B2F59;
-    --crimsonPurple:#7C4455;
-    --shunShengZi:#521729;
-    --silverpurple:#441015;
+    --first: #ece1e5;
+    --second: #DDC5CF;
+    --third:#A9A2CB;
+    --fourth:#BDA1C8;
+    --fifth:#9465A5;
+    --sixth:#534161;
+    --seventh:#4B2F59;
+    --eigth:#7C4455;
+    --ninth:#521729;
+    --tenth:#441015;
 }
