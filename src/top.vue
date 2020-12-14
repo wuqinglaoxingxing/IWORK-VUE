@@ -18,13 +18,13 @@ export default {
     changeTheme(colorItem) {
       // 设置主题
       if (colorItem == this.staticVariable.VIOLET) {
-        this.gmtds.changeColorTheme("theme", "./violet.css");
+        this.gmtds.changeColorTheme("theme", "./theme/violet.css");
         this.localStorage.setItem("colorItem",this.staticVariable.VIOLET);
       } else if (colorItem == this.staticVariable.BLUE) {
-        this.gmtds.changeColorTheme("theme", "./blue.css");
+        this.gmtds.changeColorTheme("theme", "./theme/blue.css");
         this.localStorage.setItem("colorItem",this.staticVariable.BLUE);
       } else if (colorItem == this.staticVariable.RED) {
-        this.gmtds.changeColorTheme("theme", "./red.css");
+        this.gmtds.changeColorTheme("theme", "./theme/red.css");
         this.localStorage.setItem("colorItem",this.staticVariable.RED);
       }
     },

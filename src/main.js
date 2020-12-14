@@ -23,8 +23,6 @@ Vue.use(Router); // 引入路由
 String.prototype.replaceAll = function(s1, s2) {
   return this.replace(new RegExp(s1, "gmi"), s2);
 }
-// var aa = document.getElementById("css")
-// aa.setAttribute("href","../blue.css")
 new Vue({
   router,
   store,

@@ -35,21 +35,16 @@ export default {
     // 获取主题
     let colorItem = this.localStorage.getItem("colorItem");
     if(!colorItem){
-      this.gmtds.changeColorTheme("theme","./violet.css");
+      this.gmtds.changeColorTheme("theme","./themeviolet.css");
       this.localStorage.setItem("colorItem",this.staticVariable.VIOLET);
     }else{
       if(colorItem==this.staticVariable.VIOLET){
-        this.gmtds.changeColorTheme("theme","./violet.css");
+        this.gmtds.changeColorTheme("theme","./theme/violet.css");
       }else if(colorItem==this.staticVariable.BLUE){
-        this.gmtds.changeColorTheme("theme","./blue.css");
+        this.gmtds.changeColorTheme("theme","./theme/blue.css");
       }else if(colorItem==this.staticVariable.RED){
-        this.gmtds.changeColorTheme("theme","./red.css");
+        this.gmtds.changeColorTheme("theme","./theme/red.css");
       }
-    }
-
-    let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
-    if(flag){
-      this.$store.state.currentEquipment = flag
     }
   },
 };
