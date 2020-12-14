@@ -120,7 +120,7 @@ $rightWidth: calc(100% - 2%);
     width: $rightWidth;
     .labelView {
       width: 90%;
-      background: #eeeefa;
+      background: var(--eleventh);
       border-radius: 8px;
       margin: 5vh auto;
       text-indent: 10px;
@@ -135,7 +135,7 @@ $rightWidth: calc(100% - 2%);
     .routerViewWrap {
       width: 90%;
       margin: 5vh auto;
-      border: 1px #eeeefa solid;
+      border: 1px var(--eleventh) solid;
       height: 200px;
       border-radius: 8px;
       display: flex;
@@ -155,10 +155,10 @@ $rightWidth: calc(100% - 2%);
     .descView {
       width: 90%;
       margin: 5vh auto;
-      border: 1px #eeeefa solid;
+      border: 1px var(--eleventh) solid;
       border-radius: 8px;
       .descViewCode{
-        background: #eeeefa;
+        background: var(--eleventh);
         text-align: center;
         line-height: 40px;
         height: 40px;
