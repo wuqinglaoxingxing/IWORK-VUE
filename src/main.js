@@ -12,17 +12,20 @@ import localStorage from './localstroage/localStorage'
 import staticVariable from './staticVariable/staticVariable'
 // 引入vue全局方法
 import globalMedthods from './globalMedthods/globalMedthods'
+// 引入rem适配
+import setHtmlFontSize from './rem-config/remComfig'
 
 Vue.prototype.localStorage = localStorage;
 Vue.prototype.staticVariable = staticVariable;
 Vue.prototype.gmtds = globalMedthods;
 Vue.config.productionTip = false;
-Vue.use(csiiPlugins);
+Vue.use(csiiPlugins); //引入第三方组件
 Vue.use(Router); // 引入路由
+// 设置rem
+window.onresize = setHtmlFontSize;
+setHtmlFontSize();
 
-String.prototype.replaceAll = function(s1, s2) {
-  return this.replace(new RegExp(s1, "gmi"), s2);
-}
+
 new Vue({
   router,
   store,

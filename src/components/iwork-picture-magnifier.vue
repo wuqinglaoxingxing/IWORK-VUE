@@ -1,30 +1,55 @@
 <template>
-     <div id="iwork-photo-magnifier-wrap" class="iwork-photo-magnifier-wrap">
-        <div id="iwork-photo-magnifier-wrap-showbox" class="iwork-photo-magnifier-wrap-showbox">
-            <img id="iwork-photo-magnifier-wrap-showbox-img" class="iwork-photo-magnifier-wrap-showbox-img" src="./img01.jpg" alt="">
-            <div id="iwork-photo-magnifier-wrap-showbox-hoverbox" class="iwork-photo-magnifier-wrap-showbox-hoverbox"></div>
+     <div ref="iwork-photo-magnifier-wrap" class="iwork-photo-magnifier-wrap">
+        <div ref="iwork-photo-magnifier-wrap-showbox" :style="{width:photoSize,height:photoSize}" class="iwork-photo-magnifier-wrap-showbox">
+            <img ref="iwork-photo-magnifier-wrap-showbox-img" :style="{width:photoSize,height:photoSize}" class="iwork-photo-magnifier-wrap-showbox-img" src="../assets/img01.jpg" alt="">
+            <div ref="iwork-photo-magnifier-wrap-showbox-hoverbox" :style="{width:hoverBox,height:hoverBox}" class="iwork-photo-magnifier-wrap-showbox-hoverbox"></div>
         </div>
-        <div id="iwork-photo-magnifier-wrap-enlarge-showbox" class="iwork-photo-magnifier-wrap-enlarge-showbox">
-            <img id="iwork-photo-magnifier-wrap-enlarge-showbox-img" class="iwork-photo-magnifier-wrap-enlarge-showbox-img" src="./img01.jpg" alt="">
+        <div ref="iwork-photo-magnifier-wrap-enlarge-showbox" :style="{width:photoSize,height:photoSize}" class="iwork-photo-magnifier-wrap-enlarge-showbox">
+            <img ref="iwork-photo-magnifier-wrap-enlarge-showbox-img" :style="{width:enlargeImg,height:enlargeImg}" class="iwork-photo-magnifier-wrap-enlarge-showbox-img" src="../assets/img01.jpg" alt="">
         </div>
     </div>
 </template>
 <script>
-
-    let iworkPhotoMagnifierWrap = document.getElementById("iwork-photo-magnifier-wrap");
-    let iworkPhotoMagnifierWrapShowbox = document.getElementById("iwork-photo-magnifier-wrap-showbox");
-    let iworkPhotoMagnifierWrapShowboxImg = document.getElementById("iwork-photo-magnifier-wrap-showbox-img");
-    let iworkPhotoMagnifierWrapShowboxHoverbox = document.getElementById("iwork-photo-magnifier-wrap-showbox-hoverbox");
-    let iworkPhotoMagnifierWrapEnlargeShowbox = document.getElementById("iwork-photo-magnifier-wrap-enlarge-showbox");
-    let iworkPhotoMagnifierWrapEnlargeShowboxImg = document.getElementById("iwork-photo-magnifier-wrap-enlarge-showbox-img");
+export default {
+  name: 'iworkPictureMagnifier',
+  props: {
+    photoSize: {
+      type: String,
+      default:"400px"
+    },
+    scale: {
+      type: Number,
+      default: 4,
+    },
+  },
+  data () {
+      return {
+      }
+  },
+  computed:{
+      hoverBox:function(){
+          return parseInt(this.photoSize)/this.scale+"px";
+      },
+      enlargeImg:function(){
+          return parseInt(this.photoSize)*this.scale+"px";
+      }
+  },
+  mounted(){
+    let _this = this;
+    let iworkPhotoMagnifierWrap = this.$refs["iwork-photo-magnifier-wrap"];
+    let iworkPhotoMagnifierWrapShowbox = this.$refs["iwork-photo-magnifier-wrap-showbox"];
+    let iworkPhotoMagnifierWrapShowboxImg = this.$refs["iwork-photo-magnifier-wrap-showbox-img"];
+    let iworkPhotoMagnifierWrapShowboxHoverbox = this.$refs["iwork-photo-magnifier-wrap-showbox-hoverbox"];
+    let iworkPhotoMagnifierWrapEnlargeShowbox = this.$refs["iwork-photo-magnifier-wrap-enlarge-showbox"];
+    let iworkPhotoMagnifierWrapEnlargeShowboxImg = this.$refs["iwork-photo-magnifier-wrap-enlarge-showbox-img"];
     let iworkPhotoMagnifierWrapShowboxHoverboxMouseMoveTimer = null;
     let iworkPhotoMagnifierWrapShowboxHoverboxMouseOutTimer = null;
     // 放大图片的定位 放大倍数需要同覆盖div成相应比例，才能更加优雅
     function positionEnlargeImage(hoverBox){
         var currentX = parseInt(hoverBox.style.left); 
         var currentY = parseInt(hoverBox.style.top); 
-        var currentEnlargeImageX =  currentX/400*1600;
-        var currentEnlargeImageY =  currentY/400*1600
+        var currentEnlargeImageX =  currentX/parseInt(_this.photoSize)*parseInt(_this.enlargeImg);
+        var currentEnlargeImageY =  currentY/parseInt(_this.photoSize)*parseInt(_this.enlargeImg);
 
         iworkPhotoMagnifierWrapEnlargeShowboxImg.style.left = -currentEnlargeImageX+"px"
         iworkPhotoMagnifierWrapEnlargeShowboxImg.style.top = -currentEnlargeImageY+"px"
@@ -64,9 +89,13 @@
         clearTimeout(iworkPhotoMagnifierWrapShowboxHoverboxMouseOutTimer)
         iworkPhotoMagnifierWrapShowboxHoverboxMouseOutTimer = setTimeout(function(){
             // 让覆盖层消失
-            iworkPhotoMagnifierWrapShowboxHoverbox.style.display = "none"
+            iworkPhotoMagnifierWrapShowboxHoverbox.style.display = "none";
+            // 让放大图片消失
+            iworkPhotoMagnifierWrapEnlargeShowbox.classList.remove("iwork-photo-magnifier-wrap-enlarge-showbox-active");
         },1)
     })
+  }
+}
 </script>
 <style lang="scss" scoped>
 .iwork-photo-magnifier-wrap{
@@ -86,8 +115,6 @@
 .iwork-photo-magnifier-wrap>.iwork-photo-magnifier-wrap-showbox>.iwork-photo-magnifier-wrap-showbox-hoverbox{
     position: absolute;
     display: none;
-    width: 100px;
-    height: 100px;
     opacity:.3;
     background:#09f;
     z-index:10;
@@ -96,8 +123,6 @@
 .iwork-photo-magnifier-wrap>.iwork-photo-magnifier-wrap-enlarge-showbox{
     position: absolute;
     display: none;
-    width: 400px;
-    height: 400px;
     overflow: hidden;
 }
 .iwork-photo-magnifier-wrap>.iwork-photo-magnifier-wrap-enlarge-showbox-active{
@@ -106,7 +131,5 @@
 
 .iwork-photo-magnifier-wrap>.iwork-photo-magnifier-wrap-enlarge-showbox>img{
     position: absolute;
-    width: 1600px;
-    height: 1600px;
 }
 </style>

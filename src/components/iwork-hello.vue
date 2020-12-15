@@ -1,18 +1,23 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <!-- <IworkPictureMagnifier :photoSize="photoSize" :scale="scale"></IworkPictureMagnifier> -->
   </div>
 </template>
 
 <script>
 // 引入
-
+import IworkPictureMagnifier from '@/components/iwork-picture-magnifier.vue'
 export default {
   name: 'HelloWorld',
+   components: {
+    IworkPictureMagnifier
+  },
   data () {
       return {
         msg:"hello",
-        obj:{name:1111}
+        photoSize:"400px",
+        scale:2
       }
   },
 }

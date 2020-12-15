@@ -1,13 +1,13 @@
 <template>
   <div class="rightSideWrap">
-    <div class="rightSideView" v-show="!descView.title">
+    <div class="rightSideView" v-if="!descView.title">
       <div class="routerViewWrap">
         <div class="routerView">
           <router-view></router-view>
         </div>
       </div>
     </div>
-    <div class="rightSideView" v-show="descView.title">
+    <div class="rightSideView" v-if="descView.title">
       <div class="labelView">
         <span v-text="descView.title"></span>
       </div>
@@ -94,6 +94,28 @@ export default {
             </pre>`,
           };
           break;
+        case "/iworkPictureMagnifier":
+          this.descView = {
+            title: "图片放大镜",
+            code: `<IworkPictureMagnifier :photoSize="photoSize" :scale="scale"></IworkPictureMagnifier>`,
+            params: `
+            <pre>
+              photoSize:原图片大小
+              scale:放大倍数或缩小倍数
+              备注:photoSize 默认值为400px
+                  scale     为4   将图片放大到原图片的scale倍,将覆盖阴影缩小为原图片的scale倍
+              模拟数据:
+              {
+                photoSize: "400px",  //原图片的为400px * 400px
+                scale: 4,            //放大图片为1600px*1600px   覆盖阴影为100px * 100px
+              }
+              {
+                photoSize: "400px",  //原图片的为400px * 400px
+                scale: 2,            //放大图片为800px*800px   覆盖阴影为200px * 200px
+              }
+            </pre>`,
+          };
+          break;
         default:
           this.descView = {
             title: "",
@@ -136,10 +158,13 @@ $rightWidth: calc(100% - 2%);
       width: 90%;
       margin: 5vh auto;
       border: 1px var(--eleventh) solid;
-      height: 200px;
+      padding: 50px 0;
       border-radius: 8px;
       display: flex;
+      position: relative;
       span {
+        position: absolute;
+        top: 0;
         display: block;
         font-size: 18px;
         text-align: left;

@@ -27,6 +27,8 @@ export default {
         { path: "/iworkHello", desc: "首页" },
         { path: "/iworkCalendar", desc: "日历组件" },
         { path: "/iworkUpload", desc: "上传组件" },
+        { path: "/iworkPictureMagnifier", desc: "图片放大镜" },
+        
       ],
     };
   },
