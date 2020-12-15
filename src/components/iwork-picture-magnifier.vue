@@ -47,7 +47,7 @@ export default {
     },
     photo: {
       type: String,
-      default:require("../assets/img01.jpg")
+      default:require("../assets/picture-magnifier.jpg")
     },
   },
   data() {

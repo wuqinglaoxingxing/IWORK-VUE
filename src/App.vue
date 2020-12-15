@@ -89,4 +89,10 @@ body {
   overflow: hidden;
   height: 100%;
 }
+
+/* 所有样式 */
+.img-format{
+  background-size: cover;
+  background-repeat: no-repeat;
+}
 </style>
