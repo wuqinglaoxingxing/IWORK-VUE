@@ -149,7 +149,8 @@ ul {
         width: 4.5vh;
         height: 4.5vh;
         border-radius: 50%;
-        background-image: url(./assets/face.png);
+        // background-image: url(./assets/face_default.git);
+         background-image: url(./assets/face.png);
         & > .triangle {
           position: absolute;
           top: 100%;

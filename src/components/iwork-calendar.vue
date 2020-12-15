@@ -301,7 +301,7 @@ export default {
           if(this.dateShow.length>=6){
             var year = this.dateShow.substring(0,yearFormatLen);
             var month = this.dateShow.substring(yearFormatLen,6)
-            if(month<12&&month>0){
+            if(month<=12&&month>0){
               this.year = year;
               this.month = month;
             }
@@ -313,9 +313,9 @@ export default {
             var year = this.dateShow.substring(0,yearFormatLen);
             var month = this.dateShow.substring(yearFormatLen,6)
             var day = this.dateShow.substring(6,8)
-            if(month<12&&month>0){
+            if(month<=12&&month>0){
               var dayMax = this.getDaysByYearAndMonth(year,month);
-              if(day>0&&day<dayMax){
+              if(day>0&&day<=dayMax){
                 this.year = year;
                 this.month = month;
                 this.day = day;
