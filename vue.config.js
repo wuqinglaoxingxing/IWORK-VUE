@@ -38,12 +38,16 @@ module.exports = {
     // use thread-loader for babel & TS in production build
     // enabled by default if the machine has more than 1 cores
     parallel: require('os').cpus().length > 1,
-    // 是否启用dll
-    // See https://github.com/vuejs/vue-cli/blob/dev/docs/cli-service.md#dll-mode
-    // dll: false,
-    // PWA 插件相关配置
-    // see https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa
-    pwa: {},
+    // 启用自己的favicon.ico
+    pwa: {
+        iconPaths: {
+            favicon32: 'favicon.ico',
+            favicon16: 'favicon.ico',
+            appleTouchIcon: 'favicon.ico',
+            maskIcon: 'favicon.ico',
+            msTileImage: 'favicon.ico'
+        }
+    },
     // webpack-dev-server 相关配置
     devServer: {
         open: process.platform === 'darwin',
