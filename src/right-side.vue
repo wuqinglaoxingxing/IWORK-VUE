@@ -100,16 +100,20 @@ export default {
             code: `<IworkPictureMagnifier :photoSize="photoSize" :scale="scale"></IworkPictureMagnifier>`,
             params: `
             <pre>
+              photo:图片路径地址
               photoSize:原图片大小
               scale:放大倍数或缩小倍数
-              备注:photoSize 默认值为400px
+              备注:photo     默认值为  '../assets/img01.jpg'
+                  photoSize 默认值为400px
                   scale     为4   将图片放大到原图片的scale倍,将覆盖阴影缩小为原图片的scale倍
               模拟数据:
               {
+                photo: "../assets/img01.jpg"
                 photoSize: "400px",  //原图片的为400px * 400px
                 scale: 4,            //放大图片为1600px*1600px   覆盖阴影为100px * 100px
               }
               {
+                photo: "../assets/img01.jpg"
                 photoSize: "400px",  //原图片的为400px * 400px
                 scale: 2,            //放大图片为800px*800px   覆盖阴影为200px * 200px
               }
