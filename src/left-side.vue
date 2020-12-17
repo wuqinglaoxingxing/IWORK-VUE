@@ -28,7 +28,7 @@ export default {
         { path: "/iworkCalendar", desc: "日历组件" },
         { path: "/iworkUpload", desc: "上传组件" },
         { path: "/iworkPictureMagnifier", desc: "图片放大镜" },
-        
+        { path: "/iworkLuckDraw", desc: "抽奖转盘" },
       ],
     };
   },

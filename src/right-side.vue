@@ -45,13 +45,13 @@ export default {
   },
   created() {
     this.routeChange();
-    },
+  },
   methods: {
     routeChange: function() {
       switch (this.$route.path) {
         case "/iworkCalendar":
           this.descView = {
-            title: "日历组件",
+            title: this.$route.name,
             code: `<IworkCalendar :isInitNow="false" iworkData="date" :format="format" :level="level"></IworkCalendar>`,
             params: `
             <pre>
@@ -75,7 +75,7 @@ export default {
           break;
         case "/iworkUpload":
           this.descView = {
-            title: "上传组件",
+            title: this.$route.name,
             code: ` <IworkUpload file="file" :isMultiple="false" :isHand="true" @upload="upload"></IworkUpload>`,
             params: `
             <pre>
@@ -96,7 +96,7 @@ export default {
           break;
         case "/iworkPictureMagnifier":
           this.descView = {
-            title: "图片放大镜",
+            title: this.$route.name,
             code: `<IworkPictureMagnifier :photo="photo" :photoSize="photoSize" :scale="scale"></IworkPictureMagnifier>`,
             params: `
             <pre>
@@ -116,6 +116,48 @@ export default {
                 photo: "../assets/picture-magnifier.jpg"
                 photoSize: "400px",  //原图片的为400px * 400px
                 scale: 2,            //放大图片为800px*800px   覆盖阴影为200px * 200px
+              }
+            </pre>`,
+          };
+          break;
+        case "/iworkLuckDraw":
+          this.descView = {
+            title: this.$route.name,
+            code: `<IworkLuckDraw :luckDrawSize="luckDrawSize" :selectorParts="selectorParts" :isBlackCurtain="isBlackCurtain" :setRegion="setRegion" :callGift="callGift"></IworkLuckDraw>`,
+            params: `
+            <pre>
+              luckDrawSize:抽奖转盘大小
+              selectorParts:转盘奖项
+              isBlackCurtain:转盘是否具有黑幕
+              setRegion:在有黑幕下指定转到哪一个奖项
+              callGift:奖项信息回调
+              备注:  luckDrawSize      字符串 默认值为  '400px'
+                    selectorParts     数组 默认值为 [
+                                                    { text: "苹果1" },{ text: "苹果2" },{ text: "苹果3" },
+                                                    { text: "苹果4" },{ text: "苹果5" },{ text: "苹果6" },
+                                                    { text: "苹果7" },{ text: "苹果8" },{ text: "苹果9" },{ text: "苹果10" },
+                                                  ]
+                    isBlackCurtain    默认值为false  与setRegion配合使用
+                    setRegion       默认值为1   与isBlackCurtain配合使用
+                    callGift     默认值为(gift)=>{
+                                          console.warn("======gift=====")
+                                          console.warn(gift)
+                                          console.warn("======gift=====") 
+                                        }    gift为奖项信息
+              模拟数据:
+              {
+                luckDrawSize:"200px",
+                selectorParts:[
+                  {text:"华为1"},{text:"华为2"},{text:"华为3"},
+                  {text:"华为4"},{text:"华为5"},{text:"华为6"},
+                  {text:"华为7"},{text:"华为8"},{text:"华为9"},{text:"华为10"},
+                ],
+                isBlackCurtain:false,
+                setRegion:4,
+                // callGift放在methods里面
+                callGift(gift){
+                  console.log("hello")
+                }
               }
             </pre>`,
           };
@@ -186,19 +228,18 @@ $rightWidth: calc(100% - 2%);
       margin: 5vh auto;
       border: 1px var(--eleventh) solid;
       border-radius: 8px;
-      .descViewCode{
+      .descViewCode {
         background: var(--eleventh);
         text-align: center;
         line-height: 40px;
-        height: 40px;
-        color:var(--tenth);
+        color: var(--tenth);
         font-weight: 600;
       }
-      .descViewParams{
+      .descViewParams {
         text-align: left;
         margin: 3vh 0;
-        color:var(--ninth);
-        pre{
+        color: var(--ninth);
+        pre {
           text-align: left;
         }
       }

@@ -5,6 +5,7 @@ import IworkHello from '@/components/iwork-hello.vue'
 import IworkCalendar from '@/components/iwork-calendar.vue'
 import IworkUpload from '@/components/iwork-upload.vue'
 import IworkPictureMagnifier from '@/components/iwork-picture-magnifier.vue'
+import IworkLuckDraw from '@/components/iwork-luck-draw.vue'
 Vue.use(Router)
 //搭配路由
 export default new Router({
@@ -14,7 +15,6 @@ export default new Router({
             path: '/',
             component: IworkHello,
             name: '首页',
-            //   iconCls: 'el-icon-message',
         },
         {
             path: '/iworkHello',
@@ -24,17 +24,22 @@ export default new Router({
         {
             path: '/iworkCalendar',
             component: IworkCalendar,
-            name: 'B',
+            name: '日历组件',
         },
         {
             path: '/iworkUpload',
             component: IworkUpload,
-            name: 'C',
+            name: '上传组件',
         },
         {
             path: '/iworkPictureMagnifier',
             component: IworkPictureMagnifier,
-            name: 'E',
+            name: '图片放大镜',
+        },
+        {
+            path: '/iworkLuckDraw',
+            component: IworkLuckDraw,
+            name: '抽奖转盘',
         },
         
     ]
