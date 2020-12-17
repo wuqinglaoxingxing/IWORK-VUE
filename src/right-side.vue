@@ -39,7 +39,7 @@ export default {
     };
   },
   watch: {
-    $route: function() {
+    $route: function () {
       this.routeChange();
     },
   },
@@ -47,12 +47,12 @@ export default {
     this.routeChange();
   },
   methods: {
-    routeChange: function() {
+    routeChange: function () {
       switch (this.$route.path) {
         case "/iworkCalendar":
           this.descView = {
             title: this.$route.name,
-            code: `<IworkCalendar :isInitNow="false" iworkData="date" :format="format" :level="level"></IworkCalendar>`,
+            code: `<IworkCalendar :isInitNow="isInitNow" iworkData="date" :format="format" :level="level"></IworkCalendar>`,
             params: `
             <pre>
               isInitNow:是否使用初始化时间标志
@@ -66,7 +66,8 @@ export default {
 
               模拟数据:
               {
-                date: "2020/01/01", 
+                date: "",
+                isInitNow: false,
                 format: "yyyy/MM/dd",
                 level: 3,
               }
@@ -76,7 +77,7 @@ export default {
         case "/iworkUpload":
           this.descView = {
             title: this.$route.name,
-            code: ` <IworkUpload file="file" :isMultiple="false" :isHand="true" @upload="upload"></IworkUpload>`,
+            code: ` <IworkUpload file="file" :isMultiple="isMultiple" :isHand="isHand" @upload="upload"></IworkUpload>`,
             params: `
             <pre>
               file:存储文件变量
@@ -87,7 +88,8 @@ export default {
                   isInitNow 为true   iworkData不为空 则使用iworkData 若iworkData为空,日期为当前日期
               模拟数据:
               {
-                file: [], ,   //选择的文件，子组件自动传递父组件，可能为数组，也可能为对象，取决于isMultiple
+                file: [],    //选择的文件，子组件自动传递父组件，可能为数组，也可能为对象，取决于isMultiple
+                isHand:false,  //是否有手动上传图标
                 isMultiple: false, //默认是单文件上传
                 upload: function(file) { //file 上传的文件
               }
@@ -123,13 +125,14 @@ export default {
         case "/iworkLuckDraw":
           this.descView = {
             title: this.$route.name,
-            code: `<IworkLuckDraw :luckDrawSize="luckDrawSize" :selectorParts="selectorParts" :isBlackCurtain="isBlackCurtain" :setRegion="setRegion" :callGift="callGift"></IworkLuckDraw>`,
+            code: `<IworkLuckDraw :luckDrawSize="luckDrawSize" :selectorParts="selectorParts" :isBlackCurtain="isBlackCurtain" :setRegion="setRegion" :customColor="customColor" :callGift="callGift"></IworkLuckDraw>`,
             params: `
             <pre>
               luckDrawSize:抽奖转盘大小
               selectorParts:转盘奖项
               isBlackCurtain:转盘是否具有黑幕
               setRegion:在有黑幕下指定转到哪一个奖项
+              customColor:转盘颜色控制(必输)
               callGift:奖项信息回调
               备注:  luckDrawSize      字符串 默认值为  '400px'
                     selectorParts     数组 默认值为 [
@@ -139,6 +142,7 @@ export default {
                                                   ]
                     isBlackCurtain    默认值为false  与setRegion配合使用
                     setRegion       默认值为1   与isBlackCurtain配合使用
+                    customColor    必输(详情请看模拟数据)
                     callGift     默认值为(gift)=>{
                                           console.warn("======gift=====")
                                           console.warn(gift)
@@ -154,6 +158,21 @@ export default {
                 ],
                 isBlackCurtain:false,
                 setRegion:4,
+                customColor: {
+                  outCircle: "red",   //外层圆颜色
+                  singlePart: "yellow",   //奖品单区域颜色
+                  doublePart: "blue",     //奖品双区域颜色
+                  text: "green",          //文字颜色
+                  cursorPoint: "red",     //指针颜色
+                  animation: {            //转盘灯颜色
+                    "0%": "#eaff99",
+                    "20%": "#e0ff66",
+                    "40%": "#d6ff32",
+                    "60%": "#ccff00",
+                    "80%": "#a3cc00",
+                    "100%": "#7a9900",
+                  },
+                },
                 // callGift放在methods里面
                 callGift(gift){
                   console.log("hello")

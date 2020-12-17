@@ -9,20 +9,52 @@
       :key="light"
       class="luck-draw-light luck-draw-light-rotote"
     ></div>
-    <div id="luck-draw-out-circle" class="luck-draw-out-circle">
+    <div
+      id="luck-draw-out-circle"
+      class="luck-draw-out-circle"
+      :style="{
+        background: customColor.outCircle ? customColor.outCircle : '',
+      }"
+    >
       <div id="luck-draw-in-circle" class="luck-draw-in-circle">
         <div
           class="selector"
           v-for="(selector, index) in selectorParts"
           :key="index"
         >
-          <div class="selector-show">
-            <span class="selector-show-span" v-text="selector.text"></span>
+          <div
+            class="selector-show"
+            :style="{
+              background:
+                index % 2 == 1 &&
+                customColor.singlePart &&
+                customColor.doublePart
+                  ? customColor.singlePart
+                  : customColor.doublePart,
+            }"
+          >
+            <span
+              class="selector-show-span"
+              v-text="selector.text"
+              :style="{ color: customColor.text ? customColor.text : '' }"
+            ></span>
           </div>
         </div>
       </div>
-      <div id="luck-draw-point" class="luck-draw-point">
-        <span class="luck-draw-point-text">开始</span>
+      <div
+        id="luck-draw-point"
+        class="luck-draw-point"
+        :style="{
+          backgroundColor: customColor.cursorPoint
+            ? customColor.cursorPoint
+            : '',
+        }"
+      >
+        <span
+          class="luck-draw-point-text"
+          :style="{ color: customColor.text ? customColor.text : '' }"
+          >开始</span
+        >
         <svg
           class="luck-draw-point-svg"
           t="1608087114493"
@@ -35,7 +67,9 @@
         >
           <path
             d="M512 266.5l421.2 491H90.8z"
-            fill="#EE5353"
+            :fill="
+              customColor.cursorPoint ? customColor.cursorPoint : 'var(--fifth)'
+            "
             p-id="7450"
           ></path>
         </svg>
@@ -48,6 +82,7 @@ export default {
   name: "IworkLuckDraw",
   props: {
     luckDrawSize: {
+      // 转盘默认大小
       type: String,
       default: "400px",
     },
@@ -76,14 +111,22 @@ export default {
       type: Number,
       default: 1,
     },
-    callGift:{
-      type:Function,
-      default:(gift)=>{
-        console.warn("======gift=====")
-        console.warn(gift)
-        console.warn("======gift=====")
-      }
-    }
+    customColor: {
+      // 自定义动画
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
+    callGift: {
+      // 动画结束奖品回调
+      type: Function,
+      default: (gift) => {
+        console.warn("======gift=====");
+        console.warn(gift);
+        console.warn("======gift=====");
+      },
+    },
   },
   data() {
     return {
@@ -120,12 +163,14 @@ export default {
     let selectorBorderRadiusBottomLeft = luckDrawInCircle.getBoundingClientRect()
       .height; //动态设置奖品显示需要
     // 类数组转为数组，改变样式
+    // 转盘奖品区域
     Array.prototype.slice.call(selector).forEach((element) => {
       element.style.borderTopLeftRadius =
         selectorBorderRadiusTopLeft / 2 + "px";
       element.style.borderBottomLeftRadius =
         selectorBorderRadiusBottomLeft / 2 + "px";
     });
+    // 转盘奖品区域文字
     Array.prototype.slice.call(selectorShowSpan).forEach((element) => {
       let fontSizeX = _this.fontSizeScale * luckDrawWrapWidth;
       let fontSizeY = _this.fontSizeScale * luckDrawWrapHeight;
@@ -138,9 +183,10 @@ export default {
       element.style.fontSize = fontSizeX + "px";
       element.style.fontSize = fontSizeY + "px";
     });
+    // 转盘 '开始' 文字
     Array.prototype.slice.call(luckDrawPointText).forEach((element) => {
-      let fontSizeX = (_this.fontSizeScale) * luckDrawWrapWidth;
-      let fontSizeY = (_this.fontSizeScale) * luckDrawWrapHeight;
+      let fontSizeX = _this.fontSizeScale * luckDrawWrapWidth;
+      let fontSizeY = _this.fontSizeScale * luckDrawWrapHeight;
       if (fontSizeX < 12) {
         fontSizeX = 0;
       }
@@ -150,6 +196,7 @@ export default {
       element.style.fontSize = fontSizeX + "px";
       element.style.fontSize = fontSizeY + "px";
     });
+    // 转盘灯
     Array.prototype.slice.call(luckDrawLight).forEach((element) => {
       let luckDrawLightWidth =
         luckDrawOutCircleWidth - selectorBorderRadiusTopLeft;
@@ -158,8 +205,22 @@ export default {
       element.style.width = luckDrawLightWidth / 2 + "px";
       element.style.height = luckDrawLightHeight / 2 + "px";
       element.style.transformOrigin = "center " + luckDrawWrapHeight / 2 + "px";
+      if (this.customColor.animation) {
+        let rules = _this.addStyleAnimate(
+          document.styleSheets[0],
+          "customAnimateColor",
+          this.customColor.animation
+        );
+        // 删除动画
+        // _this.delStyleAnimate(document.styleSheets[0])
+        if (rules) {
+          element.style.animation =
+            "customAnimateColor 0.5s 0s linear infinite alternate";
+        }
+      }
     });
-    luckDrawPoint.addEventListener("click", function() {
+    // 转盘开始
+    luckDrawPoint.addEventListener("click", function () {
       if (!_this.lucking) {
         return;
       }
@@ -188,12 +249,13 @@ export default {
       }
       luckDrawPoint.style.transform = "rotate(" + allDeg + "deg)";
     });
-    luckDrawPoint.addEventListener("transitionend", function() {
+    // 转盘动画结束回调
+    luckDrawPoint.addEventListener("transitionend", function () {
       let region = _this.getCoordinate(
         parseInt(luckDrawPoint.style.transform.replace(/\D/g, ""))
       );
-      _this.callGift(_this.selectorParts[region])
-      setTimeout(function() {
+      _this.callGift(_this.selectorParts[region]);
+      setTimeout(function () {
         // 初始化复位
         _this.lucking = true;
         luckDrawPoint.style.transition = "transform 0s";
@@ -202,9 +264,28 @@ export default {
     });
   },
   methods: {
+    // 获取当前是哪一个奖项区域
     getCoordinate(pointDeg) {
       let region = Math.ceil(((pointDeg - 18) % this.cicleStatic) / 36);
       return region;
+    },
+    // 创建名称为指定名称的动画
+    addStyleAnimate(sheet, name, animationObj) {
+      if (!sheet) return;
+      let rules = "";
+      Object.keys(animationObj).forEach((key) => {
+        rules += key + " { background:" + animationObj[key] + "} ";
+      });
+      if ("insertRule" in sheet) {
+        sheet.insertRule("@keyframes " + name + " {" + rules + "}", undefined);
+      } else if ("addRule" in sheet) {
+        sheet.addRule("@keyframes " + name, rules, undefined);
+      }
+      return rules;
+    },
+    // 删除名称为指定名称的动画
+    delStyleAnimate(sheet) {
+      sheet.deleteRule(0);
     },
   },
 };
@@ -222,7 +303,7 @@ export default {
   z-index: 1;
   width: 100%;
   height: 100%;
-  background-color: red;
+  background-color: var(--tenth);
   border-radius: 50%;
   box-shadow: 10px 10px 5px #888888;
 }
@@ -255,7 +336,7 @@ export default {
   /* 设置内层占比外层大小 */
   width: 16%;
   height: 16%;
-  background-color: rgb(238, 83, 83);
+  background-color: var(--fifth);
   border-radius: 50%;
   display: inline-flex;
   flex-direction: column;
@@ -276,7 +357,7 @@ export default {
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
-  color: yellow;
+  color: var(--tenth);
   text-align: center;
 }
 
@@ -339,11 +420,11 @@ export default {
 }
 
 .selector:nth-child(2n) .selector-show {
-  background-color: yellow;
+  background-color: var(--third);
 }
 
 .selector:nth-child(2n + 1) .selector-show {
-  background-color: blue;
+  background-color: var(--seventh);
 }
 
 .selector-show-span {
@@ -351,13 +432,13 @@ export default {
   padding-top: 6px;
   width: 30%;
   height: 100%;
-  color: #78eb6e;
+  color: var(--tenth);
   transform: translateX(-50%) rotate(18deg);
 }
 
 .luck-draw-light {
   position: absolute;
-  background: yellow;
+  background: var(--ninth);
   border-radius: 50%;
   margin: 0 auto;
   left: 0;
@@ -369,22 +450,22 @@ export default {
 
 @keyframes luck-draw-light-animation {
   0% {
-    background: #eaff99;
+    background: var(--first);
   }
   20% {
-    background: #e0ff66;
+    background: var(--third);
   }
   40% {
-    background: #d6ff32;
+    background: var(--fifth);
   }
   60% {
-    background: #ccff00;
+    background: var(--seventh);
   }
   80% {
-    background: #a3cc00;
+    background: var(--eigth);
   }
   100% {
-    background: #7a9900;
+    background: var(--ninth);
   }
 }
 
