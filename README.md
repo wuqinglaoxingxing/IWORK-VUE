@@ -1,4 +1,4 @@
-# test-vue
+# iworl-vue
 
 ## Project setup
 ```
