@@ -2,7 +2,7 @@ const IS_PRO = ['production', 'test'].includes(process.env.NODE_ENV);
 
 module.exports = {
     // 基本路径 baseURL已经过时
-    publicPath: IS_PRO?'./IWORK-VUE/':'./',
+    publicPath: IS_PRO?'/IWORK-VUE/':'./',
     // 输出文件目录
     outputDir: 'dist',
     // eslint-loader 是否在保存的时候检查
