@@ -1,4 +1,4 @@
-# iworl-vue
+# iwork-vue
 
 ## Project setup
 ```
