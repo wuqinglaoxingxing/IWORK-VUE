@@ -46,6 +46,8 @@ export default {
         this.gmtds.changeColorTheme("theme","./theme/red.css");
       }
     }
+     const { NODE_ENV } = process.env;
+    document.documentElement.className = NODE_ENV;
   },
 };
 </script>
