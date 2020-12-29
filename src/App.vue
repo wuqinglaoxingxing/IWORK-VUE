@@ -31,7 +31,7 @@ export default {
     return {
     };
   },
-  created(){
+  mounted(){
     // 获取主题
     let colorItem = this.localStorage.getItem("colorItem");
     if(!colorItem){
