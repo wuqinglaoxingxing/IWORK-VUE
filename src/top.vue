@@ -1,21 +1,29 @@
 <template>
   <div class="topWrap">
     <div class="first">
-      <img :src="logoURL" alt="logo"/>
+      <img :src="logoURL" alt="logo" />
     </div>
     <div class="second"></div>
     <div class="third"></div>
     <div class="four">
       <div class="iconset">
-        <div id="user-icon" class="user img-format" @click="setPanelStatus=!setPanelStatus;themeListStatus=false;">
+        <div
+          id="user-icon"
+          class="user img-format"
+          @click="
+            setPanelStatus = !setPanelStatus;
+            themeListStatus = false;
+          "
+        >
           <div class="triangle" v-show="setPanelStatus"></div>
         </div>
         <div id="set-panel" class="set-panel" v-show="setPanelStatus">
           <ul>
-            <li @click="themeListStatus=!themeListStatus">
+            <li @click="themeListStatus = !themeListStatus">
               <span class="icon skin"></span>
               <span class="text">
-                <button class="theme">主题
+                <button class="theme">
+                  主题
                   <span class="caret_down" v-show="!themeListStatus"></span>
                   <span class="caret_top" v-show="themeListStatus"></span>
                 </button>
@@ -40,23 +48,23 @@ export default {
   name: "top",
   data() {
     return {
-      logoURL: "",  //logo url 
-      themeColor: this.localStorage.getItem("colorItem"),  // 主题颜色
-      themeListStatus:false,   //主题列表是否显示状态
-      setPanelStatus:false     //设置面板是否设置状态
+      logoURL: "", //logo url
+      themeColor: this.localStorage.getItem("colorItem"), // 主题颜色
+      themeListStatus: false, //主题列表是否显示状态
+      setPanelStatus: false, //设置面板是否设置状态
     };
   },
   created() {
     let _this = this;
     this.setLogo();
     // 增加全局事件,点击其他地方关闭设置面板,该事件值针对面板的显示隐藏
-    document.addEventListener("click",function(e){
+    document.addEventListener("click", function (e) {
       let userIconStatus = _this.gmtds.isHasInParent("user-icon", e.target);
       let setPanelStatus = _this.gmtds.isHasInParent("set-panel", e.target);
-      if(!userIconStatus&&!setPanelStatus){
+      if (!userIconStatus && !setPanelStatus) {
         _this.closePanelAndInitParams();
       }
-    })
+    });
   },
   computed: {},
   methods: {
@@ -100,9 +108,9 @@ export default {
       }
     },
     // 关闭所有设置面板，以及初始化参数
-    closePanelAndInitParams(){
+    closePanelAndInitParams() {
       this.themeListStatus = this.setPanelStatus = false;
-    }
+    },
   },
 };
 </script>
@@ -150,7 +158,7 @@ ul {
         height: 4.5vh;
         border-radius: 50%;
         // background-image: url(./assets/face_default.git);
-         background-image: url(./assets/face.png);
+        background-image: url(./assets/face.png);
         & > .triangle {
           position: absolute;
           top: 100%;
@@ -176,9 +184,9 @@ ul {
           & > li:not(:last-child) {
             border-bottom: 1px black solid;
           }
-           & > li:hover {
-                background: var(--seventh);
-              }
+          & > li:hover {
+            background: var(--seventh);
+          }
           & > li {
             list-style: none;
             line-height: 0.3rem;
@@ -235,9 +243,9 @@ ul {
               width: 38%;
               color: var(--eeeefa);
               background: var(--tenth);
-              box-shadow: var(--tenth) .06rem .03rem .1rem;
+              box-shadow: var(--tenth) 0.06rem 0.03rem 0.1rem;
               & > li {
-               cursor: pointer;
+                cursor: pointer;
               }
               & > li:hover {
                 background: var(--seventh);
