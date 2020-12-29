@@ -1,18 +1,18 @@
 <template>
-  <div class="lefeSideWrap">
-    <div class="lefeSideView">
-      <ul>
-        <router-link
-          v-for="(item, index) in routerLink"
-          :to="item.path"
-          tag="li"
-          :key="index"
-        >
-          {{ item.desc }}
-        </router-link>
-      </ul>
+    <div class="lefeSideWrap">
+        <div class="lefeSideView">
+            <ul>
+                <router-link
+                    v-for="(item, index) in routerLink"
+                    :to="item.path"
+                    tag="li"
+                    :key="index"
+                >
+                    {{ item.desc }}
+                </router-link>
+            </ul>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -38,34 +38,34 @@ export default {
 <style scoped lang="scss">
 $leftWidth: calc(100% - 2%);
 .lefeSideWrap {
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: -2%;
-  bottom: 0;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  .lefeSideView{
-    width: 100%;
-  }
-  ul {
-    width: $leftWidth;
-    li {
-      font-weight: 500;
-      height: 40px;
-      line-height: 40px;
-      border-right-color: transparent;
-      border-right-style: solid;
-      border-right-width: calc(3%);
-      cursor: default;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: -2%;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    .lefeSideView{
+        width: 100%;
     }
-    .linkActive {
-      background-color: var(--first);
-      border-right-color: var(--third);
-      border-right-style: solid;
-      border-right-width: calc(3%);
-      color: var(--fifth);
+    ul {
+        width: $leftWidth;
+        li {
+            font-weight: 500;
+            height: 40px;
+            line-height: 40px;
+            border-right-color: transparent;
+            border-right-style: solid;
+            border-right-width: calc(3%);
+            cursor: default;
+        }
+        .linkActive {
+            background-color: var(--first);
+            border-right-color: var(--third);
+            border-right-style: solid;
+            border-right-width: calc(3%);
+            color: var(--fifth);
+        }
     }
-  }
 }
 </style>
