@@ -35,7 +35,7 @@ export default {
     // 获取主题
     let colorItem = this.localStorage.getItem("colorItem");
     if(!colorItem){
-      this.gmtds.changeColorTheme("theme","./themeviolet.css");
+      this.gmtds.changeColorTheme("theme","./theme/violet.css");
       this.localStorage.setItem("colorItem",this.staticVariable.VIOLET);
     }else{
       if(colorItem==this.staticVariable.VIOLET){
