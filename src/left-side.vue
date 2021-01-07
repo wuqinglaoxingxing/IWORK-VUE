@@ -29,6 +29,7 @@ export default {
         { path: "/iworkUpload", desc: "上传组件" },
         { path: "/iworkPictureMagnifier", desc: "图片放大镜" },
         { path: "/iworkLuckDraw", desc: "抽奖转盘" },
+        { path: "/iworkTaiji", desc: "太极" },
       ],
     };
   },

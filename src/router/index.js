@@ -6,6 +6,7 @@ import IworkCalendar from '@/components/iwork-calendar.vue'
 import IworkUpload from '@/components/iwork-upload.vue'
 import IworkPictureMagnifier from '@/components/iwork-picture-magnifier.vue'
 import IworkLuckDraw from '@/components/iwork-luck-draw.vue'
+import IworkTaiji from '@/components/iwork-taiji.vue'
 Vue.use(Router)
 //搭配路由
 export default new Router({
@@ -40,6 +41,11 @@ export default new Router({
             path: '/iworkLuckDraw',
             component: IworkLuckDraw,
             name: '抽奖转盘',
+        },
+        {
+            path: '/iworkTaiji',
+            component: IworkTaiji,
+            name: '太极',
         },
         
     ]

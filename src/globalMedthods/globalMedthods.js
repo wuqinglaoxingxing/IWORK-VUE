@@ -45,6 +45,22 @@ const getAllParents = function (dom,parentTagList = []) {
   }
 }
 
+/**
+ * 功能: 获取元素属性值
+ * 参数: prop 属性
+ * 
+*/
+HTMLElement.prototype.getStyle = function(prop){
+    if(!prop){
+        return window.getComputedStyle(this,null) || this.currentStyle
+    }
+    if(window.getComputedStyle){
+        return window.getComputedStyle(this,null)[prop]
+    }else{
+        return this.currentStyle[prop];
+    }
+}
+
 
 
 export default {
