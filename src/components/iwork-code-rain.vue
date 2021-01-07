@@ -10,6 +10,14 @@ export default {
             type:Number,
             default:16
         },
+        contentFillStyle:{
+            type:String,
+            default:"rgba(0,0,0,0.05)"
+        },
+        textFillStyle:{
+            type:String,
+            default:"#096"
+        }
     },
     data(){
         return{
@@ -57,10 +65,10 @@ export default {
         },
         drawCode(){
             let _this = this;
-            this.codeRainClothCtx.fillStyle="rgba(0,0,0,0.05)"
+            this.codeRainClothCtx.fillStyle=this.contentFillStyle;
             this.codeRainClothCtx.fillRect(0,0,this.codeRainClothWidth,this.codeRainClothHeight)
             for(let i=0;i<this.fontColumn;i++){
-                this.codeRainClothCtx.fillStyle="#096";
+                this.codeRainClothCtx.fillStyle=this.textFillStyle;
                 this.codeRainClothCtx.font = `${this.fontSize}px 黑体 blod`;
                 // 获取unicode 码
                 let code = ""
