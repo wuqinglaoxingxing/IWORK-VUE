@@ -30,6 +30,7 @@ export default {
         { path: "/iworkPictureMagnifier", desc: "图片放大镜" },
         { path: "/iworkLuckDraw", desc: "抽奖转盘" },
         { path: "/iworkTaiji", desc: "太极" },
+        { path: "/iworkCodeRainCloth", desc: "代码雨" },
       ],
     };
   },

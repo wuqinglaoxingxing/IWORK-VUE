@@ -7,6 +7,7 @@ import IworkUpload from '@/components/iwork-upload.vue'
 import IworkPictureMagnifier from '@/components/iwork-picture-magnifier.vue'
 import IworkLuckDraw from '@/components/iwork-luck-draw.vue'
 import IworkTaiji from '@/components/iwork-taiji.vue'
+import IworkCodeRainCloth from '@/components/iwork-code-rain.vue'
 Vue.use(Router)
 //搭配路由
 export default new Router({
@@ -47,6 +48,10 @@ export default new Router({
             component: IworkTaiji,
             name: '太极',
         },
-        
+        {
+            path: '/iworkCodeRainCloth',
+            component: IworkCodeRainCloth,
+            name: '代码雨',
+        },
     ]
 })

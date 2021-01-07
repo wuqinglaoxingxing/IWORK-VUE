@@ -13,7 +13,7 @@
         </div>
         <div class="routerViewWrap">
             <span>Demo</span>
-            <div class="routerView">
+            <div class="routerView" :style="{height:$route.path=='/iworkCodeRainCloth'?'1000px':''}">
                 <router-view></router-view>
             </div>
         </div>
@@ -39,12 +39,12 @@ export default {
         };
     },
     watch: {
-        $route: function () {
+        $route: function (n,v) {
             this.routeChange();
         },
     },
     created() {
-            this.routeChange();
+        this.routeChange();
     },
   methods: {
     routeChange: function () {
@@ -182,6 +182,24 @@ export default {
                 };
                 break;
             case "/iworkTaiji":
+                this.descView = {
+                    title: this.$route.name,
+                    code: `<IworkTaiji :taijiSize="taijiSize" :taijiColor="taijiColor"></IworkTaiji>`,
+                    params: `
+                        <pre>
+                        taijiSize:太极尺寸
+                        taijiColor:太极颜色
+                        备注:    taijiSize      字符串 默认值为  '200px'
+                                taijiColor     数组 必输 默认值为 []
+                        模拟数据:
+                        {
+                            taijiSize:"400px",    
+                            taijiColor:["#fff","#000"]   //黑白太极
+                        }
+                        </pre>`,
+                };
+                break;
+             case "/iworkCodeRainCloth":
                 this.descView = {
                     title: this.$route.name,
                     code: `<IworkTaiji :taijiSize="taijiSize" :taijiColor="taijiColor"></IworkTaiji>`,
