@@ -1,7 +1,7 @@
 <template>
     <div class="iwork-taiji-wrap" :style="customWrap">
-        <div class="iwork-taiji-left" :style="[customSame,customLeft]"></div>
-        <div class="iwork-taiji-right" :style="[customSame,customRight]"></div>
+        <div class="iwork-taiji-same iwork-taiji-left" :style="[customSame,customLeft]"></div>
+        <div class="iwork-taiji-same iwork-taiji-right" :style="[customSame,customRight]"></div>
     </div>
 </template>
 <script>
@@ -40,11 +40,9 @@ export default {
             borderColor: `${this.taijiColor[1]||''}`
         };
         this.customSame = {
-            top: `${taijiSize/4}rem`,
             width: `${taijiSize/2*0.2}rem`,
             height: `${taijiSize/2*0.2}rem`,
             borderWidth: `${taijiSize/2*0.4}rem`,
-            borderStyle:  "solid",
         }
         this.customLeft = {
             borderColor:`${this.taijiColor[1]||''}`,
@@ -68,15 +66,17 @@ export default {
         background-color: var(--tenth);
         border-color: var(--first);
 
-        .iwork-taiji-left{
+        .iwork-taiji-same{
+            top: 50%;
             position: absolute;
             border-radius: 50%;
+            border-style: solid;
+        }
+        .iwork-taiji-left{
             border-color: var(--first);
             background-color: var(--tenth);
         }
         .iwork-taiji-right{
-            position: absolute;
-            border-radius: 50%;
             border-color: var(--tenth);
             background-color: var(--first);
         }
