@@ -31,11 +31,11 @@
       :callGift="callGift"
     ></IworkLuckDraw> -->
     <!-- 太极 -->
-    <IworkTaiji
+    <!-- <IworkTaiji
     ref="iworkTaiji"
     :taijiSize="taijiSize"
     :taijiColor="taijiColor"
-    ></IworkTaiji>
+    ></IworkTaiji> -->
   </div>
 </template>
 
