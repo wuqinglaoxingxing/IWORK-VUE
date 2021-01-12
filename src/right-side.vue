@@ -52,24 +52,106 @@ export default {
             case "/iworkCalendar":
                 this.descView = {
                     title: this.$route.name,
-                    code: `<IworkCalendar :isInitNow="isInitNow" iworkData="date" :format="format" :level="level"></IworkCalendar>`,
+                    code: `<IworkCalendar :isInitNow="isInitNow" iworkData="date" :format="format" :level="level" :showStyle="showStyle" :dateBetWeenCall="dateBetWeenCall"></IworkCalendar>`,
                     params: `
                         <pre>
                         isInitNow:是否使用初始化时间标志
                         iworkData:初始化时间,该属性生效需要依赖 isInitNow
                         format:格式化时间
                         level:日历选择等级
+                        showStyle:日历选择后展示样式
+                        dateBetWeenCall:日期规定选择范围
                         备注:isInitNow 为false  iworkData不起作用且输入框为空
                             isInitNow 为true   iworkData不为空 则使用iworkData 若iworkData为空,日期为当前日期
                             iworkData  子组件会自动将日期传给父组件
                             level      1 表示可选择到年 2 表示可选择到月 3 表示可选择到日
+                            showStyle:日历选择后展示样式
+                            dateBetWeenCall:回调函数,自定义写法
+                            /**
+                             * 日期禁用
+                             * time: 时间戳 页面返回回来的时间戳
+                             * level:日期等级 1--年 2--月 3--日
+                             * return: 返回false不禁用，true禁用
+                             * */ 
+                            // 例一：禁用除了2021-2023意外的的所有日期
 
+                            //  dateBetWeenCall(time,level){
+                            //     let date = new Date();
+                            //     date.setTime(time)
+                            //     if([2021,2022,2023].includes(date.getFullYear())){
+                            //         return false
+                            //     }else{
+                            //         return true
+                            //     }
+                            // },
+                            // 例二：禁用除了所有的节假日日期 0-星期天 和 6-星期六 禁用
+
+                            // dateBetWeenCall(time,level){
+                            //     let date = new Date();
+                            //     date.setTime(time)
+                            //     if(level==3){
+                            //         if(date.getDay()==0||date.getDay()==6){
+                            //             return true;
+                            //         }else{
+                            //             return false;
+                            //         }
+                            //     }else{
+                            //         return false;
+                            //     }
+                            // }
+                            // 例三：禁用指定的日期 2021-01-12 2021-01-13 2022-02-xx 2023-xx-xx
+                            
+                            // dateBetWeenCall(time,level){
+                            //     let date = new Date();
+                            //     date.setTime(time)
+                            //     if(level==1){
+                            //         if([2023].includes(date.getFullYear())){
+                            //             return true;
+                            //         }else{
+                            //             return false;
+                            //         }
+                            //     }else if(level==2){
+                            //         if(
+                            //             ([2022].includes(date.getFullYear())&&[2].includes(date.getMonth()+1))
+                            //             ||
+                            //             ([2023].includes(date.getFullYear()))
+                            //         ){
+                            //             return true;
+                            //         }else{
+                            //             return false;
+                            //         }
+                            //     }else{
+                            //         if(
+                            //             ([2021].includes(date.getFullYear())&&[1].includes(date.getMonth()+1)&&[12,13].includes(date.getDate()))
+                            //             ||
+                            //             ([2022].includes(date.getFullYear())&&[2].includes(date.getMonth()+1))
+                            //             ||
+                            //             ([2023].includes(date.getFullYear()))
+                            //         ){
+                            //             return true;
+                            //         }else{
+                            //             return false;
+                            //         }
+                            //     }
+                            // }
                         模拟数据:
                         {
-                            date: "",
-                            isInitNow: false,
-                            format: "yyyy/MM/dd",
+                            date: "20210110",
+                            isInitNow: true,
+                            format: "yyyy-MM-dd",
                             level: 3,
+                            showStyle:{
+                                background: "linear-gradient(#e66465, #9198e5)"
+                            },
+                        }
+                        dateBetWeenCall放在methods里面
+                        /**
+                         * 日期禁用
+                         * time: 时间戳 页面返回回来的时间戳
+                         * level:日期等级 1--年 2--月 3--日
+                         * */ 
+                        dateBetWeenCall:function(time,level) {
+                            return false;
                         }
                         </pre>`,
                 };
@@ -91,6 +173,7 @@ export default {
                             file: [],    //选择的文件，子组件自动传递父组件，可能为数组，也可能为对象，取决于isMultiple
                             isHand:false,  //是否有手动上传图标
                             isMultiple: false, //默认是单文件上传
+                            // upload放在methods里面
                             upload: function(file) {} //file 上传的文件
                         }
                     </pre>`,
@@ -152,30 +235,30 @@ export default {
                         {
                             luckDrawSize:"200px",
                             selectorParts:[
-                            {text:"华为1"},{text:"华为2"},{text:"华为3"},
-                            {text:"华为4"},{text:"华为5"},{text:"华为6"},
-                            {text:"华为7"},{text:"华为8"},{text:"华为9"},{text:"华为10"},
+                                {text:"华为1"},{text:"华为2"},{text:"华为3"},
+                                {text:"华为4"},{text:"华为5"},{text:"华为6"},
+                                {text:"华为7"},{text:"华为8"},{text:"华为9"},{text:"华为10"},
                             ],
                             isBlackCurtain:false,
                             setRegion:4,
                             customColor: {
-                            outCircle: "red",   //外层圆颜色
-                            singlePart: "yellow",   //奖品单区域颜色
-                            doublePart: "blue",     //奖品双区域颜色
-                            text: "green",          //文字颜色
-                            cursorPoint: "red",     //指针颜色
-                            animation: {            //转盘灯颜色
-                                "0%": "#eaff99",
-                                "20%": "#e0ff66",
-                                "40%": "#d6ff32",
-                                "60%": "#ccff00",
-                                "80%": "#a3cc00",
-                                "100%": "#7a9900",
-                            },
+                                outCircle: "red",   //外层圆颜色
+                                singlePart: "yellow",   //奖品单区域颜色
+                                doublePart: "blue",     //奖品双区域颜色
+                                text: "green",          //文字颜色
+                                cursorPoint: "red",     //指针颜色
+                                animation: {            //转盘灯颜色
+                                    "0%": "#eaff99",
+                                    "20%": "#e0ff66",
+                                    "40%": "#d6ff32",
+                                    "60%": "#ccff00",
+                                    "80%": "#a3cc00",
+                                    "100%": "#7a9900",
+                                },
                             },
                             // callGift放在methods里面
                             callGift(gift){
-                            console.log("hello")
+                                console.log("hello")
                             }
                         }
                         </pre>`,

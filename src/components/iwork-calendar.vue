@@ -540,7 +540,7 @@ export default {
         getTimeWithMonth(month){
             let date = new Date();
             date.setFullYear(this.year);
-            date.setMonth(month)
+            date.setMonth(parseInt(month)-1)
             date.setDate(1)
             date.setHours(0)
             date.setMinutes(0)
@@ -620,13 +620,13 @@ export default {
         width: 30px;
         cursor: pointer;
         .iwork-calendar-i {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url(../assets/calendar.png) no-repeat;
-        background-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url(../assets/calendar.png) no-repeat;
+            background-position: center;
         }
     }
     .iwork-picker-panel-body-wrapper {
@@ -640,156 +640,168 @@ export default {
         z-index: 999;
         background: white;
         .iwork-picker-panel-body {
-        .picker-panel-header {
-            display: block;
-            position: relative;
-            height: 32px;
-            line-height: 32px;
-            border-bottom: 1px solid #bbbbbb;
-            .picker-btn {
-            cursor: pointer;
-            user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            .arrow-i {
-                font-size: 14px;
-                color: #999999;
-            }
-            .arrow-i:hover {
-                color: #2d8cf0;
-            }
-            }
-            .picker-prev-btn-arrow {
-            position: absolute;
-            left: 40px;
-            }
-            .picker-prev-btn-arrow-double {
-            position: absolute;
-            left: 10px;
-            }
-            .picker-header-label {
-            text-align: center;
-            cursor: default;
-            user-select: none;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            }
-            .picker-header-label:hover {
-            color: #2d8cf0;
-            }
-            .picker-next-btn-arrow-double {
-            position: absolute;
-            right: 10px;
-            }
-            .picker-next-btn-arrow {
-            position: absolute;
-            right: 40px;
-            }
-        }
-        .picker-panel-content {
-            .picker-cells {
-            width: 196px;
-            height: 196px;
-            margin: 10px;
-            .picker-cells-header {
-                span {
-                display: inline-block;
-                width: 24px;
-                height: 24px;
-                line-height: 24px;
-                text-align: center;
-                margin: 2px;
-                user-select: none;
-                -webkit-user-select: none;
-                -ms-user-select: none;
-                color: #c5c8ce;
-                cursor: not-allowed;
-                }
-            }
-            .picker-cells-normal {
-                span {
-                display: inline-block;
-                text-align: center;
-                font-style: normal;
-                border-radius: 3px;
-                transition: all 0.2s ease-in-out;
-                cursor: pointer;
-                user-select: none;
-                -webkit-user-select: none;
-                -ms-user-select: none;
-                }
-                span:hover {
-                background: #e1f0fe;
-                }
-            }
-            .picker-cells-days {
-                span {
+            .picker-panel-header {
+                display: block;
                 position: relative;
-                width: 24px;
-                height: 24px;
-                line-height: 24px;
-                margin: 2px;
-                .em-today:after {
-                    content: "";
-                    display: block;
-                    width: 6px;
-                    height: 6px;
-                    border-radius: 50%;
-                    background: #2d8cf0;
+                height: 32px;
+                line-height: 32px;
+                border-bottom: 1px solid #bbbbbb;
+                .picker-btn {
+                    cursor: pointer;
+                    user-select: none;
+                    -webkit-user-select: none;
+                    -ms-user-select: none;
+                .arrow-i {
+                    font-size: 14px;
+                    color: #999999;
+                }
+                .arrow-i:hover {
+                    color: #2d8cf0;
+                }
+                }
+                .picker-prev-btn-arrow {
                     position: absolute;
-                    top: 1px;
-                    right: 1px;
+                    left: 40px;
                 }
-                .my-birthday:after {
-                    content: "";
-                    display: block;
-                    width: 20px;
-                    height: 20px;
-                    background: #2d8cf0;
+                .picker-prev-btn-arrow-double {
                     position: absolute;
-                    top: 0;
-                    right: 2px;
-                    z-index: -1;
+                    left: 10px;
                 }
+                .picker-header-label {
+                    text-align: center;
+                    cursor: default;
+                    user-select: none;
+                    -webkit-user-select: none;
+                    -ms-user-select: none;
                 }
-                .span-not-allow {
-                color: #c5c8ce;
-                cursor: default;
+                .picker-header-label:hover {
+                    color: #2d8cf0;
                 }
-                .span-allow {
-                color: #515a6e;
-                cursor: pointer;
+                .picker-next-btn-arrow-double {
+                    position: absolute;
+                    right: 10px;
                 }
-                .span-today {
-                color: red;
-                }
-            }
-            .picker-cells-months {
-                margin-top: 4px;
-                span {
-                width: 40px;
-                height: 28px;
-                line-height: 28px;
-                margin: 10px 12px;
+                .picker-next-btn-arrow {
+                    position: absolute;
+                    right: 40px;
                 }
             }
-            .picker-cells-years {
-                margin-top: 4px;
-                text-align: left;
-                span {
-                width: 40px;
-                height: 28px;
-                line-height: 28px;
-                margin: 10px 12px;
+            .picker-panel-content {
+                .picker-cells {
+                    width: 196px;
+                    height: 196px;
+                    margin: 10px;
+                    .picker-cells-header {
+                        span {
+                            display: inline-block;
+                            width: 24px;
+                            height: 24px;
+                            line-height: 24px;
+                            text-align: center;
+                            margin: 2px;
+                            user-select: none;
+                            -webkit-user-select: none;
+                            -ms-user-select: none;
+                            color: #c5c8ce;
+                            cursor: not-allowed;
+                        }
+                    }
+                    .picker-cells-normal {
+                        span {
+                            display: inline-block;
+                            text-align: center;
+                            font-style: normal;
+                            border-radius: 3px;
+                            transition: all 0.2s ease-in-out;
+                            cursor: pointer;
+                            user-select: none;
+                            -webkit-user-select: none;
+                            -ms-user-select: none;
+                        }
+                        span:hover {
+                            background: #e1f0fe;
+                        }
+                        span[is-not-between=true]{
+                            cursor: not-allowed!important;
+                        }
+                        span[is-not-between=true]::after{
+                            content: "\0078";
+                            color:red!important;
+                            font-size: 0.2rem;
+                            display: inline-block;
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            right: 0;
+                            bottom: auto;
+                        }
+                    }
+                    .picker-cells-days {
+                        span {
+                            position: relative;
+                            width: 24px;
+                            height: 24px;
+                            line-height: 24px;
+                            margin: 2px;
+                            .em-today:after {
+                                content: "";
+                                display: block;
+                                width: 6px;
+                                height: 6px;
+                                border-radius: 50%;
+                                background: #2d8cf0;
+                                position: absolute;
+                                top: 1px;
+                                right: 1px;
+                            }
+                            .my-birthday:after {
+                                content: "";
+                                display: block;
+                                width: 20px;
+                                height: 20px;
+                                background: #2d8cf0;
+                                position: absolute;
+                                top: 0;
+                                right: 2px;
+                                z-index: -1;
+                            }
+                        }
+                        .span-not-allow {
+                            color: #c5c8ce;
+                            cursor: default;
+                        }
+                        .span-allow {
+                            color: #515a6e;
+                            cursor: pointer;
+                        }
+                        .span-today {
+                            color: red;
+                        }
+                    }
+                    .picker-cells-months {
+                        margin-top: 4px;
+                        span {
+                            position: relative;
+                            width: 40px;
+                            height: 28px;
+                            line-height: 28px;
+                            margin: 10px 12px;
+                        }
+                    }
+                    .picker-cells-years {
+                        margin-top: 4px;
+                        text-align: left;
+                        span {
+                            position: relative;
+                            width: 40px;
+                            height: 28px;
+                            line-height: 28px;
+                            margin: 10px 12px;
+                        }
+                    }
                 }
-            }
-            }
-            span[is-not-between=true]{
-                color:#c5c8ce!important;
-                cursor: not-allowed!important;
-            }
             
-        }
+            }
         }
     }
 }

@@ -142,30 +142,64 @@ export default {
      * time: 时间戳
      * level:日期等级 1--年 2--月 3--日
      * */ 
-    dateBetWeenCall(time,level){
-        var date = new Date();
-        date.setTime(time)
-        if(level==1){
-            if([2021,2022,2023].includes(date.getFullYear())){
-                return false
-            }else{
-                return true
-            }
-        }else if(level==2){
-            if([1,2,3].includes(date.getMonth())&&[2021].includes(date.getFullYear())){
-                return false
-            }else{
-                return true
-            }
-        }else{
-            if([1].includes(date.getDate())){
-                return false
-            }else{
-                return true
-            }
-        }
-        
-    }
+    // 例一：禁用除了2021-2023意外的的所有日期
+    //  dateBetWeenCall(time,level){
+    //     let date = new Date();
+    //     date.setTime(time)
+    //     if([2021,2022,2023].includes(date.getFullYear())){
+    //         return false
+    //     }else{
+    //         return true
+    //     }
+    // },
+    // 例二：禁用除了所有的节假日日期 0-星期天 和 6-星期六 禁用
+    // dateBetWeenCall(time,level){
+    //     let date = new Date();
+    //     date.setTime(time)
+    //     if(level==3){
+    //         if(date.getDay()==0||date.getDay()==6){
+    //             return true;
+    //         }else{
+    //             return false;
+    //         }
+    //     }else{
+    //         return false;
+    //     }
+    // }
+    // 例三：禁用指定的日期 2021-01-12 2021-01-13 2022-02-xx 2023-xx-xx
+    // dateBetWeenCall(time,level){
+    //     let date = new Date();
+    //     date.setTime(time)
+    //     if(level==1){
+    //         if([2023].includes(date.getFullYear())){
+    //             return true;
+    //         }else{
+    //             return false;
+    //         }
+    //     }else if(level==2){
+    //         if(
+    //             ([2022].includes(date.getFullYear())&&[2].includes(date.getMonth()+1))
+    //             ||
+    //             ([2023].includes(date.getFullYear()))
+    //         ){
+    //             return true;
+    //         }else{
+    //             return false;
+    //         }
+    //     }else{
+    //         if(
+    //             ([2021].includes(date.getFullYear())&&[1].includes(date.getMonth()+1)&&[12,13].includes(date.getDate()))
+    //             ||
+    //             ([2022].includes(date.getFullYear())&&[2].includes(date.getMonth()+1))
+    //             ||
+    //             ([2023].includes(date.getFullYear()))
+    //         ){
+    //             return true;
+    //         }else{
+    //             return false;
+    //         }
+    //     }
+    // }
   },
 };
 </script>
