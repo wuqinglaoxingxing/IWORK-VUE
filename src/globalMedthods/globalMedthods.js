@@ -3,10 +3,6 @@ const changeColorTheme = function (id, href) {
   var dom = document.getElementById(id);
   dom.href = href
 }
-// 全局字符串增加替换方法
-String.prototype.replaceAll = function (s1, s2) {
-  return this.replace(new RegExp(s1, "gmi"), s2);
-}
 // 判断指定节点是否在父节点中,以及他是否就是含有
 const isHasInParent = function (parentId, dom) {
   // 传入标签是否是DOM对象
@@ -111,6 +107,33 @@ String.prototype.colorRgb = function () {
   } else {
     return color;
   }
+};
+// 全局字符串增加替换方法
+String.prototype.replaceAll = function (s1, s2) {
+    return this.replace(new RegExp(s1, "gmi"), s2);
+}
+/**
+ * 用途:返回格式化后的日期
+ * format:yyyy/MM/dd
+ * 返回：格式化后的日期字符串
+ * */
+// 日期格式化
+Date.prototype.format = function (format) {
+　　var args = {
+　　　　"M+": this.getMonth() + 1,
+　　　　"d+": this.getDate(),
+　　　　"h+": this.getHours(),
+　　　　"m+": this.getMinutes(),
+　　　　"s+": this.getSeconds(),
+　　　　"q+": Math.floor((this.getMonth() + 3) / 3), //quarter
+　　　　"S": this.getMilliseconds()
+　　};
+　　if (/(y+)/.test(format)) format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+　　for (var i in args) {
+　　　　var n = args[i];
+　　　　if (new RegExp("(" + i + ")").test(format)) format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
+　　}
+　　return format;
 };
 
 

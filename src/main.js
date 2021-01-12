@@ -6,8 +6,11 @@ import Router from 'vue-router'
 import router from './router/index'
 // 引入vuex
 import store from './store/store'
-// 引入localStorage服务
+// 引入服务
+// localStorage
 import localStorage from './services/localStorage'
+// log
+import log from './services/log'
 // 引入静态变量
 import staticVariable from './staticVariable/staticVariable'
 // 引入vue全局方法
@@ -20,6 +23,7 @@ let bus = new Vue()
 Vue.prototype.bus = bus
 
 Vue.prototype.localStorage = localStorage;
+Vue.prototype.log = log;
 Vue.prototype.staticVariable = staticVariable;
 Vue.prototype.gmtds = globalMedthods;
 Vue.config.productionTip = false;

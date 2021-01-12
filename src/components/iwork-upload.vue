@@ -133,7 +133,7 @@ export default {
       // for(var i=0;i<this.fileResource.length;i++){
       //   formData.append('file', this.fileResource[i], this.fileResource[i].name);
       // }
-      // console.log(formData.get('file'))
+      // this.log(formData.get('file'))
     }
   },
 };

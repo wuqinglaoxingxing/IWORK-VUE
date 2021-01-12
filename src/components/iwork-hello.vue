@@ -9,6 +9,7 @@
       :format="format"
       :level="level"
       :showStyle="showStyle"
+      :dateBetWeenCall="dateBetWeenCall"
     ></IworkCalendar>
     <!-- 上传 -->
     <!-- <IworkUpload
@@ -64,13 +65,11 @@ export default {
          * */
         date: "20210110",
         isInitNow: true,
-        format: "yyyy/MM/dd",
+        format: "yyyy-MM-dd",
         level: 3,
         showStyle:{
             background: "linear-gradient(#e66465, #9198e5)"
         },
-        startDate:"2021-01-11",
-        endDate:"2021-02-01",
         /**
          * 上传
          * */
@@ -126,12 +125,47 @@ export default {
   mounted(){
   } ,
   methods: {
+    /**
+     * 抽奖
+     * */   
     callGift(gift) {
-      console.log("hello");
+      this.log("hello");
     },
+    /**
+     * 上传
+    */
     upload(file) {
-      console.log(flie);
+      this.log(flie);
     },
+    /**
+     *  日期禁用
+     * time: 时间戳
+     * level:日期等级 1--年 2--月 3--日
+     * */ 
+    dateBetWeenCall(time,level){
+        var date = new Date();
+        date.setTime(time)
+        if(level==1){
+            if([2021,2022,2023].includes(date.getFullYear())){
+                return false
+            }else{
+                return true
+            }
+        }else if(level==2){
+            if([1,2,3].includes(date.getMonth())&&[2021].includes(date.getFullYear())){
+                return false
+            }else{
+                return true
+            }
+        }else{
+            if([1].includes(date.getDate())){
+                return false
+            }else{
+                return true
+            }
+        }
+        
+    }
   },
 };
 </script>
