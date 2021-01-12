@@ -7,7 +7,7 @@ import router from './router/index'
 // 引入vuex
 import store from './store/store'
 // 引入localStorage服务
-import localStorage from './localstroage/localStorage'
+import localStorage from './services/localStorage'
 // 引入静态变量
 import staticVariable from './staticVariable/staticVariable'
 // 引入vue全局方法

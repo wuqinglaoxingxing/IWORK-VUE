@@ -2,13 +2,14 @@
   <div class="hello">
     <!-- <h1>{{ msg }}</h1> -->
     <!-- 日历 -->
-    <!-- <h1>{{ date }}</h1>
+    <h1>{{ date }}</h1>
     <IworkCalendar
       :isInitNow="isInitNow"
       iworkData="date"
       :format="format"
       :level="level"
-    ></IworkCalendar> -->
+      :showStyle="showStyle"
+    ></IworkCalendar>
     <!-- 上传 -->
     <!-- <IworkUpload
       file="file"
@@ -61,10 +62,15 @@ export default {
         /**
          * 日历
          * */
-        date: "",
-        isInitNow: false,
+        date: "20210110",
+        isInitNow: true,
         format: "yyyy/MM/dd",
         level: 3,
+        showStyle:{
+            background: "linear-gradient(#e66465, #9198e5)"
+        },
+        startDate:"2021-01-11",
+        endDate:"2021-02-01",
         /**
          * 上传
          * */
