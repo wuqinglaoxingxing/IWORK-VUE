@@ -29,7 +29,7 @@
                     <span
                         class="picker-btn picker-prev-btn-arrow"
                         v-show="currentLevel == STATIC_LEVEL.DAY"
-                        @click="preMonth(STATIC_DIRECTION.PRE)"
+                        @click="preMonth()"
                     >
                         <i class="arrow-i">&lt;</i>
                     </span>
@@ -53,7 +53,7 @@
                     <span
                         class="picker-btn picker-next-btn-arrow"
                         v-show="currentLevel == STATIC_LEVEL.DAY"
-                        @click="nextMonth(STATIC_DIRECTION.NEXT)"
+                        @click="nextMonth()"
                     >
                         <i class="arrow-i">&gt;</i>
                     </span>
@@ -159,10 +159,6 @@ export default {
                 YEAR:1,
                 MONTH:2,
                 DAY:3
-            },
-            STATIC_DIRECTION:{  //前进方向
-                PRE:"PRE",
-                NEXT:"NEXT"
             },
             isInit: this.isInitNow,
             dateShow: "", //日期变量格式化后的
