@@ -66,7 +66,7 @@ export default {
         date: "20210110",
         isInitNow: true,
         format: "yyyy-MM-dd",
-        level: 2,
+        level: 3,
         showStyle:{
             background: "linear-gradient(#e66465, #9198e5)"
         },
