@@ -66,7 +66,7 @@ export default {
         date: "20210110",
         isInitNow: true,
         format: "yyyy-MM-dd",
-        level: 3,
+        level: 2,
         showStyle:{
             background: "linear-gradient(#e66465, #9198e5)"
         },
@@ -153,19 +153,19 @@ export default {
     //     }
     // },
     // 例二：禁用除了所有的节假日日期 0-星期天 和 6-星期六 禁用
-    // dateBetWeenCall(time,level){
-    //     let date = new Date();
-    //     date.setTime(time)
-    //     if(level==3){
-    //         if(date.getDay()==0||date.getDay()==6){
-    //             return true;
-    //         }else{
-    //             return false;
-    //         }
-    //     }else{
-    //         return false;
-    //     }
-    // }
+    dateBetWeenCall(time,level){
+        let date = new Date();
+        date.setTime(time)
+        if(level==3){
+            if(date.getDay()==0||date.getDay()==6){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
     // 例三：禁用指定的日期 2021-01-12 2021-01-13 2022-02-xx 2023-xx-xx
     // dateBetWeenCall(time,level){
     //     let date = new Date();

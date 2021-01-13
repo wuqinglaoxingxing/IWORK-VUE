@@ -5,6 +5,7 @@
             class="iwork-calendar-input"
             @click="calendarClick"
             @blur="calendarBlur"
+            @keydown="calendarKeyDown($event)"
             v-model="dateShow"
             ref="iworkCalendarInput"
         />
@@ -323,6 +324,14 @@ export default {
         preventFocus(e) {
             e.preventDefault();
         },
+        calendarKeyDown(e){
+            // 删除 非数字
+            this.dateShow = this.dateShow.replace(/\D/g,"");
+            // 阻止非数字输入,删除键不禁用
+            if(!/\d/g.test(e.key)&&e.keyCode!=8){
+                e.preventDefault()
+            }
+        },
         // 日历失去焦点
         calendarBlur() {
             // 让文字可以显示出来
@@ -331,15 +340,26 @@ export default {
             this.closeCalendar();
             // 格式化数据
             let dataValue = this.dateShow.replace(/\D/gi,"")
-            if(dataValue.length<8){
-                dataValue = [this.dateShowObj.year,this.dateShowObj.month,this.dateShowObj.day].join("")
-            }
             let newDate = new Date();
+            if(this.level==this.STATIC_LEVEL.YEAR){
+                if(dataValue.length<4){
+                    dataValue = [this.dateShowObj.year,this.dateShowObj.month,this.dateShowObj.day].join("")
+                }
+            }else if(this.level==this.STATIC_LEVEL.MONTH){
+                if(dataValue.length<6){
+                    dataValue = [this.dateShowObj.year,this.dateShowObj.month,this.dateShowObj.day].join("")
+                }
+                newDate.setMonth(parseInt(dataValue.substring(4,6))-1);
+            }else{
+                if(dataValue.length<8){
+                    dataValue = [this.dateShowObj.year,this.dateShowObj.month,this.dateShowObj.day].join("")
+                }
+                newDate.setMonth(parseInt(dataValue.substring(4,6))-1);
+                newDate.setDate(dataValue.substring(6,8))
+            }
             newDate.setFullYear(dataValue.substring(0,4));
-            newDate.setMonth(dataValue.substring(4,6));
-            newDate.setDate(dataValue.substring(6,8))
             this.year = newDate.getFullYear();
-            this.month = newDate.getMonth();
+            this.month = newDate.getMonth()+1;
             this.day = newDate.getDate();
             this.dateShowFormat()
         },
