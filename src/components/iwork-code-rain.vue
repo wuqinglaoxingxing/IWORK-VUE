@@ -64,7 +64,6 @@ export default {
             return str;
         },
         drawCode(){
-            let _this = this;
             this.codeRainClothCtx.fillStyle=this.contentFillStyle;
             this.codeRainClothCtx.fillRect(0,0,this.codeRainClothWidth,this.codeRainClothHeight)
             for(let i=0;i<this.fontColumn;i++){

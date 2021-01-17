@@ -55,15 +55,15 @@ export default {
     };
   },
   created() {
-    let _this = this;
     this.setLogo();
     // 增加全局事件,点击其他地方关闭设置面板,该事件值针对面板的显示隐藏
-    document.addEventListener("click", function (e) {
-      let userIconStatus = _this.gmtds.isHasInParent("user-icon", e.target);
-      let setPanelStatus = _this.gmtds.isHasInParent("set-panel", e.target);
-      if (!userIconStatus && !setPanelStatus) {
-        _this.closePanelAndInitParams();
-      }
+    document.addEventListener("click",  (e) => {
+        // this -> vue
+        let userIconStatus = this.gmtds.isHasInParent("user-icon", e.target);
+        let setPanelStatus = this.gmtds.isHasInParent("set-panel", e.target);
+        if (!userIconStatus && !setPanelStatus) {
+            this.closePanelAndInitParams();
+        }
     });
   },
   computed: {},
