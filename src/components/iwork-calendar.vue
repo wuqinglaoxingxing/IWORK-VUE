@@ -570,12 +570,10 @@ export default {
             currentDateValue.setMinutes(0)
             currentDateValue.setSeconds(0)
             currentDateValue.setMilliseconds(0);
-            currentDateValue.setDate(parseInt(currentDate.NUMBER))
             let currentTime = 0;
             if(currentDate.SYMBOL=="CURRENT"){
                 currentDateValue.setFullYear(parseInt(this.year))
                 currentDateValue.setMonth(parseInt(this.month)-1)
-                currentTime = currentDateValue.getTime();
             }else if(currentDate.SYMBOL=="LAST"){
                 if(parseInt(this.month)-2<0){
                     currentDateValue.setMonth(11)
@@ -584,7 +582,6 @@ export default {
                     currentDateValue.setMonth(parseInt(this.month)-2)
                     currentDateValue.setFullYear(parseInt(this.year))
                 }
-                currentTime = currentDateValue.getTime();
             }else{
                 if(parseInt(this.month)>11){
                     currentDateValue.setMonth(0)
@@ -593,8 +590,9 @@ export default {
                     currentDateValue.setMonth(parseInt(this.month))
                     currentDateValue.setFullYear(parseInt(this.year))
                 }
-                currentTime = currentDateValue.getTime();
             }
+            currentDateValue.setDate(parseInt(currentDate.NUMBER))
+            currentTime = currentDateValue.getTime();
             return currentTime;
         },
 
