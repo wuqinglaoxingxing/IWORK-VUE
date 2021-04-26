@@ -8,6 +8,7 @@ import IworkPictureMagnifier from '@/components/iwork-picture-magnifier.vue'
 import IworkLuckDraw from '@/components/iwork-luck-draw.vue'
 import IworkTaiji from '@/components/iwork-taiji.vue'
 import IworkCodeRainCloth from '@/components/iwork-code-rain.vue'
+import IworkScrollChar from '@/components/iwork-scroll-char.vue';
 Vue.use(Router)
 //搭配路由
 export default new Router({
@@ -32,6 +33,11 @@ export default new Router({
             path: '/iworkUpload',
             component: IworkUpload,
             name: '上传组件',
+        },
+        {
+            path: '/iworkScrollChar',
+            component: IworkScrollChar,
+            name: '滚动字符',
         },
         {
             path: '/iworkPictureMagnifier',

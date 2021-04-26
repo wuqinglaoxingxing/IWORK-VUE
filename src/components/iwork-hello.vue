@@ -38,6 +38,7 @@
     :taijiSize="taijiSize"
     :taijiColor="taijiColor"
     ></IworkTaiji> -->
+    <IworkScrollChar :value="charValue" :charArr="charArr" :styleValue="styleValue"></IworkScrollChar>
   </div>
 </template>
 
@@ -48,6 +49,7 @@ import IworkUpload from "@/components/iwork-upload.vue";
 import IworkPictureMagnifier from "@/components/iwork-picture-magnifier.vue";
 import IworkLuckDraw from "@/components/iwork-luck-draw.vue";
 import IworkTaiji from '@/components/iwork-taiji.vue'
+import IworkScrollChar from '@/components/iwork-scroll-char.vue'
 export default {
   name: "HelloWorld",
   components: {
@@ -55,7 +57,8 @@ export default {
     IworkUpload,
     IworkPictureMagnifier,
     IworkLuckDraw,
-    IworkTaiji
+    IworkTaiji,
+    IworkScrollChar
   },
   data() {
     return {
@@ -63,7 +66,7 @@ export default {
         /**
          * 日历
          * */
-        date: "20210110",
+        date: "20210111",
         isInitNow: true,
         format: "yyyy-MM-dd",
         level: 3,
@@ -119,10 +122,25 @@ export default {
          * 太极
          * */
         taijiSize:"400px",
-        taijiColor:["#fff","#000"]
+        taijiColor:["#fff","#000"],
+        /**
+         * 滚动字符
+         */ 
+        charValue:NaN,
+        charArr:[1,2,3,4,5,6,7,8,9,10,11,12,13],
+        styleValue:{
+            width:"50px",
+            height:"50px",
+            fontSize:"40px"
+        }
     };
   },
   mounted(){
+        setInterval(()=>{
+            this.charValue = Math.ceil(Math.random()*10)
+            this.log(this.charValue)
+        },2000)
+     
   } ,
   methods: {
     /**

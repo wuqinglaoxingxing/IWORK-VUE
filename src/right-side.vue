@@ -3,7 +3,11 @@
     <div class="rightSideView" v-if="!descView.title">
         <div class="routerViewWrap">
             <div class="routerView">
-                <router-view></router-view>
+                <keep-alive>
+                    <component v-bind:is="components[$route.path]"></component>
+                    <!-- <router-view></router-view> -->
+                </keep-alive>
+                <!-- <router-view></router-view> -->
             </div>
         </div>
     </div>
@@ -14,7 +18,11 @@
         <div class="routerViewWrap">
             <span>Demo</span>
             <div class="routerView" :style="{height:$route.path=='/iworkCodeRainCloth'?'1000px':''}">
-                <router-view></router-view>
+                <keep-alive>
+                    <component v-bind:is="components[$route.path]"></component>
+                    <!-- <router-view></router-view> -->
+                </keep-alive>
+                <!-- <router-view></router-view> -->
             </div>
         </div>
         <div class="descView">
@@ -27,15 +35,24 @@
 
 <script>
 // 引入
-
 export default {
     name: "rightSide",
     data() {
         return {
-        descView: {
-            title: "",
-            desc: "",
-        },
+            descView: {
+                title: "",
+                desc: "",
+            },
+            components:{
+                "/iworkHello":() => import('@/components/iwork-hello.vue'),
+                "/iworkCalendar":()=>import('@/components/iwork-calendar.vue'),
+                "/iworkUpload":()=>import('@/components/iwork-upload.vue'),
+                "/iworkPictureMagnifier":()=>import('@/components/iwork-picture-magnifier.vue'),
+                "/iworkLuckDraw":()=>import('@/components/iwork-luck-draw.vue'),
+                "/iworkTaiji":()=>import('@/components/iwork-taiji.vue'),
+                "/iworkCodeRainCloth":()=>import('@/components/iwork-code-rain.vue'),
+                "/iworkScrollChar":()=>import('@/components/iwork-scroll-char.vue'),
+            }
         };
     },
     watch: {
@@ -282,7 +299,7 @@ export default {
                         </pre>`,
                 };
                 break;
-             case "/iworkCodeRainCloth":
+            case "/iworkCodeRainCloth":
                 this.descView = {
                     title: this.$route.name,
                     code: `<IworkTaiji :taijiSize="taijiSize" :taijiColor="taijiColor"></IworkTaiji>`,
@@ -297,6 +314,41 @@ export default {
                             taijiSize:"400px",    
                             taijiColor:["#fff","#000"]   //黑白太极
                         }
+                        </pre>`,
+                };
+                break;
+            case "/iworkScrollChar":
+                this.descView = {
+                    title: this.$route.name,
+                    code: `<IworkScrollChar :charArr="charArr" :value="charValue" :styleValue="styleValue"></IworkScrollChar>`,
+                    params: `
+                        <pre>
+                        参考首页:
+                        charArr:字符数组
+                        styleValue:单个显示样式
+                        value:需要变化的值
+                        备注:    charArr        数组 默认值为  [0,1,2,3,4,5,6,7,8,9,10]
+                                styleValue     数组 对象 默认值为  {
+                                                                    width:"100px",
+                                                                    height:"100px"
+                                                                };
+                                value:必输，初始化为NaN  mounted传入具体值
+                        模拟数据:
+                        {
+                            charValue:NaN,
+                            charArr:[1,2,3,4,5,6,7,8,9,10,11,12,13],
+                            styleValue:{
+                                width:"50px",
+                                height:"50px",
+                                fontSize:"40px"
+                            }
+                        }
+                        mounted(){
+                            setInterval(()=>{
+                                this.charValue = Math.ceil(Math.random()*10)
+                                this.log(this.charValue)
+                            },3000)
+                        } ,
                         </pre>`,
                 };
                 break;

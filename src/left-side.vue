@@ -31,6 +31,7 @@ export default {
         { path: "/iworkLuckDraw", desc: "抽奖转盘" },
         { path: "/iworkTaiji", desc: "太极" },
         { path: "/iworkCodeRainCloth", desc: "代码雨" },
+        { path: "/iworkScrollChar", desc: "滚动字符" },
       ],
     };
   },
