@@ -52,7 +52,7 @@ export default {
                 "/iworkLuckDraw":()=>import('@/components/iwork-luck-draw.vue'),
                 "/iworkTaiji":()=>import('@/components/iwork-taiji.vue'),
                 "/iworkCodeRainCloth":()=>import('@/components/iwork-code-rain.vue'),
-                "/iworkScrollChar":()=>import('@/components/iwork-scroll-char.vue'),
+                "/iworkScrollChar":()=>import('@/components-views/iwork-scroll-char.vue'),
                 "/iworkTableTree":()=>import('@/components-views/iwork-table-tree.vue'),
             }
         };
@@ -499,6 +499,7 @@ $rightWidth: calc(100% - 2%);
                 font-size: .18rem;
                 a{
                     color: var(--theme12);
+                    cursor: pointer;
                 }
             }
         }

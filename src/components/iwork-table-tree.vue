@@ -113,8 +113,14 @@ export default {
             maxLevel: 0,
         };
     },
-    created() {
-        [this.values, this.showHandle] = this.getValues();
+    watch:{
+        tablevalue:{
+            handler:function(){
+                [this.values, this.showHandle] = this.getValues()
+            },
+            deep: true,
+            immediate:true
+        }
     },
     computed: {
     },

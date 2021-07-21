@@ -38,7 +38,7 @@
     :taijiSize="taijiSize"
     :taijiColor="taijiColor"
     ></IworkTaiji> -->
-    <IworkScrollChar :value="charValue" :charArr="charArr" :styleValue="styleValue"></IworkScrollChar>
+    <!-- <IworkScrollChar :value="charValue" :charArr="charArr" :styleValue="styleValue"></IworkScrollChar> -->
   </div>
 </template>
 
@@ -136,10 +136,10 @@ export default {
     };
   },
   mounted(){
-        setInterval(()=>{
-            this.charValue = Math.ceil(Math.random()*10)
-            this.log(this.charValue)
-        },2000)
+        // setInterval(()=>{
+        //     this.charValue = Math.ceil(Math.random()*10)
+        //     this.log(this.charValue)
+        // },2000)
      
   } ,
   methods: {

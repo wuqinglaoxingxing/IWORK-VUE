@@ -62,6 +62,9 @@ export default {
     },
     created() {
         this.tablevalue = tree
+        // import("./tree").then(data=>{
+        //     this.tablevalue = data.default
+        // })
     },
 };
 </script>
