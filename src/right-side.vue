@@ -28,7 +28,7 @@
         <div class="descView">
             <div class="descViewCode" v-text="descView.code"></div>
             <div class="descViewParams" v-html="descView.params"></div>
-            <div class="descViewEnclosure">附件<a href="@/components-views/tree.json" download="tree.json">11</a></div>
+            <div class="descViewEnclosure">附件：<a @click.prevent="go(descView.enclosure)">查看</a></div>
         </div>
     </div>
   </div>
@@ -406,6 +406,7 @@ export default {
                             }
                         ]
                         </pre>`,
+                        enclosure:" https://gitee.com/AnHuiNG/IWORK-VUE/raw/main/json/tree.json"
                 };
                 break;
             default:
@@ -416,6 +417,9 @@ export default {
                 break;
         }
     },
+    go(url){
+        window.open(url,"_blank")
+    }
   },
 };
 </script>
@@ -487,6 +491,14 @@ $rightWidth: calc(100% - 2%);
                 color: var(--ninth);
                 pre {
                 text-align: left;
+                }
+            }
+            .descViewEnclosure{
+                text-align: left;
+                text-indent: .2rem;
+                font-size: .18rem;
+                a{
+                    color: var(--theme12);
                 }
             }
         }
