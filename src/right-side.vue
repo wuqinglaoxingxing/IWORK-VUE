@@ -52,6 +52,7 @@ export default {
                 "/iworkTaiji":()=>import('@/components/iwork-taiji.vue'),
                 "/iworkCodeRainCloth":()=>import('@/components/iwork-code-rain.vue'),
                 "/iworkScrollChar":()=>import('@/components/iwork-scroll-char.vue'),
+                "/iworkTableTree":()=>import('@/components-views/iwork-table-tree.vue'),
             }
         };
     },
@@ -349,6 +350,15 @@ export default {
                                 this.log(this.charValue)
                             },3000)
                         } ,
+                        </pre>`,
+                };
+                break;
+            case "/iworkTableTree":
+                this.descView = {
+                    title: this.$route.name,
+                    code: ``,
+                    params: `
+                        <pre>
                         </pre>`,
                 };
                 break;

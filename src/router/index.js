@@ -8,7 +8,9 @@ import IworkPictureMagnifier from '@/components/iwork-picture-magnifier.vue'
 import IworkLuckDraw from '@/components/iwork-luck-draw.vue'
 import IworkTaiji from '@/components/iwork-taiji.vue'
 import IworkCodeRainCloth from '@/components/iwork-code-rain.vue'
-import IworkScrollChar from '@/components/iwork-scroll-char.vue';
+import IworkScrollChar from '@/components/iwork-scroll-char.vue'
+import IworkTableTree from '@/components-views/iwork-table-tree.vue';
+
 Vue.use(Router)
 //搭配路由
 export default new Router({
@@ -58,6 +60,11 @@ export default new Router({
             path: '/iworkCodeRainCloth',
             component: IworkCodeRainCloth,
             name: '代码雨',
+        },
+        {
+            path: '/iworkTableTree',
+            component: IworkTableTree,
+            name: '树状表格',
         },
     ]
 })

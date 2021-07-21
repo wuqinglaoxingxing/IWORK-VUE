@@ -136,9 +136,25 @@ Date.prototype.format = function (format) {
 　　return format;
 };
 
+//生成指定长度由随机数字组成的字符串的方法
+export function getRandomNumber(n) {
+    var str = "";
+    for (var i = 0; i < n; i++) {
+        var dic = Math.random() + "";
+        str += dic.charAt(3);
+    }
+    return str;
+};
+
+// 生成随机ID
+const getRandomUniqueID = function(){
+    return new Date().getTime()+getRandomNumber(5)
+}
 
 export default {
   changeColorTheme,
   getAllParents,
-  isHasInParent
+  isHasInParent,
+  getRandomNumber,
+  getRandomUniqueID
 }

@@ -32,6 +32,7 @@ export default {
         { path: "/iworkTaiji", desc: "太极" },
         { path: "/iworkCodeRainCloth", desc: "代码雨" },
         { path: "/iworkScrollChar", desc: "滚动字符" },
+        { path: "/iworkTableTree", desc: "树状表格" },
       ],
     };
   },
