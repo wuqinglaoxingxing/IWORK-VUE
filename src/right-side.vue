@@ -28,6 +28,7 @@
         <div class="descView">
             <div class="descViewCode" v-text="descView.code"></div>
             <div class="descViewParams" v-html="descView.params"></div>
+            <div class="descViewEnclosure">附件<a href="@/components-views/tree.json" download="tree.json">11</a></div>
         </div>
     </div>
   </div>
@@ -356,9 +357,54 @@ export default {
             case "/iworkTableTree":
                 this.descView = {
                     title: this.$route.name,
-                    code: ``,
+                    code: `<iworkTableTree :tablekeys="tablekeys" :tablekeysDesc="tablekeysDesc" :tablevalue="tablevalue" :isNotClose="isNotClose" :oprtField="oprtField" :oprtEvent="oprtEvent"></iworkTableTree>`,
                     params: `
                         <pre>
+                        tablekeys：表格列key值数组，用于渲染表头和遍历数据
+                        tablekeysDesc：表格列key值所对应的描述数组，用于渲染表头
+                        tablevalue：表格数据---需满足树的数据结构
+                        isNotClose：表格初始状态的开合状态
+                        isShowOprt：是否显示操作栏位
+                        oprtEvent：操作栏位的自定义操作
+                        模拟数据:
+                        tablevalue: [],--查看附件
+                        tablekeys: [
+                            "menuitemndesc",
+                            "__istramenudesc",
+                            "menuitemdesc",
+                            "menuitemlevnbr",
+                        ],
+                        tablekeysDesc: {
+                            menuitemndesc: "菜单名称",
+                            __istramenudesc: "菜单类型",
+                            menuitemdesc: "菜单名称",
+                            menuitemlevnbr: "菜单层级",
+                        },
+                        isNotClose:false,
+                        isShowOprt:"end",  //none,start,end
+                        oprtEvent:[
+                            {
+                                name:"新增",
+                                icon:require("../assets/addM.png"),
+                                event:function(item){
+                                    console.log("add",item);
+                                }
+                            },
+                            {
+                                name:"修改",
+                                icon:require("../assets/editM.png"),
+                                event:function(item){
+                                    console.log("edit",item);
+                                }
+                            },
+                            {
+                                name:"删除",
+                                icon:require("../assets/deleteM.png"),
+                                event:function(item){
+                                    console.log("delete",item);
+                                }
+                            }
+                        ]
                         </pre>`,
                 };
                 break;

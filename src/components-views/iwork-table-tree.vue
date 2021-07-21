@@ -4,6 +4,9 @@
             :tablekeys="tablekeys"
             :tablekeysDesc="tablekeysDesc"
             :tablevalue="tablevalue"
+            :isNotClose="isNotClose"
+            :isShowOprt="isShowOprt"
+            :oprtEvent="oprtEvent"
         ></iworkTableTree>
     </div>
 </template>
@@ -20,28 +23,41 @@ export default {
             tablevalue: [],
             tablekeys: [
                 "menuitemndesc",
-                // "menuitemnbr",
-                // "isonlinedesc",
                 "__istramenudesc",
                 "menuitemdesc",
                 "menuitemlevnbr",
-                "menuitemseqnbr",
-                // "template",
-                // "parentmenuitemnbr",
             ],
             tablekeysDesc: {
                 menuitemndesc: "菜单名称",
-                menuitemnbr: "菜单ID",
-                __level:"层级",
-                sParent:"父级",
-                isonlinedesc: "应用菜单/是否显示",
                 __istramenudesc: "菜单类型",
                 menuitemdesc: "菜单名称",
                 menuitemlevnbr: "菜单层级",
-                menuitemseqnbr: "菜单排序",
-                parentmenuitemnbr: "父级菜单ID",
-                template: "模板路径",
             },
+            isNotClose:false,
+            isShowOprt:"end",  //none,start,end
+            oprtEvent:[
+                {
+                    name:"新增",
+                    icon:require("../assets/addM.png"),
+                    event:function(item){
+                        console.log("add",item);
+                    }
+                },
+                {
+                    name:"修改",
+                    icon:require("../assets/editM.png"),
+                    event:function(item){
+                        console.log("edit",item);
+                    }
+                },
+                {
+                    name:"删除",
+                    icon:require("../assets/deleteM.png"),
+                    event:function(item){
+                        console.log("delete",item);
+                    }
+                }
+            ]
         };
     },
     created() {
