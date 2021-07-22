@@ -258,7 +258,7 @@ export default {
         & > tbody {
             & > tr {
                 line-height: 0.4rem;
-                border-bottom: 0.01rem solid var(--third);
+                border-bottom: 0.01rem solid var(--first);
                 & > td {
                     text-align: left;
                     white-space: nowrap;
@@ -321,6 +321,9 @@ export default {
                         background: url(../assets/dir.png) no-repeat center;
                     }
                 }
+            }
+            & > tr:hover{
+                border-bottom: 0.01rem solid var(--third);
             }
         }
     }
