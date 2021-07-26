@@ -4,7 +4,8 @@
             :picture="picture"
             :wrapWidth="wrapWidth"
             :edgeMax="edgeMax"
-            :computedUnit="computedUnit"
+            :computedUnitX="computedUnitX"
+            :computedUnitY="computedUnitY"
             :getExtractImg="getExtractImg"
         ></iworkImgIntercep>
     </div>
@@ -20,7 +21,8 @@ export default {
         return {
             picture: require("../assets/img-intercep.jpg"),
             wrapWidth:500,
-            computedUnit:200,
+            computedUnitX:200,
+            computedUnitY:112,
             edgeMax:10,
             getExtractImg:function(imgBase64){
                 console.log(imgBase64);

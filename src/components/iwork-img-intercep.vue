@@ -4,7 +4,10 @@
             <img :src="picture" />
             <canvas class="pic_show"></canvas>
         </div>
-        <button class="translate">截取</button>
+        <div class="btn_list" :style="{width:wrapWidth+'px'}">
+            <button class="translate">截取</button>
+            <button class="reset">重置</button>
+        </div>
         <canvas class="pic_draw"></canvas>
     </div>
 </template>
@@ -17,173 +20,217 @@ export default {
             required: true,
         },
         // 图片显示宽度
-        wrapWidth:{
+        wrapWidth: {
             type: Number,
             default: 500,
         },
-        // 放大缩小单位 
-        computedUnit:{
+        // 放大缩小单位X轴
+        computedUnitX: {
+            type: Number,
+            default: 200,
+        },
+        // 放大缩小单位Y轴
+        computedUnitY: {
             type: Number,
             default: 200,
         },
         // 可以移动到边缘的最大值
-        edgeMax:{
+        edgeMax: {
             type: Number,
             default: 10,
         },
         // 返回的截取的base64
-        getExtractImg:{
+        getExtractImg: {
             type: Function,
+        },
+        // 放大倍数
+        enLarge:{
+            type: Number,
+            default:2
         }
     },
     data() {
         return {
+
         };
     },
     mounted() {
-        let that = this
-        let pic_wrapper = document.querySelector(".pic_wrapper")
-        let img = pic_wrapper.querySelector("img")
-        let translate = document.querySelector(".translate")
+        let that = this;
+        let imgIntercepWrap = document.querySelector(".img-intercep-wrap")
+        let pic_wrapper = imgIntercepWrap.querySelector(".pic_wrapper");
+        let img = pic_wrapper.querySelector("img");
+        let translate = imgIntercepWrap.querySelector(".translate");
+        let reset = imgIntercepWrap.querySelector(".reset")
         /** @type {HTMLCanvasElement} */
-        let pic_show = pic_wrapper.querySelector(".pic_show")
-        let ctx = pic_show.getContext("2d")
+        let pic_show = pic_wrapper.querySelector(".pic_show");
+        let ctx = pic_show.getContext("2d");
 
-        let initWidth,initHeight,disXO, disYO, maxWidth, maxHeight, wrapHeight
+        let initWidth,
+            initHeight,
+            disXO,
+            disYO,
+            maxWidth,
+            maxHeight,
+            wrapHeight;
 
         img.onload = function () {
-            initWidth = img.width
-            initHeight = img.height
-            maxWidth = img.width * 2
-            maxHeight = img.height * 2
-            wrapHeight =  parseInt(img.height / img.width * that.wrapWidth)
-            pic_wrapper.style.width = that.wrapWidth+"px"
-            pic_wrapper.style.height = wrapHeight+"px"
-            pic_show.width = that.wrapWidth
-            pic_show.height = wrapHeight
+            initWidth = img.width;
+            initHeight = img.height;
+            
+            wrapHeight = parseInt((img.height / img.width) * that.wrapWidth);
+            maxWidth = that.wrapWidth * that.enLarge;
+            maxHeight = wrapHeight * that.enLarge;
+
+            img.width =  that.wrapWidth
+            img.height =  wrapHeight
+
+            pic_wrapper.style.width = that.wrapWidth + "px";
+            pic_wrapper.style.height = wrapHeight + "px";
+            pic_show.width = that.wrapWidth;
+            pic_show.height = wrapHeight;
             // 初始化设置
-            img.style.width = img.width +"px"
-            img.style.height = img.height +"px"
-            translate.style.width = that.wrapWidth +"px"
-            img.style.top = 0
-            img.style.left = 0
+            img.style.width = img.width + "px";
+            img.style.height = img.height + "px";
+            img.style.top = 0;
+            img.style.left = 0;
 
             ctx.beginPath();
-            ctx.fillStyle = "rgba(255,255,255,0.3)"
-            ctx.arc(that.wrapWidth / 2, wrapHeight / 2, wrapHeight / 2, 0, Math.PI / 180 * 360, false);
+            ctx.fillStyle = "rgba(255,255,255,0.3)";
+            ctx.arc(
+                that.wrapWidth / 2,
+                wrapHeight / 2,
+                wrapHeight / 2,
+                0,
+                (Math.PI / 180) * 360,
+                false
+            );
             ctx.fill();
-        }
+        };
 
         let mousedownFn = function (e) {
             e.preventDefault();
-            img.removeEventListener('mousemove', mousemoveFn);
-            img.addEventListener("mousemove", mousemoveFn)
-            disXO = e.clientX - pic_wrapper.offsetLeft - parseInt(img.style.left ? img.style.left : 0);
-            disYO = e.clientY - pic_wrapper.offsetTop - parseInt(img.style.top ? img.style.top : 0);
-        }
+            img.removeEventListener("mousemove", mousemoveFn);
+            img.addEventListener("mousemove", mousemoveFn);
+            disXO =
+                e.clientX -
+                pic_wrapper.offsetLeft -
+                parseInt(img.style.left ? img.style.left : 0);
+            disYO =
+                e.clientY -
+                pic_wrapper.offsetTop -
+                parseInt(img.style.top ? img.style.top : 0);
+        };
         let mouseupFn = function (e) {
-            img.removeEventListener('mousemove', mousemoveFn);
-        }
+            img.removeEventListener("mousemove", mousemoveFn);
+        };
         let mouseleaveFn = function (e) {
-            img.removeEventListener('mousemove', mousemoveFn);
-        }
+            img.removeEventListener("mousemove", mousemoveFn);
+        };
         let mousewheelFn = function (e) {
-            let {
-                width: wWidth,
-                height: wHeight
-            } = pic_wrapper.getBoundingClientRect()
-            let wheelDelta = e.wheelDelta
+            e.preventDefault();
+            e.stopPropagation();
+            let wheelDelta = e.wheelDelta;
             if (wheelDelta > 0) {
-                let lv = Math.abs(wheelDelta) / 120
-                let newWidth = img.width - lv * that.computedUnit
-                let newHeight = img.height - lv * that.computedUnit
-                if (newWidth > wWidth) {
-                    img.style.width = newWidth + "px"
+                let lv = Math.abs(wheelDelta) / 120;
+                let newWidth = img.width - lv * that.computedUnitX;
+                let newHeight = img.height - lv * that.computedUnitY;
+                if (newWidth > that.wrapWidth / 2) {
+                    img.style.width = newWidth + "px";
                 } else {
-                    img.style.width = wWidth + "px"
+                    img.style.width = that.wrapWidth / 2 + "px";
                 }
-                if (newHeight > wHeight) {
-                    img.style.height = newHeight + "px"
+                if (newHeight > wrapHeight / 2) {
+                    img.style.height = newHeight + "px";
                 } else {
-                    img.style.height = wHeight + "px"
+                    img.style.height = wrapHeight / 2 + "px";
                 }
             } else {
-                let lv = Math.abs(wheelDelta) / 120
-                let newWidth = img.width + lv * that.computedUnit
-                let newHeight = img.height + lv * that.computedUnit
+                let lv = Math.abs(wheelDelta) / 120;
+                let newWidth = img.width + lv * that.computedUnitX;
+                let newHeight = img.height + lv * that.computedUnitY;
                 if (newWidth < maxWidth) {
-                    img.style.width = newWidth + "px"
+                    img.style.width = newWidth + "px";
                 } else {
-                    img.style.width = maxWidth + "px"
+                    img.style.width = maxWidth + "px";
                 }
                 if (newHeight < maxHeight) {
-                    img.style.height = newHeight + "px"
+                    img.style.height = newHeight + "px";
                 } else {
-                    img.style.height = maxHeight + "px"
+                    img.style.height = maxHeight + "px";
                 }
             }
-            if (img.width - Math.abs(parseInt(img.style.left)) < wWidth) {
-                img.style.left = wWidth - img.width + "px"
-            }
-            if (img.height - Math.abs(parseInt(img.style.top)) < wHeight) {
-                img.style.top = wHeight - img.height + "px"
-            }
-        }
+        };
         let mousemoveFn = function (e) {
             e.preventDefault();
-            let {
-                width: wWidth,
-                height: wHeight
-            } = pic_wrapper.getBoundingClientRect()
+            let { width: wWidth, height: wHeight } =
+                pic_wrapper.getBoundingClientRect();
             let disXT = e.clientX - pic_wrapper.offsetLeft;
             let disYT = e.clientY - pic_wrapper.offsetTop;
-            let disX = disXT - disXO
-            let disY = disYT - disYO
+            let disX = disXT - disXO;
+            let disY = disYT - disYO;
             // -10可以移动到边缘的最大值
-            if (disX > wWidth-that.edgeMax) {
-                disX = 0
-            } else {
-                if (img.width - Math.abs(parseInt(disX)) < that.edgeMax) {
-                    disX = wWidth - img.width
-                }
+            if (wWidth - disX < that.edgeMax) {
+                disX = wWidth-that.edgeMax;
+            } else if (disX + img.width < that.edgeMax) {
+                disX =  that.edgeMax-img.width;
             }
             // -10可以移动到边缘的最大值
-            if (disY > wHeight-that.edgeMax) {
-                disY = 0
-            } else {
-                if (img.height - Math.abs(parseInt(disY)) < that.edgeMax) {
-                    disY = wHeight - img.height
-                }
+            if (wHeight - disY < that.edgeMax) {
+                disY = wHeight-that.edgeMax;
+            } else if (disY + img.height < that.edgeMax) {
+                disY = that.edgeMax-img.height;
             }
-            img.style.left = disX + "px"
-            img.style.top = disY + "px"
+            img.style.left = disX + "px";
+            img.style.top = disY + "px";
+        };
+        img.addEventListener("mousedown", mousedownFn);
+        img.addEventListener("mouseleave", mouseleaveFn);
+        img.addEventListener("mouseup", mouseupFn);
+        img.addEventListener("mousewheel", mousewheelFn);
+        translate.addEventListener(
+            "click",
+            function () {
+                const width = img.style.width;
+                const height = img.style.height;
+                const top = img.style.top;
+                const left = img.style.left;
 
-        }
-        img.addEventListener("mousedown", mousedownFn)
-        img.addEventListener("mouseleave", mouseleaveFn)
-        img.addEventListener("mouseup", mouseupFn)
-        img.addEventListener("mousewheel", mousewheelFn)
-        translate.addEventListener("click",function(){
-            const width = img.style.width
-            const height = img.style.height
-            const top = img.style.top
-            const left = img.style.left
-
-            let pic_draw = document.querySelector(".pic_draw")
-            pic_draw.width = wrapHeight
-            pic_draw.height = wrapHeight
-            let ctx1 = pic_draw.getContext("2d")
-            ctx1.arc(wrapHeight/2, wrapHeight/2, wrapHeight/2, 0,  Math.PI / 180 * 360, false);
-            ctx1.strokeStyle = '#FFFFFF'; // 设置绘制圆形边框的颜色
-            ctx1.stroke(); // 绘制出圆形，默认为黑色，可通过 ctx.strokeStyle = '#FFFFFF'， 设置想要的颜色
-            ctx1.clip();
-            let lvW = initWidth/img.width
-            let lvH = initHeight/img.height
-            ctx1.drawImage(img,
-                (that.wrapWidth/2-wrapHeight/2 - parseInt(left))*lvW,-parseInt(top)*lvH,
-                (wrapHeight)*lvW,wrapHeight*lvH,
-                0,0, wrapHeight, wrapHeight)
-            that.getExtractImg(pic_draw.toDataURL('image/png'))
+                let pic_draw = document.querySelector(".pic_draw");
+                pic_draw.width = wrapHeight;
+                pic_draw.height = wrapHeight;
+                let ctx1 = pic_draw.getContext("2d");
+                ctx1.arc(
+                    wrapHeight / 2,
+                    wrapHeight / 2,
+                    wrapHeight / 2,
+                    0,
+                    (Math.PI / 180) * 360,
+                    false
+                );
+                ctx1.strokeStyle = "#FFFFFF"; // 设置绘制圆形边框的颜色
+                ctx1.stroke(); // 绘制出圆形，默认为黑色，可通过 ctx.strokeStyle = '#FFFFFF'， 设置想要的颜色
+                ctx1.clip();
+                let lvW = initWidth / img.width;
+                let lvH = initHeight / img.height;
+                ctx1.drawImage(
+                    img,
+                    (that.wrapWidth / 2 - wrapHeight / 2 - parseInt(left)) *
+                        lvW,
+                    -parseInt(top) * lvH,
+                    wrapHeight * lvW,
+                    wrapHeight * lvH,
+                    0,
+                    0,
+                    wrapHeight,
+                    wrapHeight
+                );
+                that.getExtractImg(pic_draw.toDataURL("image/png"));
+            },
+            false
+        );
+        reset.addEventListener("click",function(){
+            img.style.width =  that.wrapWidth+"px"
+            img.style.height = wrapHeight+"px"
         },false)
     },
 };
@@ -210,10 +257,22 @@ export default {
             pointer-events: none;
         }
     }
-    & > .translate {
-        display: block;
-        height: .35rem;
-        margin: .03rem auto;
+
+    &>.btn_list{
+        margin: 0.03rem auto;
+        display: flex;
+        &>button{
+            flex:1;
+            border: none;
+        }
+        & > .translate {
+            height: 0.35rem;
+            border-right: 1px #ddd solid;
+            background: var(--first);
+        }
+        & >.reset{
+            background: var(--second);
+        }
     }
 
     // & > .pic_draw {

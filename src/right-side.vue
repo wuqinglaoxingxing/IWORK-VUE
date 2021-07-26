@@ -418,14 +418,16 @@ export default {
                         <pre>
                         picture:图片
                         wrapWidth:图片显示宽度
-                        computedUnit:放大缩小单位
+                        computedUnitX:放大缩小单位X轴
+                        computedUnitY:放大缩小单位Y轴
                         edgeMax:可以移动到边缘的最大值
                         getExtractImg:返回的截取的base64
                         模拟数据:
                         {
                             picture: require("../assets/img-intercep.jpg"),
                             wrapWidth:500,
-                            computedUnit:200,
+                            computedUnitX:200,
+                            computedUnitY:100,
                             edgeMax:10,
                             getExtractImg:function(imgBase64){
                                 console.log(imgBase64);
