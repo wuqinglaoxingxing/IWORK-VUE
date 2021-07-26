@@ -231,6 +231,8 @@ export default {
         reset.addEventListener("click",function(){
             img.style.width =  that.wrapWidth+"px"
             img.style.height = wrapHeight+"px"
+            img.style.left = 0
+            img.style.top = 0
         },false)
     },
 };
