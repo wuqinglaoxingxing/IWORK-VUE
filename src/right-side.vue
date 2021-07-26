@@ -54,6 +54,7 @@ export default {
                 "/iworkCodeRainCloth":()=>import('@/components/iwork-code-rain.vue'),
                 "/iworkScrollChar":()=>import('@/components-views/iwork-scroll-char.vue'),
                 "/iworkTableTree":()=>import('@/components-views/iwork-table-tree.vue'),
+                "/iworkImgIntercep":()=>import('@/components-views/iwork-img-intercep.vue'),
             }
         };
     },
@@ -407,6 +408,30 @@ export default {
                         ]
                         </pre>`,
                         enclosure:" https://gitee.com/AnHuiNG/IWORK-VUE/raw/main/json/tree.json"
+                };
+                break;
+            case "/iworkImgIntercep":
+                this.descView = {
+                    title: this.$route.name,
+                    code: `<iworkImgIntercep :picture="picture" :wrapWidth="wrapWidth" :edgeMax="edgeMax" :computedUnit="computedUnit"  :getExtractImg="getExtractImg"></iworkImgIntercep>`,
+                    params: `
+                        <pre>
+                        picture:图片
+                        wrapWidth:图片显示宽度
+                        computedUnit:放大缩小单位
+                        edgeMax:可以移动到边缘的最大值
+                        getExtractImg:返回的截取的base64
+                        模拟数据:
+                        {
+                            picture: require("../assets/img-intercep.jpg"),
+                            wrapWidth:500,
+                            computedUnit:200,
+                            edgeMax:10,
+                            getExtractImg:function(imgBase64){
+                                console.log(imgBase64);
+                            }
+                        }
+                        </pre>`,
                 };
                 break;
             default:

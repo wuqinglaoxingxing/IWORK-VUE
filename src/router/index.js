@@ -8,8 +8,9 @@ import IworkPictureMagnifier from '@/components/iwork-picture-magnifier.vue'
 import IworkLuckDraw from '@/components/iwork-luck-draw.vue'
 import IworkTaiji from '@/components/iwork-taiji.vue'
 import IworkCodeRainCloth from '@/components/iwork-code-rain.vue'
-import IworkScrollChar from '@/components/iwork-scroll-char.vue'
+import IworkScrollChar from '@/components-views/iwork-scroll-char.vue'
 import IworkTableTree from '@/components-views/iwork-table-tree.vue';
+import IworkImgIntercep from '@/components-views/iwork-img-intercep.vue';
 
 Vue.use(Router)
 //搭配路由
@@ -65,6 +66,11 @@ export default new Router({
             path: '/iworkTableTree',
             component: IworkTableTree,
             name: '树状表格',
+        },
+        {
+            path: '/iworkImgIntercep',
+            component: IworkImgIntercep,
+            name: '图片拖拽放大及截图',
         },
     ]
 })
