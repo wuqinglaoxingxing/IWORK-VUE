@@ -20,9 +20,7 @@
             <div class="routerView" :style="{height:$route.path=='/iworkCodeRainCloth'?'1000px':''}">
                 <keep-alive>
                     <component v-bind:is="components[$route.path]"></component>
-                    <!-- <router-view></router-view> -->
                 </keep-alive>
-                <!-- <router-view></router-view> -->
             </div>
         </div>
         <div class="descView">
@@ -45,6 +43,7 @@ export default {
                 desc: "",
             },
             components:{
+                "/":() => import('@/components/iwork-hello.vue'),
                 "/iworkHello":() => import('@/components/iwork-hello.vue'),
                 "/iworkCalendar":()=>import('@/components/iwork-calendar.vue'),
                 "/iworkUpload":()=>import('@/components/iwork-upload.vue'),
