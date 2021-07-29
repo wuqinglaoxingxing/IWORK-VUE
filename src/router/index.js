@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 //搭配路由
 export default new Router({
-    mode:"history",
+    // mode:"history",
     linkActiveClass:"linkActive",
     routes: [{
             // 主页
