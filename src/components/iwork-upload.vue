@@ -1,7 +1,7 @@
 <template>
     <div class="iwork-upload-wrapper">
         <input ref="iworkUploadInput" class="iwork-upload-input" type="text" name="fileName" v-model="fileName"
-            @keydown="forbiddenInput($event)" @focus="isOpen=true" @blur="isOpen=false"/>
+            @keydown="forbiddenInput($event)" @focus="isOpen=true" @blur="isOpen=false" />
         <span v-if="!isHand" class="iwork-upload-span iwork-upload-not-hand-span" @click="importFile"
             @mousedown="preventFocus($event)">
             <i class="iwork-upload-upload"></i>
@@ -42,7 +42,7 @@ export default {
             // 文件上传
             fileResource: [],
             // 多选文件列表显示标志
-            isOpen:false
+            isOpen: false,
         };
     },
     watch: {
@@ -96,12 +96,12 @@ export default {
         getFile() {
             let fileInput = this.$refs.fileInput;
             if (this.isMultiple) {
-                if(!Array.isArray(this.fileResource)){
-                    this.fileResource = []
+                if (!Array.isArray(this.fileResource)) {
+                    this.fileResource = [];
                 }
-                Array.from(fileInput.files).forEach(file=>{
-                    this.fileResource.push(file)
-                })
+                Array.from(fileInput.files).forEach((file) => {
+                    this.fileResource.push(file);
+                });
             } else {
                 this.fileResource = {};
                 let file = fileInput.files[0];

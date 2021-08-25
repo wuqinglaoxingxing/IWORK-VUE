@@ -44,23 +44,21 @@ export default {
             type: Function,
         },
         // 放大倍数
-        enLarge:{
+        enLarge: {
             type: Number,
-            default:2
-        }
+            default: 2,
+        },
     },
     data() {
-        return {
-
-        };
+        return {};
     },
     mounted() {
         let that = this;
-        let imgIntercepWrap = document.querySelector(".img-intercep-wrap")
+        let imgIntercepWrap = document.querySelector(".img-intercep-wrap");
         let pic_wrapper = imgIntercepWrap.querySelector(".pic_wrapper");
         let img = pic_wrapper.querySelector("img");
         let translate = imgIntercepWrap.querySelector(".translate");
-        let reset = imgIntercepWrap.querySelector(".reset")
+        let reset = imgIntercepWrap.querySelector(".reset");
         /** @type {HTMLCanvasElement} */
         let pic_show = pic_wrapper.querySelector(".pic_show");
         let ctx = pic_show.getContext("2d");
@@ -76,13 +74,13 @@ export default {
         img.onload = function () {
             initWidth = img.width;
             initHeight = img.height;
-            
+
             wrapHeight = parseInt((img.height / img.width) * that.wrapWidth);
             maxWidth = that.wrapWidth * that.enLarge;
             maxHeight = wrapHeight * that.enLarge;
 
-            img.width =  that.wrapWidth
-            img.height =  wrapHeight
+            img.width = that.wrapWidth;
+            img.height = wrapHeight;
 
             pic_wrapper.style.width = that.wrapWidth + "px";
             pic_wrapper.style.height = wrapHeight + "px";
@@ -170,15 +168,15 @@ export default {
             let disY = disYT - disYO;
             // -10可以移动到边缘的最大值
             if (wWidth - disX < that.edgeMax) {
-                disX = wWidth-that.edgeMax;
+                disX = wWidth - that.edgeMax;
             } else if (disX + img.width < that.edgeMax) {
-                disX =  that.edgeMax-img.width;
+                disX = that.edgeMax - img.width;
             }
             // -10可以移动到边缘的最大值
             if (wHeight - disY < that.edgeMax) {
-                disY = wHeight-that.edgeMax;
+                disY = wHeight - that.edgeMax;
             } else if (disY + img.height < that.edgeMax) {
-                disY = that.edgeMax-img.height;
+                disY = that.edgeMax - img.height;
             }
             img.style.left = disX + "px";
             img.style.top = disY + "px";
@@ -228,12 +226,16 @@ export default {
             },
             false
         );
-        reset.addEventListener("click",function(){
-            img.style.width =  that.wrapWidth+"px"
-            img.style.height = wrapHeight+"px"
-            img.style.left = 0
-            img.style.top = 0
-        },false)
+        reset.addEventListener(
+            "click",
+            function () {
+                img.style.width = that.wrapWidth + "px";
+                img.style.height = wrapHeight + "px";
+                img.style.left = 0;
+                img.style.top = 0;
+            },
+            false
+        );
     },
 };
 </script>
@@ -260,11 +262,11 @@ export default {
         }
     }
 
-    &>.btn_list{
+    & > .btn_list {
         margin: 0.03rem auto;
         display: flex;
-        &>button{
-            flex:1;
+        & > button {
+            flex: 1;
             border: none;
         }
         & > .translate {
@@ -272,7 +274,7 @@ export default {
             border-right: 1px #ddd solid;
             background: var(--first);
         }
-        & >.reset{
+        & > .reset {
             background: var(--second);
         }
     }

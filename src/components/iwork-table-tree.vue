@@ -6,71 +6,33 @@
                     <th v-if="isShowOprt !== 'none' && isShowOprt === 'start'">
                         操作
                     </th>
-                    <th
-                        v-for="(tablekey, idx) in tablekeys"
-                        :key="idx"
-                        v-text="tablekeysDesc[tablekey]"
-                    ></th>
+                    <th v-for="(tablekey, idx) in tablekeys" :key="idx" v-text="tablekeysDesc[tablekey]"></th>
                     <th v-if="isShowOprt !== 'none' && isShowOprt === 'end'">
                         操作
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr
-                    v-for="(value, v_idx) in values"
-                    :key="v_idx"
-                    v-show="checkShow(value)"
-                >
-                    <td
-                        v-show="isShowOprt !== 'none' && isShowOprt === 'start'"
-                        class="oprt"
-                    >
-                        <span
-                            class="oprtSpan"
-                            v-for="(item, e_idx) in oprtEvent"
-                            :key="e_idx"
-                            :style="{
+                <tr v-for="(value, v_idx) in values" :key="v_idx" v-show="checkShow(value)">
+                    <td v-show="isShowOprt !== 'none' && isShowOprt === 'start'" class="oprt">
+                        <span class="oprtSpan" v-for="(item, e_idx) in oprtEvent" :key="e_idx" :style="{
                                 backgroundImage: 'url(' + item.icon + ')',
-                            }"
-                            @click.stop="item.event(value)"
-                        ></span>
+                            }" @click.stop="item.event(value)"></span>
                     </td>
-                    <td
-                        v-for="(tablekey, k_idx) in tablekeys"
-                        :key="k_idx"
-                        :style="getStyle(value.__level, k_idx)"
-                    >
-                        <span
-                            class="openOrClose"
-                            :class="value.__isShow ? 'open' : 'close'"
-                            v-if="k_idx === 0 && value.__children"
-                            @click="
+                    <td v-for="(tablekey, k_idx) in tablekeys" :key="k_idx" :style="getStyle(value.__level, k_idx)">
+                        <span class="openOrClose" :class="value.__isShow ? 'open' : 'close'"
+                            v-if="k_idx === 0 && value.__children" @click="
                                 value.__isShow = !value.__isShow;
                                 upShow(value);
-                            "
-                        ></span>
+                            "></span>
                         <span class="placeholder" v-else>&nbsp;</span>
-                        <span
-                            v-if="k_idx === 0"
-                            class="icon"
-                            :class="value.__children ? 'dir' : 'file'"
-                        ></span>
+                        <span v-if="k_idx === 0" class="icon" :class="value.__children ? 'dir' : 'file'"></span>
                         <span v-text="value[tablekey]"></span>
                     </td>
-                    <td
-                        v-show="isShowOprt !== 'none' && isShowOprt === 'end'"
-                        class="oprt"
-                    >
-                        <span
-                            class="oprtSpan"
-                            v-for="(item, e_idx) in oprtEvent"
-                            :key="e_idx"
-                            :style="{
+                    <td v-show="isShowOprt !== 'none' && isShowOprt === 'end'" class="oprt">
+                        <span class="oprtSpan" v-for="(item, e_idx) in oprtEvent" :key="e_idx" :style="{
                                 backgroundImage: 'url(' + item.icon + ')',
-                            }"
-                            @click.stop="item.event(value)"
-                        ></span>
+                            }" @click.stop="item.event(value)"></span>
                     </td>
                 </tr>
             </tbody>
@@ -113,17 +75,16 @@ export default {
             maxLevel: 0,
         };
     },
-    watch:{
-        tablevalue:{
-            handler:function(){
-                [this.values, this.showHandle] = this.getValues()
+    watch: {
+        tablevalue: {
+            handler: function () {
+                [this.values, this.showHandle] = this.getValues();
             },
             deep: true,
-            immediate:true
-        }
+            immediate: true,
+        },
     },
-    computed: {
-    },
+    computed: {},
     methods: {
         checkShow(item) {
             const { sParent, __index } = item;
@@ -142,19 +103,23 @@ export default {
             return child.isClose;
         },
         upShow(item) {
-            let itemChildren = item.children
-            function setClose(arr, flg,itemChildren) {
-                arr.forEach((ele,idx) => {
-                    const tr = itemChildren[idx]
+            let itemChildren = item.children;
+            function setClose(arr, flg, itemChildren) {
+                arr.forEach((ele, idx) => {
+                    const tr = itemChildren[idx];
                     ele.isClose = flg;
                     if (ele.children && ele.children.length > 0) {
-                        setClose(ele.children, flg && tr.__isShow,tr.children);
+                        setClose(ele.children, flg && tr.__isShow, tr.children);
                     }
                 });
             }
             const { sParent, __index, __seq, __isShow } = item;
             if (!sParent) {
-                setClose(this.showHandle[__seq].children, __isShow,itemChildren);
+                setClose(
+                    this.showHandle[__seq].children,
+                    __isShow,
+                    itemChildren
+                );
                 return;
             }
             const pItem = this.showHandle.filter((show) => {
@@ -164,7 +129,7 @@ export default {
             for (let i = 0; i < __index.length; i++) {
                 children = children[__index[i]].children;
             }
-            setClose(children, __isShow,itemChildren);
+            setClose(children, __isShow, itemChildren);
         },
         getStyle(level, idx) {
             if (idx !== 0) {
@@ -269,7 +234,7 @@ export default {
                         background-repeat: no-repeat;
                         width: 0.2rem;
                         height: 0.2rem;
-                        margin-right:.05rem;
+                        margin-right: 0.05rem;
                         cursor: pointer;
                     }
                 }
@@ -322,7 +287,7 @@ export default {
                     }
                 }
             }
-            & > tr:hover{
+            & > tr:hover {
                 border-bottom: 0.01rem solid var(--third);
             }
         }

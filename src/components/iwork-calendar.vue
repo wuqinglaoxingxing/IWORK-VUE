@@ -1,60 +1,29 @@
 <template>
     <div class="iwork-calendar-wrap">
-        <input
-            type="text"
-            class="iwork-calendar-input"
-            @click="calendarClick"
-            @blur="calendarBlur"
-            @keydown="calendarKeyDown($event)"
-            v-model="dateShow"
-            ref="iworkCalendarInput"
-        />
+        <input type="text" class="iwork-calendar-input" @click="calendarClick" @blur="calendarBlur"
+            @keydown="calendarKeyDown($event)" v-model="dateShow" ref="iworkCalendarInput" />
         <span class="iwork-calendar-span" @click="openCalendar">
             <i class="iwork-calendar-i"></i>
         </span>
-        <div
-            class="iwork-picker-panel-body-wrapper"
-            @mousedown="preventFocus($event)"
-            v-show="openCalendarFlg"
-        >
+        <div class="iwork-picker-panel-body-wrapper" @mousedown="preventFocus($event)" v-show="openCalendarFlg">
             <div class="iwork-picker-panel-body">
                 <!-- 头部选择 -- 左右区域 -->
                 <div class="picker-panel-header">
-                    <span
-                        class="picker-btn picker-prev-btn-arrow-double"
-                        @click="preYear()"
-                    >
+                    <span class="picker-btn picker-prev-btn-arrow-double" @click="preYear()">
                         <i class="arrow-i">&lt;&lt;</i>
                     </span>
-                    <span
-                        class="picker-btn picker-prev-btn-arrow"
-                        v-show="currentLevel == STATIC_LEVEL.DAY"
-                        @click="preMonth()"
-                    >
+                    <span class="picker-btn picker-prev-btn-arrow" v-show="currentLevel == STATIC_LEVEL.DAY"
+                        @click="preMonth()">
                         <i class="arrow-i">&lt;</i>
                     </span>
-                    <span
-                        ><span class="picker-header-label" @click="openYear"
-                        >{{ year }}年</span
-                        >
-                        <span
-                        class="picker-header-label"
-                        @click="openMonth"
-                        v-show="currentLevel > STATIC_LEVEL.YEAR"
-                        >{{ month }}月</span
-                        ></span
-                    >
-                    <span
-                        class="picker-btn picker-next-btn-arrow-double"
-                        @click="nextYear()"
-                    >
+                    <span><span class="picker-header-label" @click="openYear">{{ year }}年</span>
+                        <span class="picker-header-label" @click="openMonth"
+                            v-show="currentLevel > STATIC_LEVEL.YEAR">{{ month }}月</span></span>
+                    <span class="picker-btn picker-next-btn-arrow-double" @click="nextYear()">
                         <i class="arrow-i">&gt;&gt;</i>
                     </span>
-                    <span
-                        class="picker-btn picker-next-btn-arrow"
-                        v-show="currentLevel == STATIC_LEVEL.DAY"
-                        @click="nextMonth()"
-                    >
+                    <span class="picker-btn picker-next-btn-arrow" v-show="currentLevel == STATIC_LEVEL.DAY"
+                        @click="nextMonth()">
                         <i class="arrow-i">&gt;</i>
                     </span>
                 </div>
@@ -62,55 +31,36 @@
                     <!-- 年 -->
                     <div class="picker-cells" v-show="currentLevel == STATIC_LEVEL.YEAR">
                         <div class="picker-cells-years picker-cells-normal">
-                        <span
-                            :style="isCurrentDate(year,STATIC_LEVEL.YEAR) ? showStyle||defaultStyle:{}"
-                            :is-not-between="dateBetWeenCall(getCurrentTime(year,STATIC_LEVEL.YEAR),STATIC_LEVEL.YEAR)"
-                            v-for="(year, index) in years"
-                            :key="index"
-                            @click="chooseYear($event,year)"
-                            >{{ year }}</span
-                        >
+                            <span :style="isCurrentDate(year,STATIC_LEVEL.YEAR) ? showStyle||defaultStyle:{}"
+                                :is-not-between="dateBetWeenCall(getCurrentTime(year,STATIC_LEVEL.YEAR),STATIC_LEVEL.YEAR)"
+                                v-for="(year, index) in years" :key="index"
+                                @click="chooseYear($event,year)">{{ year }}</span>
                         </div>
                     </div>
                     <!-- 月 -->
                     <div class="picker-cells" v-show="currentLevel == STATIC_LEVEL.MONTH">
                         <div class="picker-cells-months picker-cells-normal">
-                        <span
-                            :style="isCurrentDate(month,STATIC_LEVEL.MONTH) ? showStyle||defaultStyle:{}"
-                            :is-not-between="dateBetWeenCall(getCurrentTime(month,STATIC_LEVEL.MONTH),STATIC_LEVEL.MONTH)"
-                            v-for="(month, index) in months"
-                            :key="index"
-                            @click="chooseMonth($event,month)"
-                            >{{ month }}月</span
-                        >
+                            <span :style="isCurrentDate(month,STATIC_LEVEL.MONTH) ? showStyle||defaultStyle:{}"
+                                :is-not-between="dateBetWeenCall(getCurrentTime(month,STATIC_LEVEL.MONTH),STATIC_LEVEL.MONTH)"
+                                v-for="(month, index) in months" :key="index"
+                                @click="chooseMonth($event,month)">{{ month }}月</span>
                         </div>
                     </div>
                     <!-- 日 -->
                     <div class="picker-cells" v-show="currentLevel == STATIC_LEVEL.DAY">
                         <div class="picker-cells-header">
-                            <span
-                                v-for="(week, index) in weekDay"
-                                :key="index"
-                                class="span-not-allow"
-                                >{{ week }}</span
-                            >
+                            <span v-for="(week, index) in weekDay" :key="index" class="span-not-allow">{{ week }}</span>
                         </div>
                         <div class="picker-cells-days picker-cells-normal">
-                            <span
-                                v-for="(dayObj, index) in days"
-                                :key="'day' + index"
+                            <span v-for="(dayObj, index) in days" :key="'day' + index"
                                 :style="isCurrentDate(dayObj,STATIC_LEVEL.DAY) ? showStyle||defaultStyle:{}"
                                 :is-not-between="dateBetWeenCall(getCurrentTime(dayObj,STATIC_LEVEL.DAY),STATIC_LEVEL.DAY)"
                                 :class="[
                                 dayObj.SYMBOL == 'CURRENT' ? 'span-allow' : 'span-not-allow',
-                                ]"
-                                @click="chooseDay($event, dayObj)"
-                                ><em
-                                :class="[
+                                ]" @click="chooseDay($event, dayObj)"><em :class="[
                                     isToday(dayObj) ? 'em-today' : '',
                                     isBirthDay(dayObj) ? 'my-birthday' : '',
-                                ]"
-                                >{{ dayObj.NUMBER }}</em>
+                                ]">{{ dayObj.NUMBER }}</em>
                             </span>
                         </div>
                     </div>
@@ -121,7 +71,7 @@
 </template>
 <script>
 export default {
-  props: {
+    props: {
         iworkData: {
             type: String,
         },
@@ -137,13 +87,13 @@ export default {
             type: Boolean,
             default: false,
         },
-        showStyle:{
+        showStyle: {
             type: Object,
             default: null,
         },
-        dateBetWeenCall:{
+        dateBetWeenCall: {
             type: Function,
-            default:(data)=>{}
+            default: (data) => {},
         },
     },
     data() {
@@ -152,29 +102,32 @@ export default {
             months: 12,
             weekDay: ["日", "一", "二", "三", "四", "五", "六"],
             currentLevel: this.level, //1 表示年 2 表示月 3 表示日
-            year: new Date().getFullYear(), //视图层 年 
+            year: new Date().getFullYear(), //视图层 年
             month: new Date().getMonth() + 1, //视图层 月
-            day: new Date().getDate(),//视图层 日
-            STATIC_LEVEL:{    //静态变量
-                YEAR:1,
-                MONTH:2,
-                DAY:3
+            day: new Date().getDate(), //视图层 日
+            STATIC_LEVEL: {
+                //静态变量
+                YEAR: 1,
+                MONTH: 2,
+                DAY: 3,
             },
             isInit: this.isInitNow,
             dateShow: "", //日期变量格式化后的
-            dateShowObj:{   //日期变量未格式化
-                year:"",
-                month:"",
-                day:""
+            dateShowObj: {
+                //日期变量未格式化
+                year: "",
+                month: "",
+                day: "",
             },
-            defaultStyle:{  //默认渲染样式
-                backgroundImage: "linear-gradient(var(--third), var(--fifth))"
+            defaultStyle: {
+                //默认渲染样式
+                backgroundImage: "linear-gradient(var(--third), var(--fifth))",
             },
         };
     },
     computed: {
-    // 日期视图计算
-        days: function() {
+        // 日期视图计算
+        days: function () {
             let days = [];
             let weekDay = this.getWeekByMonth(this.year, this.month);
             let lastDays = this.getDaysByYearAndMonthWithLastOrNext(
@@ -196,7 +149,7 @@ export default {
             return days;
         },
         // 年份计算
-        years: function() {
+        years: function () {
             let startYear = parseInt(this.year / 10) * 10;
             let endYear = startYear + 9;
             let year = [];
@@ -209,45 +162,45 @@ export default {
     watch: {
         // 监听月份,让月份长度变成2
         month(n, o) {
-        if (n && n < 10) {
-            this.month = (n + "").padStart(2, "0");
-        }
+            if (n && n < 10) {
+                this.month = (n + "").padStart(2, "0");
+            }
         },
         // 监听日,让月份长度变成2
         day(n, o) {
-        if (n && n < 10) {
-            this.day = (n + "").padStart(2, "0");
-        }
+            if (n && n < 10) {
+                this.day = (n + "").padStart(2, "0");
+            }
         },
         // 将model值分解 真实数据
-        dateShow:function(n,o){
-            let date = this.$parent[this.iworkData].replace(/\D/g,"");
-            this.dateShowObj.year = date.substring(0,4);
-            this.dateShowObj.month = date.substring(4,6);
-            this.dateShowObj.day = date.substring(6,8);
-        }
+        dateShow: function (n, o) {
+            let date = this.$parent[this.iworkData].replace(/\D/g, "");
+            this.dateShowObj.year = date.substring(0, 4);
+            this.dateShowObj.month = date.substring(4, 6);
+            this.dateShowObj.day = date.substring(6, 8);
+        },
     },
     created() {
-        if(!this.iworkData){
-            this.log("iworkData is not define")
+        if (!this.iworkData) {
+            this.log("iworkData is not define");
             return;
         }
         // 初始化设置日期
-        let date = this.$parent[this.iworkData].replace(/\D/g,"");
-        if(this.isInitNow&&date){
-            this.year = date.substring(0,4);
-            this.month = date.substring(4,6);
-            this.day = date.substring(6,8);
+        let date = this.$parent[this.iworkData].replace(/\D/g, "");
+        if (this.isInitNow && date) {
+            this.year = date.substring(0, 4);
+            this.month = date.substring(4, 6);
+            this.day = date.substring(6, 8);
         }
         this.dateShow = this.dateShowFormat();
     },
     methods: {
         // 设置父组件的值
-        setModelValue(value){
+        setModelValue(value) {
             this.$parent[this.iworkData] = value;
         },
         // model值格式化
-        dateShowFormat(){
+        dateShowFormat() {
             // 设置当前时间
             // 设置初始值日期为当前时间
             if (!this.isInit) {
@@ -261,27 +214,33 @@ export default {
                 dataStr = dataStr.replace(/yyyy/g, "");
             }
             if (this.month && this.level >= 2) {
-                dataStr = dataStr.replace("MM", this.month.toString().padStart(2,"0"));
+                dataStr = dataStr.replace(
+                    "MM",
+                    this.month.toString().padStart(2, "0")
+                );
             } else {
                 dataStr = dataStr.replace(/[\-\/]MM/g, "");
             }
             if (this.day && this.level >= 3) {
-                dataStr = dataStr.replace("dd", this.day.toString().padStart(2,"0"));
+                dataStr = dataStr.replace(
+                    "dd",
+                    this.day.toString().padStart(2, "0")
+                );
             } else {
                 dataStr = dataStr.replace(/[\-\/]dd/g, "");
             }
             if (!this.year && !this.month && !this.day) {
                 dataStr = "";
             }
-            this.$nextTick(()=>{
-                this.dateShowObj={
-                    year:this.year,
-                    month:this.month,
-                    day:this.day
-                }
-            })
+            this.$nextTick(() => {
+                this.dateShowObj = {
+                    year: this.year,
+                    month: this.month,
+                    day: this.day,
+                };
+            });
             this.dateShow = dataStr;
-            this.setModelValue(dataStr.replace(/\D/gi,""))
+            this.setModelValue(dataStr.replace(/\D/gi, ""));
             return dataStr;
         },
         // 获取当前月份第一天星期几
@@ -320,12 +279,12 @@ export default {
         preventFocus(e) {
             e.preventDefault();
         },
-        calendarKeyDown(e){
+        calendarKeyDown(e) {
             // 删除 非数字
-            this.dateShow = this.dateShow.replace(/\D/g,"");
+            this.dateShow = this.dateShow.replace(/\D/g, "");
             // 阻止非数字输入,删除键不禁用
-            if(!/\d/g.test(e.key)&&e.keyCode!=8){
-                e.preventDefault()
+            if (!/\d/g.test(e.key) && e.keyCode != 8) {
+                e.preventDefault();
             }
         },
         // 日历失去焦点
@@ -335,29 +294,41 @@ export default {
             // 关闭日历
             this.closeCalendar();
             // 格式化数据
-            let dataValue = this.dateShow.replace(/\D/gi,"")
+            let dataValue = this.dateShow.replace(/\D/gi, "");
             let newDate = new Date();
-            if(this.level==this.STATIC_LEVEL.YEAR){
-                if(dataValue.length<4){
-                    dataValue = [this.dateShowObj.year,this.dateShowObj.month,this.dateShowObj.day].join("")
+            if (this.level == this.STATIC_LEVEL.YEAR) {
+                if (dataValue.length < 4) {
+                    dataValue = [
+                        this.dateShowObj.year,
+                        this.dateShowObj.month,
+                        this.dateShowObj.day,
+                    ].join("");
                 }
-            }else if(this.level==this.STATIC_LEVEL.MONTH){
-                if(dataValue.length<6){
-                    dataValue = [this.dateShowObj.year,this.dateShowObj.month,this.dateShowObj.day].join("")
+            } else if (this.level == this.STATIC_LEVEL.MONTH) {
+                if (dataValue.length < 6) {
+                    dataValue = [
+                        this.dateShowObj.year,
+                        this.dateShowObj.month,
+                        this.dateShowObj.day,
+                    ].join("");
                 }
-                newDate.setMonth(parseInt(dataValue.substring(4,6))-1);
-            }else{
-                if(dataValue.length<8){
-                    dataValue = [this.dateShowObj.year,this.dateShowObj.month,this.dateShowObj.day].join("")
+                newDate.setMonth(parseInt(dataValue.substring(4, 6)) - 1);
+            } else {
+                if (dataValue.length < 8) {
+                    dataValue = [
+                        this.dateShowObj.year,
+                        this.dateShowObj.month,
+                        this.dateShowObj.day,
+                    ].join("");
                 }
-                newDate.setMonth(parseInt(dataValue.substring(4,6))-1);
-                newDate.setDate(dataValue.substring(6,8))
+                newDate.setMonth(parseInt(dataValue.substring(4, 6)) - 1);
+                newDate.setDate(dataValue.substring(6, 8));
             }
-            newDate.setFullYear(dataValue.substring(0,4));
+            newDate.setFullYear(dataValue.substring(0, 4));
             this.year = newDate.getFullYear();
-            this.month = newDate.getMonth()+1;
+            this.month = newDate.getMonth() + 1;
             this.day = newDate.getDate();
-            this.dateShowFormat()
+            this.dateShowFormat();
         },
         // 打开日历方法
         openCalendar() {
@@ -379,8 +350,8 @@ export default {
             this.currentLevel = 2;
         },
         // 选择月
-        chooseMonth(e,month) {
-            if(e.currentTarget.getAttribute("is-not-between")){
+        chooseMonth(e, month) {
+            if (e.currentTarget.getAttribute("is-not-between")) {
                 return;
             }
             this.month = month;
@@ -391,13 +362,13 @@ export default {
             } else {
                 this.currentLevel = this.STATIC_LEVEL.DAY;
             }
-            if(this.level==this.STATIC_LEVEL.MONTH){
+            if (this.level == this.STATIC_LEVEL.MONTH) {
                 this.dateShow = this.dateShowFormat();
             }
         },
         // 选择年
-        chooseYear(e,year) {
-            if(e.currentTarget.getAttribute("is-not-between")){
+        chooseYear(e, year) {
+            if (e.currentTarget.getAttribute("is-not-between")) {
                 return;
             }
             this.year = year;
@@ -408,14 +379,14 @@ export default {
             } else {
                 this.currentLevel = this.STATIC_LEVEL.MONTH;
             }
-            if(this.level==this.STATIC_LEVEL.YEAR){
+            if (this.level == this.STATIC_LEVEL.YEAR) {
                 this.dateShow = this.dateShowFormat();
             }
         },
         // 选择日
         chooseDay(e, dayObj) {
             e.stopPropagation();
-            if(e.currentTarget.getAttribute("is-not-between")){
+            if (e.currentTarget.getAttribute("is-not-between")) {
                 return;
             }
             // 让文字可以显示出来
@@ -486,23 +457,30 @@ export default {
             }
         },
         // 当前日期标注
-        isCurrentDate(currentDate,level){
+        isCurrentDate(currentDate, level) {
             let returnFlg = false;
-            if(this.level!=level){
+            if (this.level != level) {
                 return returnFlg;
             }
-            switch(this.level){
+            switch (this.level) {
                 case 1:
-                    parseInt(this.dateShowObj.year) == currentDate?returnFlg=true:returnFlg=false;
+                    parseInt(this.dateShowObj.year) == currentDate
+                        ? (returnFlg = true)
+                        : (returnFlg = false);
                     break;
                 case 2:
-                    parseInt(this.dateShowObj.year)==this.year&&
-                    parseInt(this.dateShowObj.month) == currentDate?returnFlg=true:returnFlg=false;
+                    parseInt(this.dateShowObj.year) == this.year &&
+                    parseInt(this.dateShowObj.month) == currentDate
+                        ? (returnFlg = true)
+                        : (returnFlg = false);
                     break;
                 case 3:
-                    parseInt(this.dateShowObj.year)==this.year&&
-                    parseInt(this.dateShowObj.month) == this.month&&
-                    parseInt(this.dateShowObj.day) == currentDate.NUMBER&&currentDate.SYMBOL == "CURRENT"?returnFlg=true:returnFlg=false;
+                    parseInt(this.dateShowObj.year) == this.year &&
+                    parseInt(this.dateShowObj.month) == this.month &&
+                    parseInt(this.dateShowObj.day) == currentDate.NUMBER &&
+                    currentDate.SYMBOL == "CURRENT"
+                        ? (returnFlg = true)
+                        : (returnFlg = false);
                     break;
                 default:
                     return false;
@@ -524,8 +502,8 @@ export default {
             }
         },
         // 获取当前时间戳，日期选择判断
-        getCurrentTime(value,level){
-            switch(level){
+        getCurrentTime(value, level) {
+            switch (level) {
                 case this.STATIC_LEVEL.YEAR:
                     return this.getTimeWithYear(value);
                 case this.STATIC_LEVEL.MONTH:
@@ -541,61 +519,60 @@ export default {
          * 年：获取的时间为当前year-01-01   00:00:00 000
          * 月：获取时间为yyyy-month-01  00:00:00 000
          * 日：获取时间为yyyy-MM-day    00:00:00 000
-         * */ 
-        getTimeWithYear(year){
+         * */
+        getTimeWithYear(year) {
             let date = new Date();
             date.setFullYear(year);
-            date.setMonth(0)
-            date.setDate(1)
-            date.setHours(0)
-            date.setMinutes(0)
-            date.setSeconds(0)
+            date.setMonth(0);
+            date.setDate(1);
+            date.setHours(0);
+            date.setMinutes(0);
+            date.setSeconds(0);
             date.setMilliseconds(0);
             return date.getTime();
         },
-        getTimeWithMonth(month){
+        getTimeWithMonth(month) {
             let date = new Date();
             date.setFullYear(this.year);
-            date.setMonth(parseInt(month)-1)
-            date.setDate(1)
-            date.setHours(0)
-            date.setMinutes(0)
-            date.setSeconds(0)
+            date.setMonth(parseInt(month) - 1);
+            date.setDate(1);
+            date.setHours(0);
+            date.setMinutes(0);
+            date.setSeconds(0);
             date.setMilliseconds(0);
             return date.getTime();
         },
-        getTimeWithDay(currentDate){
+        getTimeWithDay(currentDate) {
             let currentDateValue = new Date();
-            currentDateValue.setHours(0)
-            currentDateValue.setMinutes(0)
-            currentDateValue.setSeconds(0)
+            currentDateValue.setHours(0);
+            currentDateValue.setMinutes(0);
+            currentDateValue.setSeconds(0);
             currentDateValue.setMilliseconds(0);
             let currentTime = 0;
-            if(currentDate.SYMBOL=="CURRENT"){
-                currentDateValue.setFullYear(parseInt(this.year))
-                currentDateValue.setMonth(parseInt(this.month)-1)
-            }else if(currentDate.SYMBOL=="LAST"){
-                if(parseInt(this.month)-2<0){
-                    currentDateValue.setMonth(11)
-                    currentDateValue.setFullYear(parseInt(this.year)-1)
-                }else{
-                    currentDateValue.setMonth(parseInt(this.month)-2)
-                    currentDateValue.setFullYear(parseInt(this.year))
+            if (currentDate.SYMBOL == "CURRENT") {
+                currentDateValue.setFullYear(parseInt(this.year));
+                currentDateValue.setMonth(parseInt(this.month) - 1);
+            } else if (currentDate.SYMBOL == "LAST") {
+                if (parseInt(this.month) - 2 < 0) {
+                    currentDateValue.setMonth(11);
+                    currentDateValue.setFullYear(parseInt(this.year) - 1);
+                } else {
+                    currentDateValue.setMonth(parseInt(this.month) - 2);
+                    currentDateValue.setFullYear(parseInt(this.year));
                 }
-            }else{
-                if(parseInt(this.month)>11){
-                    currentDateValue.setMonth(0)
-                    currentDateValue.setFullYear(parseInt(this.year)+1)
-                }else{
-                    currentDateValue.setMonth(parseInt(this.month))
-                    currentDateValue.setFullYear(parseInt(this.year))
+            } else {
+                if (parseInt(this.month) > 11) {
+                    currentDateValue.setMonth(0);
+                    currentDateValue.setFullYear(parseInt(this.year) + 1);
+                } else {
+                    currentDateValue.setMonth(parseInt(this.month));
+                    currentDateValue.setFullYear(parseInt(this.year));
                 }
             }
-            currentDateValue.setDate(parseInt(currentDate.NUMBER))
+            currentDateValue.setDate(parseInt(currentDate.NUMBER));
             currentTime = currentDateValue.getTime();
             return currentTime;
         },
-
     },
 };
 </script>
@@ -618,7 +595,7 @@ export default {
         background-image: none;
         cursor: text;
         transition: border 0.2s ease-in-out, background 0.2s ease-in-out,
-        box-shadow 0.2s ease-in-out;
+            box-shadow 0.2s ease-in-out;
         outline: #57a3f3;
     }
     .iwork-calendar-input:focus,
@@ -665,13 +642,13 @@ export default {
                     user-select: none;
                     -webkit-user-select: none;
                     -ms-user-select: none;
-                .arrow-i {
-                    font-size: 14px;
-                    color: #999999;
-                }
-                .arrow-i:hover {
-                    color: #2d8cf0;
-                }
+                    .arrow-i {
+                        font-size: 14px;
+                        color: #999999;
+                    }
+                    .arrow-i:hover {
+                        color: #2d8cf0;
+                    }
                 }
                 .picker-prev-btn-arrow {
                     position: absolute;
@@ -735,12 +712,12 @@ export default {
                         span:hover {
                             background: #e1f0fe;
                         }
-                        span[is-not-between=true]{
-                            cursor: not-allowed!important;
+                        span[is-not-between="true"] {
+                            cursor: not-allowed !important;
                         }
-                        span[is-not-between=true]::after{
+                        span[is-not-between="true"]::after {
                             content: "\0078";
-                            color:red!important;
+                            color: red !important;
                             font-size: 0.2rem;
                             display: inline-block;
                             position: absolute;
@@ -814,7 +791,6 @@ export default {
                         }
                     }
                 }
-            
             }
         }
     }
