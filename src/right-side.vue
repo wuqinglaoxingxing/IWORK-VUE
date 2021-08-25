@@ -357,12 +357,13 @@ export default {
             case "/iworkTableTree":
                 this.descView = {
                     title: this.$route.name,
-                    code: `<iworkTableTree :tablekeys="tablekeys" :tablekeysDesc="tablekeysDesc" :tablevalue="tablevalue" :isNotClose="isNotClose" :oprtField="oprtField" :oprtEvent="oprtEvent"></iworkTableTree>`,
+                    code: `<iworkTableTree :tablekeys="tablekeys" :tablekeysDesc="tablekeysDesc" :tablevalue="tablevalue" :isNotClose="isNotClose" :isShowOprt="isShowOprt" :oprtEvent="oprtEvent"></iworkTableTree>`,
                     params: `
                         <pre>
                         tablekeys：表格列key值数组，用于渲染表头和遍历数据
                         tablekeysDesc：表格列key值所对应的描述数组，用于渲染表头
-                        tablevalue：表格数据---需满足树的数据结构
+                        tablevalue：表格数据---需满足树的数据结构 
+                                    --拥有selectd属性的数据会添加多选框
                         isNotClose：表格初始状态的开合状态
                         isShowOprt：是否显示操作栏位
                         oprtEvent：操作栏位的自定义操作

@@ -26,6 +26,7 @@
                                 upShow(value);
                             "></span>
                         <span class="placeholder" v-else>&nbsp;</span>
+                        <span v-if="k_idx === 0&&isSelection" class="icon" :class="setSelectedStyle(value)" ></span>
                         <span v-if="k_idx === 0" class="icon" :class="value.__children ? 'dir' : 'file'"></span>
                         <span v-text="value[tablekey]"></span>
                     </td>
@@ -67,6 +68,10 @@ export default {
             type: Array,
             default: () => [],
         },
+        isSelection:{
+            type: Boolean,
+            default: false,
+        }
     },
     data() {
         return {
@@ -198,6 +203,18 @@ export default {
             }
             return setValue(reArr, tablevalue, 1, null, showHandle);
         },
+        // 是否多选框样式
+        setSelectedStyle(item,isP){
+            // isP表示是否为父级调用 -- 表示强制进行设置
+            // 如果已经设置过了，不需要在进行设置
+            if(!item.alreadySet||isP){
+                if(item.selected){
+                    return "selected"
+                }else{
+
+                }
+            }
+        }
     },
 };
 </script>
@@ -284,6 +301,15 @@ export default {
                     }
                     & > span.dir {
                         background: url(../assets/dir.png) no-repeat center;
+                    }
+                    & > span.selected {
+                        background: url(../assets/selected.png) no-repeat center;
+                    }
+                    & > span.unselected {
+                        background: url(../assets/unselected.png) no-repeat center;
+                    }
+                    & > span.selecton {
+                        background: url(../assets/selecton.png) no-repeat center;
                     }
                 }
             }
