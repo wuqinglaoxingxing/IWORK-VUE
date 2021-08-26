@@ -64,7 +64,6 @@ export default {
             return arr
         }
         this.tablevalue = get(tree);
-        debugger
         // import("./tree").then(data=>{
         //     this.tablevalue = data.default
         // })

@@ -26,7 +26,8 @@
                                 upShow(value);
                             "></span>
                         <span class="placeholder" v-else>&nbsp;</span>
-                        <span v-if="k_idx === 0&&isSelection" class="icon" :class="setSelectedStyle(value)" ></span>
+                        <span v-if="k_idx === 0&&isSelection" class="icon" :class="setSelectedStyle(value)"
+                            @click="changeSelected(value)"></span>
                         <span v-if="k_idx === 0" class="icon" :class="value.__children ? 'dir' : 'file'"></span>
                         <span v-text="value[tablekey]"></span>
                     </td>
@@ -68,16 +69,33 @@ export default {
             type: Array,
             default: () => [],
         },
-        isSelection:{
+        isSelection: {
             type: Boolean,
             default: false,
-        }
+        },
+        selectFn: {
+            type: Function,
+            default: (selected, all) => {
+                console.log(selected, all);
+            },
+        },
     },
     data() {
         return {
             values: [],
             showHandle: [],
             maxLevel: 0,
+            tablevalueTmp: [],
+            delProps: [
+                "sParent",
+                "uniqueID",
+                "preParent",
+                "__children",
+                "__isShow",
+                "__istramenudesc",
+                "__level",
+                "__seq",
+            ],
         };
     },
     watch: {
@@ -172,6 +190,9 @@ export default {
                         cValue.sParent = pValue.sParent
                             ? pValue.sParent
                             : pValue.uniqueID;
+                        cValue.preParent = pValue.uniqueID
+                            ? pValue.uniqueID
+                            : null;
                         if (!cValue.__index) {
                             cValue.__index = pValue.__index
                                 ? JSON.parse(JSON.stringify(pValue.__index))
@@ -199,22 +220,74 @@ export default {
                         );
                     }
                 }
+                _this.tablevalueTmp = tablevalue;
                 return [reArr, showHandle];
             }
             return setValue(reArr, tablevalue, 1, null, showHandle);
         },
-        // 是否多选框样式
-        setSelectedStyle(item,isP){
-            // isP表示是否为父级调用 -- 表示强制进行设置
-            // 如果已经设置过了，不需要在进行设置
-            if(!item.alreadySet||isP){
-                if(item.selected){
-                    return "selected"
-                }else{
+        // 设置选择样式
+        setSelectedStyle(item) {
+            return item.selected ? "selected" : "unselected";
+        },
+        // 更改选择样式
+        changeSelected(value) {
+            let self = this;
+            value.selected = !value.selected;
+            debugger
+            if (value.selected) {
+                // true: 所有父级勾选，所有子集不操作
+                // 如果存在父级
+                // 递归父级修改
+                function upParent(child, select) {
+                    if (child.preParent) {
+                        for (let idx = 0; idx < self.values.length; idx++) {
+                            let parent = self.values[idx];
+                            if (parent.uniqueID === child.preParent) {
+                                parent.selected = select;
+                                upParent(parent, select);
+                                break;
+                            }
+                        }
+                    }
+                }
+                upParent(value, value.selected);
+            } else {
+                // false: 所有父级不操作，所有子集不勾选
+                // 递归子集修改
+                function upChild(children, select) {
+                    children &&
+                        children.forEach((child) => {
+                            child.selected = select;
+                            upChild(child.children, select);
+                        });
+                }
+                upChild(value.children, value.selected);
+            }
 
+            // 对传入数据进行修改
+            let valueT = JSON.parse(JSON.stringify(value));
+            let reAll = JSON.parse(JSON.stringify(this.tablevalueTmp));
+            function delProps(tarArr, props) {
+                function delObj(target, props) {
+                    Object.keys(target).forEach((key) => {
+                        if (props.includes(key)) {
+                            delete target[key];
+                        }
+                    });
+                    target.children && delProps(target.children, props);
+                }
+                if (Array.isArray(tarArr)) {
+                    tarArr.forEach((target) => {
+                        delObj(target, props);
+                    });
+                } else {
+                    delObj(tarArr, props);
                 }
             }
-        }
+            delProps(valueT, this.delProps);
+            delProps(reAll, this.delProps);
+            this.selectFn(valueT, reAll);
+        },
     },
 };
 </script>
@@ -306,10 +379,8 @@ export default {
                         background: url(../assets/selected.png) no-repeat center;
                     }
                     & > span.unselected {
-                        background: url(../assets/unselected.png) no-repeat center;
-                    }
-                    & > span.selecton {
-                        background: url(../assets/selecton.png) no-repeat center;
+                        background: url(../assets/unselected.png) no-repeat
+                            center;
                     }
                 }
             }
