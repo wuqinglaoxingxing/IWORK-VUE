@@ -27,12 +27,12 @@ export default {
         // 放大缩小单位X轴
         computedUnitX: {
             type: Number,
-            default: 200,
+            default: 6,
         },
         // 放大缩小单位Y轴
         computedUnitY: {
             type: Number,
-            default: 200,
+            default: 6,
         },
         // 可以移动到边缘的最大值
         edgeMax: {
@@ -128,8 +128,11 @@ export default {
             e.preventDefault();
             e.stopPropagation();
             let wheelDelta = e.wheelDelta;
+            let lv = Math.abs(wheelDelta) / 120;
+            // 保证放大
+            lv = lv < 1?1:lv
+            console.log(wheelDelta,lv);
             if (wheelDelta > 0) {
-                let lv = Math.abs(wheelDelta) / 120;
                 let newWidth = img.width - lv * that.computedUnitX;
                 let newHeight = img.height - lv * that.computedUnitY;
                 if (newWidth > that.wrapWidth / 2) {
@@ -142,8 +145,8 @@ export default {
                 } else {
                     img.style.height = wrapHeight / 2 + "px";
                 }
+                console.log(newWidth,newHeight,that.wrapWidth);
             } else {
-                let lv = Math.abs(wheelDelta) / 120;
                 let newWidth = img.width + lv * that.computedUnitX;
                 let newHeight = img.height + lv * that.computedUnitY;
                 if (newWidth < maxWidth) {
@@ -156,6 +159,7 @@ export default {
                 } else {
                     img.style.height = maxHeight + "px";
                 }
+                console.log(newWidth,newHeight);
             }
         };
         let mousemoveFn = function (e) {
@@ -184,7 +188,7 @@ export default {
         img.addEventListener("mousedown", mousedownFn);
         img.addEventListener("mouseleave", mouseleaveFn);
         img.addEventListener("mouseup", mouseupFn);
-        img.addEventListener("mousewheel", mousewheelFn);
+        pic_wrapper.addEventListener("mousewheel", mousewheelFn);
         translate.addEventListener(
             "click",
             function () {

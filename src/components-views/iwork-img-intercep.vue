@@ -21,8 +21,10 @@ export default {
         return {
             picture: require("../assets/img-intercep.jpg"),
             wrapWidth:500,
-            computedUnitX:200,
-            computedUnitY:112,
+            // computedUnitX:200,
+            // computedUnitY:112,
+            computedUnitX:7,
+            computedUnitY:4,
             edgeMax:10,
             getExtractImg:function(imgBase64){
                 console.log(imgBase64);
