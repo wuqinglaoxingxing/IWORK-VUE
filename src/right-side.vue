@@ -357,7 +357,7 @@ export default {
             case "/iworkTableTree":
                 this.descView = {
                     title: this.$route.name,
-                    code: `<iworkTableTree :tablekeys="tablekeys" :tablekeysDesc="tablekeysDesc" :tablevalue="tablevalue" :isNotClose="isNotClose" :isShowOprt="isShowOprt" :oprtEvent="oprtEvent"></iworkTableTree>`,
+                    code: `<iworkTableTree :tablekeys="tablekeys" :tablekeysDesc="tablekeysDesc" :tablevalue="tablevalue" :isNotClose="isNotClose" :isShowOprt="isShowOprt" :isSelection="isSelection" :oprtEvent="oprtEvent"></iworkTableTree>`,
                     params: `
                         <pre>
                         tablekeys：表格列key值数组，用于渲染表头和遍历数据
@@ -366,6 +366,7 @@ export default {
                                     --拥有selectd属性的数据会添加多选框
                         isNotClose：表格初始状态的开合状态
                         isShowOprt：是否显示操作栏位
+                        isSelection：具有勾选框
                         oprtEvent：操作栏位的自定义操作
                         模拟数据:
                         tablevalue: [],--查看附件
@@ -383,6 +384,7 @@ export default {
                         },
                         isNotClose:false,
                         isShowOprt:"end",  //none,start,end
+                        isSelection:true, //具有勾选框
                         oprtEvent:[
                             {
                                 name:"新增",
@@ -426,8 +428,10 @@ export default {
                         {
                             picture: require("../assets/img-intercep.jpg"),
                             wrapWidth:500,
-                            computedUnitX:200,
-                            computedUnitY:100,
+                            // computedUnitX:200,
+                            // computedUnitY:112,
+                            computedUnitX:7,
+                            computedUnitY:4,
                             edgeMax:10,
                             getExtractImg:function(imgBase64){
                                 console.log(imgBase64);

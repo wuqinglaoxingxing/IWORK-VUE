@@ -29,7 +29,7 @@ export default {
             },
             isNotClose: false,
             isShowOprt: "end", //none,start,end
-            isSelection:true, //具有勾选框
+            isSelection:false, //具有勾选框
             oprtEvent: [
                 {
                     name: "新增",

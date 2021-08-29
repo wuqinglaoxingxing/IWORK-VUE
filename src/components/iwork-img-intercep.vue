@@ -129,10 +129,11 @@ export default {
             e.stopPropagation();
             let wheelDelta = e.wheelDelta;
             let lv = Math.abs(wheelDelta) / 120;
-            // 保证放大
-            lv = lv < 1?1:lv
-            console.log(wheelDelta,lv);
-            if (wheelDelta > 0) {
+            // 保证放大倍数
+            lv = lv < 1 ? 1 : lv;
+            // 获取是否为mac
+            const osMac = that.gmtds.os.isMac;
+            if ((wheelDelta > 0 && osMac) || (!osMac && wheelDelta < 0)) {
                 let newWidth = img.width - lv * that.computedUnitX;
                 let newHeight = img.height - lv * that.computedUnitY;
                 if (newWidth > that.wrapWidth / 2) {
@@ -145,7 +146,7 @@ export default {
                 } else {
                     img.style.height = wrapHeight / 2 + "px";
                 }
-                console.log(newWidth,newHeight,that.wrapWidth);
+                console.log(newWidth, newHeight, that.wrapWidth);
             } else {
                 let newWidth = img.width + lv * that.computedUnitX;
                 let newHeight = img.height + lv * that.computedUnitY;
@@ -159,7 +160,7 @@ export default {
                 } else {
                     img.style.height = maxHeight + "px";
                 }
-                console.log(newWidth,newHeight);
+                console.log(newWidth, newHeight);
             }
         };
         let mousemoveFn = function (e) {
