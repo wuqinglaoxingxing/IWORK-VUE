@@ -1,0 +1,33 @@
+<meta charset="utf-8">
+<title>iworkView demo</title>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.min.js"></script>
+<script src="./iworkView.umd.js"></script>
+
+<link rel="stylesheet" href="./iworkView.css">
+
+<link rel="stylesheet" href="../public/theme/blue.css">
+
+<body>
+    <div id="app">
+        <iwork-code-rain></iwork-code-rain>
+        <iwork-taiji :taijiSize="taijiSize" :taijiColor="taijiColor"></iwork-taiji>
+    </div>
+    <script>
+        console.log(iworkView)
+
+        new Vue({
+            el: "#app",
+            components: {
+                iworkCodeRain: iworkView.default.iworkCodeRain,
+                iworkTaiji: iworkView.default.iworkTaiji
+            },
+            data() {
+                return {
+                    taijiSize: "400px",
+                    taijiColor: ["#fff", "#000"] //黑白太极
+                }
+            }
+        })
+    </script>
+</body>
