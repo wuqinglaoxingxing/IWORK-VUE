@@ -147,7 +147,6 @@ export default {
                 } else {
                     img.style.height = wrapHeight / 2 + "px";
                 }
-                console.log(newWidth, newHeight, that.wrapWidth);
             } else {
                 let newWidth = img.width + lv * that.computedUnitX;
                 let newHeight = img.height + lv * that.computedUnitY;
@@ -161,7 +160,6 @@ export default {
                 } else {
                     img.style.height = maxHeight + "px";
                 }
-                console.log(newWidth, newHeight);
             }
         };
         let mousemoveFn = function (e) {

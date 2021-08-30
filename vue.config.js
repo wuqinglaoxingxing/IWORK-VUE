@@ -15,8 +15,11 @@ module.exports = {
     chainWebpack: (config) => {
         config.resolve.symlinks(true) // 修复热更新失效
     },
-    configureWebpack: () => {
-        devtool: 'source-map'
+    configureWebpack: {
+        devtool: 'source-map',
+        output: {
+            libraryExport: 'default'
+        }
     },
     // vue-loader 配置项
     // https://vue-loader.vuejs.org/en/options.html
@@ -58,7 +61,7 @@ module.exports = {
         port: 40000,
         https: false,
         hotOnly: false,
-        before: app => {}
+        before: app => { }
     },
     // 第三方插件配置
     pluginOptions: {

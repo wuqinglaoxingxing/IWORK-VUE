@@ -15,8 +15,8 @@ import log from './services/log'
 import staticVariable from './staticVariable/staticVariable'
 // 引入vue全局方法
 import globalMedthods from './globalMedthods/globalMedthods'
-// 引入rem适配
-import setHtmlFontSize from './rem-config/remComfig'
+//设置全家fontSize
+import setHtmlFontSize from './font/fontSize'
 
 // 建立中转站，实现组件与组件之间的传值
 let bus = new Vue()

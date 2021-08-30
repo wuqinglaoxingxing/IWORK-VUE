@@ -9,7 +9,13 @@ import iworkScrollChar from '../components/iwork-scroll-char.vue'
 import iworkTableTree from '../components/iwork-table-tree.vue'
 import iworkTaiji from '../components/iwork-taiji.vue'
 import iworkUpload from '../components/iwork-upload.vue'
+// 设置字体
+import setHtmlFontSize from '../font/fontSize'
+// 设置样式
 import style from './style.vue'
+
+window.onresize = setHtmlFontSize;
+setHtmlFontSize();
 
 const components = [
     iworkCalendar,
