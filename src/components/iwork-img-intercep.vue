@@ -14,6 +14,7 @@
 
 <script>
 export default {
+    name:"iworkImgIntercep",
     props: {
         // 图片
         picture: {

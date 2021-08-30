@@ -38,7 +38,7 @@
 </template>
 <script>
 export default {
-    name: "IworkLuckDraw",
+    name: "iworkLuckDraw",
     props: {
         luckDrawSize: {
             // 转盘默认大小

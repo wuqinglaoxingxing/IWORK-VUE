@@ -12,6 +12,7 @@
 </template>
 <script>
 export default {
+    name:"iworkScrollChar",
     props: {
         charArr: {
             type: Array,

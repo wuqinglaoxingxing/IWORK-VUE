@@ -71,6 +71,7 @@
 </template>
 <script>
 export default {
+    name:"iworkCalendar",
     props: {
         iworkData: {
             type: String,

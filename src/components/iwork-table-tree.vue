@@ -44,6 +44,7 @@
 
 <script>
 export default {
+    name:"iworkTableTree",
     props: {
         tablekeys: {
             type: Array,

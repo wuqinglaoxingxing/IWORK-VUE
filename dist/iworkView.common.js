@@ -7296,15 +7296,15 @@ var install = function install(Vue) {
     Vue.component(component.name, component);
   });
 };
-
-Vue.prototype.gmtds = globalMedthods;
 /* istanbul ignore if */
+
 
 if (typeof window !== 'undefined' && window.Vue) {
   install(window.Vue);
 }
 
 ;
+window.Vue.prototype.gmtds = globalMedthods;
 /* harmony default export */ var umd = ({
   version: '1.0.0',
   install: install,

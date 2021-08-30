@@ -34,12 +34,12 @@ const install = function (Vue, opts = {}) {
 
 };
 
-Vue.prototype.gmtds = globalMedthods;
-
 /* istanbul ignore if */
 if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue);
 };
+
+window.Vue.prototype.gmtds = globalMedthods;
 
 export default {
     version: '1.0.0',

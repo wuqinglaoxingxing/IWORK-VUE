@@ -24,7 +24,7 @@
 </template>
 <script>
 export default {
-    name: "IworkUpload",
+    name:"iworkUpload",
     props: {
         isMultiple: {
             type: Boolean,

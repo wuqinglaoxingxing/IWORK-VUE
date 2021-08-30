@@ -6,6 +6,7 @@
 </template>
 <script>
 export default {
+    name:"iworkTaiji",
     props: {
         taijiSize: {
             type: String,
