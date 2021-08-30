@@ -44,7 +44,7 @@
 
 <script>
 export default {
-    name:"iworkTableTree",
+    name: "iworkTableTree",
     props: {
         tablekeys: {
             type: Array,
@@ -110,6 +110,19 @@ export default {
     },
     computed: {},
     methods: {
+        //生成指定长度由随机数字组成的字符串的方法
+        // 生成随机ID
+        getRandomUniqueID() {
+            function getRandomNumber(n) {
+                var str = "";
+                for (var i = 0; i < n; i++) {
+                    var dic = Math.random() + "";
+                    str += dic.charAt(3);
+                }
+                return str;
+            }
+            return new Date().getTime() + getRandomNumber(5);
+        },
         checkShow(item) {
             const { sParent, __index } = item;
             if (!sParent) {
@@ -181,7 +194,7 @@ export default {
                     };
                     cValue.__isShow = _this.isNotClose;
                     // 为每个层级创建唯一表示
-                    cValue.uniqueID = _this.gmtds.getRandomUniqueID();
+                    cValue.uniqueID = _this.getRandomUniqueID();
                     show.uniqueID = cValue.uniqueID;
                     // 判断是否具有父级
                     if (!pValue) {
@@ -234,7 +247,7 @@ export default {
         changeSelected(value) {
             let self = this;
             value.selected = !value.selected;
-            debugger
+            debugger;
             if (value.selected) {
                 // true: 所有父级勾选，所有子集不操作
                 // 如果存在父级

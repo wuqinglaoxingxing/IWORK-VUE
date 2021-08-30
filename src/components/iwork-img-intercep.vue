@@ -133,7 +133,7 @@ export default {
             // 保证放大倍数
             lv = lv < 1 ? 1 : lv;
             // 获取是否为mac
-            const osMac = that.gmtds.os.isMac;
+            const osMac = that.os().isMac;
             if ((wheelDelta > 0 && osMac) || (!osMac && wheelDelta < 0)) {
                 let newWidth = img.width - lv * that.computedUnitX;
                 let newHeight = img.height - lv * that.computedUnitY;
@@ -243,6 +243,24 @@ export default {
             false
         );
     },
+    methods:{
+        os() {
+            let UserAgent = window.navigator.userAgent.toLowerCase();
+            return {
+                isIpad          : /ipad/.test(UserAgent),
+                isIphone        : /iphone os/.test(UserAgent),
+                isAndroid       : /android/.test(UserAgent),
+                isWindowsCe     : /windows ce/.test(UserAgent),
+                isWindowsMobile : /windows mobile/.test(UserAgent),
+                isWin2K         : /windows nt 5.0/.test(UserAgent),
+                isXP            : /windows nt 5.1/.test(UserAgent),
+                isVista         : /windows nt 6.0/.test(UserAgent),
+                isWin7          : /windows nt 6.1/.test(UserAgent),
+                isWin8          : /windows nt 6.2/.test(UserAgent),
+                isWin81         : /windows nt 6.3/.test(UserAgent),        isMac           : /mac os/.test(UserAgent)
+            };
+        }
+    }
 };
 </script>
 <style lang="scss" scoped>
