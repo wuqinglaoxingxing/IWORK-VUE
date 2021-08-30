@@ -9,6 +9,7 @@ import iworkScrollChar from '../components/iwork-scroll-char.vue'
 import iworkTableTree from '../components/iwork-table-tree.vue'
 import iworkTaiji from '../components/iwork-taiji.vue'
 import iworkUpload from '../components/iwork-upload.vue'
+import {version} from '../../package.json'
 import style from './style.vue'
 
 const components = [
@@ -39,10 +40,8 @@ if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue);
 };
 
-window.Vue.prototype.gmtds = globalMedthods;
-
 export default {
-    version: '1.0.0',
+    version,
     install,
     iworkCalendar,
     iworkCodeRain,

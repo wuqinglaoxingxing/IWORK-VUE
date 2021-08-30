@@ -2356,6 +2356,13 @@ module.exports = DESCRIPTORS ? function (object, key, value) {
 
 /***/ }),
 
+/***/ "9224":
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"a\":\"0.1.3\"}");
+
+/***/ }),
+
 /***/ "9263":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7297,6 +7304,9 @@ var iwork_upload_component = normalizeComponent(
 )
 
 /* harmony default export */ var iwork_upload = (iwork_upload_component.exports);
+// EXTERNAL MODULE: ./package.json
+var package_0 = __webpack_require__("9224");
+
 // EXTERNAL MODULE: ./src/umd/style.vue?vue&type=style&index=0&lang=css&
 var stylevue_type_style_index_0_lang_css_ = __webpack_require__("ce7b");
 
@@ -7335,6 +7345,7 @@ var style_component = normalizeComponent(
 
 
 
+
 var components = [iwork_calendar, iwork_code_rain, iwork_img_intercep, iwork_luck_draw, iwork_picture_magnifier, iwork_scroll_char, iwork_table_tree, iwork_taiji, iwork_upload, style];
 
 var install = function install(Vue) {
@@ -7354,9 +7365,8 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 ;
-window.Vue.prototype.gmtds = globalMedthods;
 /* harmony default export */ var umd = ({
-  version: '1.0.0',
+  version: package_0["a" /* version */],
   install: install,
   iworkCalendar: iwork_calendar,
   iworkCodeRain: iwork_code_rain,
