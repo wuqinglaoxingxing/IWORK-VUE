@@ -1,7 +1,8 @@
 {
-  "name": "test-vue",
+  "name": "iwork-vue",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "main":"dist/iworkView.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
