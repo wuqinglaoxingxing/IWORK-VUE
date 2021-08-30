@@ -1,13 +1,13 @@
 {
   "name": "iwork-vue",
-  "version": "0.1.3",
+  "version": "1.0.0",
   "private": false,
-  "main":"dist/iworkView.umd.js",
+  "main":"dist/iworkVue.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build:umd": "vue-cli-service build --target lib --name iworkView src/umd/index.js --dest dist"
+    "build:umd": "vue-cli-service build --target lib --name iworkVue src/umd/index.js --dest dist"
   },
   "dependencies": {
     "core-js": "^3.6.5",

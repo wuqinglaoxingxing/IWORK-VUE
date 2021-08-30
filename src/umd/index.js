@@ -9,7 +9,6 @@ import iworkScrollChar from '../components/iwork-scroll-char.vue'
 import iworkTableTree from '../components/iwork-table-tree.vue'
 import iworkTaiji from '../components/iwork-taiji.vue'
 import iworkUpload from '../components/iwork-upload.vue'
-import {version} from '../../package.json'
 import style from './style.vue'
 
 const components = [
@@ -35,13 +34,14 @@ const install = function (Vue, opts = {}) {
 
 };
 
+
 /* istanbul ignore if */
 if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue);
 };
 
 export default {
-    version,
+    version: '1.0.0',
     install,
     iworkCalendar,
     iworkCodeRain,

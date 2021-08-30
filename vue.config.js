@@ -15,7 +15,9 @@ module.exports = {
     chainWebpack: (config) => {
         config.resolve.symlinks(true) // 修复热更新失效
     },
-    configureWebpack: () => {},
+    configureWebpack: () => {
+        devtool: 'source-map'
+    },
     // vue-loader 配置项
     // https://vue-loader.vuejs.org/en/options.html
     // vueLoader: {},
@@ -24,7 +26,7 @@ module.exports = {
     // css相关配置
     css: {
         // 是否使用css分离插件 ExtractTextPlugin
-        extract: IS_PRO,
+        extract: false,
         // 开启 CSS source maps?
         sourceMap: false,
         // css预设器配置项
