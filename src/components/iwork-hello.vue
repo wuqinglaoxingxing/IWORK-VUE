@@ -1,5 +1,5 @@
 <template>
-    <div class="hello">
+    <div class="hello iwork-hello">
         <!-- <h1>{{ msg }}</h1> -->
         <!-- 日历 -->
         <h1>{{ date }}</h1>

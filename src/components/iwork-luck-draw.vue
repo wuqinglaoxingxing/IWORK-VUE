@@ -1,5 +1,5 @@
 <template>
-    <div id="luck-draw-wrap" class="luck-draw-wrap" :style="{ width: luckDrawSize, height: luckDrawSize }">
+    <div id="luck-draw-wrap" class="luck-draw-wrap iwork-luck-draw" :style="{ width: luckDrawSize, height: luckDrawSize }">
         <div v-for="light in ligthNum" :key="light" class="luck-draw-light luck-draw-light-rotote"></div>
         <div id="luck-draw-out-circle" class="luck-draw-out-circle" :style="{
         background: customColor.outCircle ? customColor.outCircle : '',

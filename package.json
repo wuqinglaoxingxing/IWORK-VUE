@@ -2,7 +2,7 @@
   "name": "iwork-vue",
   "version": "1.0.1",
   "private": false,
-  "main":"dist/iworkVue.umd.js",
+  "main": "dist/iworkVue.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

@@ -1,5 +1,5 @@
 <template>
-    <div class="img-intercep-wrap">
+    <div class="img-intercep-wrap iwork-img-intercep">
         <div class="pic_wrapper">
             <img :src="picture" />
             <canvas class="pic_show"></canvas>
@@ -287,12 +287,12 @@ export default {
     & > .btn_list {
         margin: 0.03rem auto;
         display: flex;
+        font-size: .14rem;
         & > button {
             flex: 1;
             border: none;
         }
         & > .translate {
-            height: 0.35rem;
             border-right: 1px #ddd solid;
             background: var(--first);
         }

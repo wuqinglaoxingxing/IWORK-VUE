@@ -1,5 +1,5 @@
 <template>
-    <div class="scroll-char-wrapper" ref="scroll-char-wrapper" :style="styleValue">
+    <div class="scroll-char-wrapper iwork-scroll-char" ref="scroll-char-wrapper" :style="styleValue">
         <div class="scroll-char-show" ref="scroll-char-show">
             <div class="scroll-char-arr" ref="scroll-char-arr">
                 <div class="scroll-char-item" ref="scroll-char-item" v-for="(char,index) of charArr" :style="styleValue"

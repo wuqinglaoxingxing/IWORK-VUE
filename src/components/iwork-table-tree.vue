@@ -1,5 +1,5 @@
 <template>
-    <div class="table-tree-wrapper">
+    <div class="table-tree-wrapper iwork-table-tree">
         <table class="table-tree-table">
             <thead>
                 <tr>
