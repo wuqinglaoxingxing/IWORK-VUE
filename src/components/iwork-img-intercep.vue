@@ -108,7 +108,8 @@ export default {
 
         let mousedownFn = function (e) {
             e.preventDefault();
-            img.removeEventListener("mousemove", mousemoveFn);
+            // 针对移速过快导致拖拽物脱离鼠标问题
+            pic_wrapper.removeEventListener("mousemove", mousemoveFn);
             img.addEventListener("mousemove", mousemoveFn);
             disXO =
                 e.clientX -
