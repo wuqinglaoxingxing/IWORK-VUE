@@ -415,7 +415,8 @@ export default {
             case "/iworkImgIntercep":
                 this.descView = {
                     title: this.$route.name,
-                    code: `<iworkImgIntercep :picture="picture" :wrapWidth="wrapWidth" :edgeMax="edgeMax" :computedUnit="computedUnit"  :getExtractImg="getExtractImg"></iworkImgIntercep>`,
+                    code: `<iwork-img-intercep :picture="picture" :wrapWidth="wrapWidth" :edgeMax="edgeMax" :computedUnitX="computedUnitX"
+            :computedUnitY="computedUnitY" :getExtractImg="getExtractImg"></iwork-img-intercep>`,
                     params: `
                         <pre>
                         picture:图片
