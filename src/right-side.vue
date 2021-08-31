@@ -425,18 +425,39 @@ export default {
                         computedUnitY:放大缩小单位Y轴
                         edgeMax:可以移动到边缘的最大值
                         getExtractImg:返回的截取的base64
+                        enLarge:放大倍数
+                        enSmall:缩小倍数
+                        sAreaTp:截图区域 -- circle: 圆形 
+                                        --  rect:  矩形
+                        selector:针对多个组件共同使用需要设定父选择器
+                        wRectUnitNum:计算的矩形区域占比
+        
                         模拟数据:
                         {
                             picture: require("../assets/img-intercep.jpg"),
                             wrapWidth:500,
-                            // computedUnitX:200,
-                            // computedUnitY:112,
                             computedUnitX:7,
                             computedUnitY:4,
                             edgeMax:10,
                             getExtractImg:function(imgBase64){
                                 console.log(imgBase64);
                             }
+                        }
+                        模拟数据:
+                        {
+                            picture: require("../assets/picture-magnifier-car.jpg"),
+                            selector:".iworkImgIntercep-P",
+                            wrapWidth:500,
+                            computedUnitX:4.62,
+                            computedUnitY:10,
+                            edgeMax:10,
+                            getExtractImg:function(imgBase64){
+                                console.log(imgBase64);
+                            },
+                            enLarge:3,
+                            enSmall:6,
+                            sAreaTp:"rect",
+                            wRectUnitNum:8
                         }
                         </pre>`,
                 };
