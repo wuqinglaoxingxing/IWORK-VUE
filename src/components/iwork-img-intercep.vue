@@ -203,8 +203,8 @@ export default {
                 let newWidth = imgWidth + lv * that.computedUnitX;
                 let newHeight = imgHeight + lv * that.computedUnitY;
                 // 获取宽度,高度，将其设置到属性上
-                attrWidth = newWidth < maxWidth?newWidth:minWidth
-                attrHeight = newHeight < maxHeight?newHeight:minHeight
+                attrWidth = newWidth < maxWidth?newWidth:maxWidth
+                attrHeight = newHeight < maxHeight?newHeight:maxHeight
             }
             img.style.width = attrWidth + "px";
             img.style.height = attrHeight + "px";
@@ -365,6 +365,7 @@ export default {
         & > button {
             flex: 1;
             border: none;
+            outline: none;
         }
         & > .translate {
             border-right: 1px #ddd solid;
