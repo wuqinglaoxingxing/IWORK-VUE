@@ -337,6 +337,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .img-intercep-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-size: 0;
     & > .pic_wrapper {
         display: inline-block;
