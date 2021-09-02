@@ -4,8 +4,6 @@
             :picture="T1.picture"
             :wrapWidth="T1.wrapWidth"
             :edgeMax="T1.edgeMax"
-            :computedUnitX="T1.computedUnitX"
-            :computedUnitY="T1.computedUnitY"
             :getExtractImg="T1.getExtractImg"
         ></iworkImgIntercep>
         <div class="iworkImgIntercep-P">
@@ -14,8 +12,6 @@
                 :selector="T2.selector"
                 :wrapWidth="T2.wrapWidth"
                 :edgeMax="T2.edgeMax"
-                :computedUnitX="T2.computedUnitX"
-                :computedUnitY="T2.computedUnitY"
                 :getExtractImg="T2.getExtractImg"
                 :enLarge="T2.enLarge"
                 :enSmall="T2.enSmall"
@@ -37,8 +33,6 @@ export default {
            T1:{
                 picture: require("../assets/img-intercep.jpg"),
                 wrapWidth:500,
-                computedUnitX:7,
-                computedUnitY:4,
                 edgeMax:10,
                 getExtractImg:function(imgBase64){
                     console.log(imgBase64);
@@ -48,8 +42,6 @@ export default {
                 picture: require("../assets/picture-magnifier-car.jpg"),
                 selector:".iworkImgIntercep-P",
                 wrapWidth:500,
-                computedUnitX:4.62,
-                computedUnitY:10,
                 edgeMax:10,
                 getExtractImg:function(imgBase64){
                     console.log(imgBase64);

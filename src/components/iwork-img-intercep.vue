@@ -25,15 +25,10 @@ export default {
             type: Number,
             default: 500,
         },
-        // 放大缩小单位X轴
-        computedUnitX: {
+        // 放大缩小倍率
+        bSRate: {
             type: Number,
-            default: 6,
-        },
-        // 放大缩小单位Y轴
-        computedUnitY: {
-            type: Number,
-            default: 6,
+            default: 4,
         },
         // 可以移动到边缘的最大值
         edgeMax: {
@@ -55,19 +50,19 @@ export default {
             default: 2,
         },
         // 选择区域
-        sAreaTp:{
+        sAreaTp: {
             type: String,
-            default: "circle" //circle:圆形 rect:矩形
+            default: "circle", //circle:圆形 rect:矩形
         },
         // 针对多个组件共同使用需要设定父选择器
-        selector:{
-            type:String
+        selector: {
+            type: String,
         },
         // 计算的矩形区域占比
-        wRectUnitNum:{
+        wRectUnitNum: {
             type: Number,
             default: 8,
-        }
+        },
     },
     data() {
         return {};
@@ -78,16 +73,18 @@ export default {
             pic_wrapper, //图片层--包含canvas遮罩和图片显示
             img, //显示图片
             pic_show, //画布
-            ctx,//画布上下文
+            ctx, //画布上下文
             translate, //截取按钮
             reset; //重置按钮
-            
+
         // 表示提供了父级选择器,更加精确
-        if(this.selector){
-            imgIntercepWrap = document.querySelector(this.selector)?.querySelector(".img-intercep-wrap");
+        if (this.selector) {
+            imgIntercepWrap = document
+                .querySelector(this.selector)
+                ?.querySelector(".img-intercep-wrap");
         }
         // 确保一定有最外层对象
-        if(!imgIntercepWrap){
+        if (!imgIntercepWrap) {
             imgIntercepWrap = document.querySelector(".img-intercep-wrap");
         }
         pic_wrapper = imgIntercepWrap.querySelector(".pic_wrapper");
@@ -98,8 +95,8 @@ export default {
         pic_show = pic_wrapper.querySelector(".pic_show");
         ctx = pic_show.getContext("2d");
 
-        let initWidth,//导入图片的宽
-            initHeight,//导入图片的高
+        let initWidth, //导入图片的宽
+            initHeight, //导入图片的高
             disXO, //移动x轴距离
             disYO, //移动y轴距离
             maxWidth, //放大最大宽度
@@ -110,11 +107,15 @@ export default {
             wrapCircleR, //计算的截取圆区域半径
             wRectUnitX, //计算的矩形的x轴单位
             wRectUnitY, //计算的矩形的y轴单位
-            wRectUnitNum=this.wRectUnitNum; //计算的矩形区域占比
-        
+            computedUnitRateX, //图片比例X
+            computedUnitRateY = 1, //图片比例Y
+            wRectUnitNum = this.wRectUnitNum; //计算的矩形区域占比
+
         img.onload = function () {
             initWidth = img.width;
             initHeight = img.height;
+
+            computedUnitRateX = parseFloat((initWidth / initHeight).toFixed(3));
 
             wrapHeight = parseInt((img.height / img.width) * that.wrapWidth);
             maxWidth = that.wrapWidth * that.enLarge;
@@ -138,15 +139,21 @@ export default {
             ctx.beginPath();
             ctx.fillStyle = "rgba(255,255,255,.3)";
             /*矩形代码*/
-            if(that.sAreaTp==="rect"){
+            if (that.sAreaTp === "rect") {
                 wRectUnitX = that.wrapWidth / wRectUnitNum;
                 wRectUnitY = wrapHeight / wRectUnitNum;
-                ctx.fillRect(wRectUnitX, wRectUnitY, (wRectUnitNum-2) * wRectUnitX, (wRectUnitNum-2) * wRectUnitY);
+                ctx.fillRect(
+                    wRectUnitX,
+                    wRectUnitY,
+                    (wRectUnitNum - 2) * wRectUnitX,
+                    (wRectUnitNum - 2) * wRectUnitY
+                );
             }
             /*矩形代码*/
             /*圆形代码*/
-            if(that.sAreaTp==="circle"){
-                wrapCircleR=that.wrapWidth>wrapHeight?wrapHeight:that.wrapWidth
+            if (that.sAreaTp === "circle") {
+                wrapCircleR =
+                    that.wrapWidth > wrapHeight ? wrapHeight : that.wrapWidth;
                 ctx.arc(
                     that.wrapWidth / 2,
                     wrapHeight / 2,
@@ -189,27 +196,33 @@ export default {
             lv = lv < 1 ? 1 : lv;
             // 获取是否为mac
             const osMac = that.os().isMac;
-            let attrWidth,attrHeight;
+            let attrWidth, attrHeight;
             // 利用属性，防止小数
-            let imgWidth = img.getAttribute("attrW")? parseFloat(img.getAttribute("attrW")):img.width
-            let imgHeight = img.getAttribute("attrH")? parseFloat(img.getAttribute("attrH")):img.height
+            let imgWidth = img.getAttribute("attrW")
+                ? parseFloat(img.getAttribute("attrW"))
+                : img.width;
+            let imgHeight = img.getAttribute("attrH")
+                ? parseFloat(img.getAttribute("attrH"))
+                : img.height;
             if ((wheelDelta > 0 && osMac) || (!osMac && wheelDelta < 0)) {
-                let newWidth =  imgWidth - lv * that.computedUnitX;
-                let newHeight = imgHeight - lv * that.computedUnitY;
+                let newWidth = imgWidth - lv * computedUnitRateX * that.bSRate;
+                let newHeight =
+                    imgHeight - lv * computedUnitRateY * that.bSRate;
                 // 获取宽度,高度，将其设置到属性上
-                attrWidth = newWidth > minWidth ?newWidth:minWidth
-                attrHeight = newHeight > minHeight?newHeight:minHeight
+                attrWidth = newWidth > minWidth ? newWidth : minWidth;
+                attrHeight = newHeight > minHeight ? newHeight : minHeight;
             } else {
-                let newWidth = imgWidth + lv * that.computedUnitX;
-                let newHeight = imgHeight + lv * that.computedUnitY;
+                let newWidth = imgWidth + lv * computedUnitRateX * that.bSRate;
+                let newHeight =
+                    imgHeight + lv * computedUnitRateY * that.bSRate;
                 // 获取宽度,高度，将其设置到属性上
-                attrWidth = newWidth < maxWidth?newWidth:maxWidth
-                attrHeight = newHeight < maxHeight?newHeight:maxHeight
+                attrWidth = newWidth < maxWidth ? newWidth : maxWidth;
+                attrHeight = newHeight < maxHeight ? newHeight : maxHeight;
             }
             img.style.width = attrWidth + "px";
             img.style.height = attrHeight + "px";
-            img.setAttribute("attrW",attrWidth)
-            img.setAttribute("attrH",attrHeight)
+            img.setAttribute("attrW", attrWidth);
+            img.setAttribute("attrH", attrHeight);
         };
         let mousemoveFn = function (e) {
             e.preventDefault();
@@ -246,12 +259,12 @@ export default {
                 const top = img.style.top;
                 const left = img.style.left;
                 const lvW = initWidth / img.width;
-                const lvH = initHeight / img.height;  
+                const lvH = initHeight / img.height;
 
                 let pic_draw = imgIntercepWrap.querySelector(".pic_draw");
                 let ctx1 = pic_draw.getContext("2d");
                 /*圆形代码*/
-                if(that.sAreaTp==="circle"){
+                if (that.sAreaTp === "circle") {
                     pic_draw.width = wrapCircleR;
                     pic_draw.height = wrapCircleR;
                     ctx1.arc(
@@ -268,8 +281,12 @@ export default {
                     // 核心计算画的区域
                     ctx1.drawImage(
                         img,
-                        (that.wrapWidth / 2 - wrapCircleR / 2 - parseInt(left)) * lvW,
-                        (wrapHeight/2 - wrapCircleR/2 - parseInt(top)) * lvH,
+                        (that.wrapWidth / 2 -
+                            wrapCircleR / 2 -
+                            parseInt(left)) *
+                            lvW,
+                        (wrapHeight / 2 - wrapCircleR / 2 - parseInt(top)) *
+                            lvH,
                         wrapCircleR * lvW,
                         wrapCircleR * lvH,
                         0,
@@ -280,20 +297,19 @@ export default {
                 }
                 /*圆形代码*/
                 /*矩形代码*/
-                if(that.sAreaTp==="rect"){
-                    pic_draw.width = (wRectUnitNum-2)*wRectUnitX;
-                    pic_draw.height = (wRectUnitNum-2)*wRectUnitY;
+                if (that.sAreaTp === "rect") {
+                    pic_draw.width = (wRectUnitNum - 2) * wRectUnitX;
+                    pic_draw.height = (wRectUnitNum - 2) * wRectUnitY;
                     ctx1.drawImage(
                         img,
-                        (that.wrapWidth / wRectUnitNum - parseInt(left)) *
-                            lvW,
-                        (-parseInt(top) +wRectUnitY) * lvH+2,
-                        (wRectUnitNum-2)*wRectUnitX * lvW,
-                        (wRectUnitNum-2)*wRectUnitY * lvH,
+                        (that.wrapWidth / wRectUnitNum - parseInt(left)) * lvW,
+                        (-parseInt(top) + wRectUnitY) * lvH + 2,
+                        (wRectUnitNum - 2) * wRectUnitX * lvW,
+                        (wRectUnitNum - 2) * wRectUnitY * lvH,
                         0,
                         0,
-                        (wRectUnitNum-2)*wRectUnitX,
-                        (wRectUnitNum-2)*wRectUnitY
+                        (wRectUnitNum - 2) * wRectUnitX,
+                        (wRectUnitNum - 2) * wRectUnitY
                     );
                 }
                 /*矩形代码*/
@@ -308,8 +324,8 @@ export default {
                 img.style.height = wrapHeight + "px";
                 img.style.left = 0;
                 img.style.top = 0;
-                img.removeAttribute("attrW")
-                img.removeAttribute("attrH")
+                img.removeAttribute("attrW");
+                img.removeAttribute("attrH");
             },
             false
         );
@@ -365,10 +381,12 @@ export default {
         margin: 0.03rem auto;
         display: flex;
         font-size: 0.14rem;
+        height: .32rem;
         & > button {
             flex: 1;
             border: none;
             outline: none;
+            color: #333;
         }
         & > .translate {
             border-right: 1px #ddd solid;
@@ -378,6 +396,5 @@ export default {
             background: var(--second);
         }
     }
-
 }
 </style>

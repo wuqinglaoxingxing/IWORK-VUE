@@ -1,35 +1,35 @@
 <template>
-  <div class="rightSideWrap">
-    <div class="rightSideView" v-if="!descView.title">
-        <div class="routerViewWrap">
-            <div class="routerView">
-                <keep-alive>
-                    <component v-bind:is="components[$route.path]"></component>
+    <div class="rightSideWrap">
+        <div class="rightSideView" v-if="!descView.title">
+            <div class="routerViewWrap">
+                <div class="routerView">
+                    <keep-alive>
+                        <component v-bind:is="components[$route.path]"></component>
+                        <!-- <router-view></router-view> -->
+                    </keep-alive>
                     <!-- <router-view></router-view> -->
-                </keep-alive>
-                <!-- <router-view></router-view> -->
+                </div>
+            </div>
+        </div>
+        <div class="rightSideView" v-if="descView.title">
+            <div class="labelView">
+                <span v-text="descView.title"></span>
+            </div>
+            <div class="routerViewWrap">
+                <span>Demo</span>
+                <div class="routerView" :style="{height:$route.path=='/iworkCodeRainCloth'?'1000px':''}">
+                    <keep-alive>
+                        <component v-bind:is="components[$route.path]"></component>
+                    </keep-alive>
+                </div>
+            </div>
+            <div class="descView">
+                <div class="descViewCode" v-text="descView.code"></div>
+                <div class="descViewParams" v-html="descView.params"></div>
+                <div class="descViewEnclosure">附件：<a @click.prevent="go(descView.enclosure)">查看</a></div>
             </div>
         </div>
     </div>
-    <div class="rightSideView" v-if="descView.title">
-        <div class="labelView">
-            <span v-text="descView.title"></span>
-        </div>
-        <div class="routerViewWrap">
-            <span>Demo</span>
-            <div class="routerView" :style="{height:$route.path=='/iworkCodeRainCloth'?'1000px':''}">
-                <keep-alive>
-                    <component v-bind:is="components[$route.path]"></component>
-                </keep-alive>
-            </div>
-        </div>
-        <div class="descView">
-            <div class="descViewCode" v-text="descView.code"></div>
-            <div class="descViewParams" v-html="descView.params"></div>
-            <div class="descViewEnclosure">附件：<a @click.prevent="go(descView.enclosure)">查看</a></div>
-        </div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -42,37 +42,44 @@ export default {
                 title: "",
                 desc: "",
             },
-            components:{
-                "/":() => import('@/components/iwork-hello.vue'),
-                "/iworkHello":() => import('@/components/iwork-hello.vue'),
-                "/iworkCalendar":()=>import('@/components/iwork-calendar.vue'),
-                "/iworkUpload":()=>import('@/components/iwork-upload.vue'),
-                "/iworkPictureMagnifier":()=>import('@/components/iwork-picture-magnifier.vue'),
-                "/iworkLuckDraw":()=>import('@/components/iwork-luck-draw.vue'),
-                "/iworkTaiji":()=>import('@/components/iwork-taiji.vue'),
-                "/iworkCodeRainCloth":()=>import('@/components/iwork-code-rain.vue'),
-                "/iworkScrollChar":()=>import('@/components-views/iwork-scroll-char.vue'),
-                "/iworkTableTree":()=>import('@/components-views/iwork-table-tree.vue'),
-                "/iworkImgIntercep":()=>import('@/components-views/iwork-img-intercep.vue'),
-            }
+            components: {
+                "/": () => import("@/components/iwork-hello.vue"),
+                "/iworkHello": () => import("@/components/iwork-hello.vue"),
+                "/iworkCalendar": () =>
+                    import("@/components/iwork-calendar.vue"),
+                "/iworkUpload": () => import("@/components/iwork-upload.vue"),
+                "/iworkPictureMagnifier": () =>
+                    import("@/components/iwork-picture-magnifier.vue"),
+                "/iworkLuckDraw": () =>
+                    import("@/components/iwork-luck-draw.vue"),
+                "/iworkTaiji": () => import("@/components/iwork-taiji.vue"),
+                "/iworkCodeRainCloth": () =>
+                    import("@/components/iwork-code-rain.vue"),
+                "/iworkScrollChar": () =>
+                    import("@/components-views/iwork-scroll-char.vue"),
+                "/iworkTableTree": () =>
+                    import("@/components-views/iwork-table-tree.vue"),
+                "/iworkImgIntercep": () =>
+                    import("@/components-views/iwork-img-intercep.vue"),
+            },
         };
     },
     watch: {
-        $route: function (n,v) {
+        $route: function (n, v) {
             this.routeChange();
         },
     },
     created() {
         this.routeChange();
     },
-  methods: {
-    routeChange: function () {
-        switch (this.$route.path) {
-            case "/iworkCalendar":
-                this.descView = {
-                    title: this.$route.name,
-                    code: `<IworkCalendar :isInitNow="isInitNow" iworkData="date" :format="format" :level="level" :showStyle="showStyle" :dateBetWeenCall="dateBetWeenCall"></IworkCalendar>`,
-                    params: `
+    methods: {
+        routeChange: function () {
+            switch (this.$route.path) {
+                case "/iworkCalendar":
+                    this.descView = {
+                        title: this.$route.name,
+                        code: `<IworkCalendar :isInitNow="isInitNow" iworkData="date" :format="format" :level="level" :showStyle="showStyle" :dateBetWeenCall="dateBetWeenCall"></IworkCalendar>`,
+                        params: `
                         <pre>
                         isInitNow:是否使用初始化时间标志
                         iworkData:初始化时间,该属性生效需要依赖 isInitNow
@@ -173,13 +180,13 @@ export default {
                             return false;
                         }
                         </pre>`,
-                };
-                break;
-            case "/iworkUpload":
-                this.descView = {
-                    title: this.$route.name,
-                    code: ` <IworkUpload file="file" :isMultiple="isMultiple" :isHand="isHand" @upload="upload"></IworkUpload>`,
-                    params: `
+                    };
+                    break;
+                case "/iworkUpload":
+                    this.descView = {
+                        title: this.$route.name,
+                        code: ` <IworkUpload file="file" :isMultiple="isMultiple" :isHand="isHand" @upload="upload"></IworkUpload>`,
+                        params: `
                     <pre>
                         file:存储文件变量
                         isMultiple:是否允许多文件上传
@@ -196,13 +203,13 @@ export default {
                             upload: function(file) {} //file 上传的文件
                         }
                     </pre>`,
-                };
-                break;
-            case "/iworkPictureMagnifier":
-                this.descView = {
-                    title: this.$route.name,
-                    code: `<IworkPictureMagnifier :photo="photo" :photoSize="photoSize" :scale="scale"></IworkPictureMagnifier>`,
-                    params: `
+                    };
+                    break;
+                case "/iworkPictureMagnifier":
+                    this.descView = {
+                        title: this.$route.name,
+                        code: `<IworkPictureMagnifier :photo="photo" :photoSize="photoSize" :scale="scale"></IworkPictureMagnifier>`,
+                        params: `
                     <pre>
                     photo:图片路径地址
                     photoSize:原图片大小
@@ -222,13 +229,13 @@ export default {
                         scale: 2,            //放大图片为800px*800px   覆盖阴影为200px * 200px
                     }
                     </pre>`,
-                };
-                break;
-            case "/iworkLuckDraw":
-                this.descView = {
-                    title: this.$route.name,
-                    code: `<IworkLuckDraw :luckDrawSize="luckDrawSize" :selectorParts="selectorParts" :isBlackCurtain="isBlackCurtain" :setRegion="setRegion" :customColor="customColor" :callGift="callGift"></IworkLuckDraw>`,
-                    params: `
+                    };
+                    break;
+                case "/iworkLuckDraw":
+                    this.descView = {
+                        title: this.$route.name,
+                        code: `<IworkLuckDraw :luckDrawSize="luckDrawSize" :selectorParts="selectorParts" :isBlackCurtain="isBlackCurtain" :setRegion="setRegion" :customColor="customColor" :callGift="callGift"></IworkLuckDraw>`,
+                        params: `
                         <pre>
                         luckDrawSize:抽奖转盘大小
                         selectorParts:转盘奖项
@@ -281,13 +288,13 @@ export default {
                             }
                         }
                         </pre>`,
-                };
-                break;
-            case "/iworkTaiji":
-                this.descView = {
-                    title: this.$route.name,
-                    code: `<IworkTaiji :taijiSize="taijiSize" :taijiColor="taijiColor"></IworkTaiji>`,
-                    params: `
+                    };
+                    break;
+                case "/iworkTaiji":
+                    this.descView = {
+                        title: this.$route.name,
+                        code: `<IworkTaiji :taijiSize="taijiSize" :taijiColor="taijiColor"></IworkTaiji>`,
+                        params: `
                         <pre>
                         taijiSize:太极尺寸
                         taijiColor:太极颜色
@@ -299,13 +306,13 @@ export default {
                             taijiColor:["#fff","#000"]   //黑白太极
                         }
                         </pre>`,
-                };
-                break;
-            case "/iworkCodeRainCloth":
-                this.descView = {
-                    title: this.$route.name,
-                    code: `<IworkTaiji :taijiSize="taijiSize" :taijiColor="taijiColor"></IworkTaiji>`,
-                    params: `
+                    };
+                    break;
+                case "/iworkCodeRainCloth":
+                    this.descView = {
+                        title: this.$route.name,
+                        code: `<IworkTaiji :taijiSize="taijiSize" :taijiColor="taijiColor"></IworkTaiji>`,
+                        params: `
                         <pre>
                         taijiSize:太极尺寸
                         taijiColor:太极颜色
@@ -317,13 +324,13 @@ export default {
                             taijiColor:["#fff","#000"]   //黑白太极
                         }
                         </pre>`,
-                };
-                break;
-            case "/iworkScrollChar":
-                this.descView = {
-                    title: this.$route.name,
-                    code: `<IworkScrollChar :charArr="charArr" :value="charValue" :styleValue="styleValue"></IworkScrollChar>`,
-                    params: `
+                    };
+                    break;
+                case "/iworkScrollChar":
+                    this.descView = {
+                        title: this.$route.name,
+                        code: `<IworkScrollChar :charArr="charArr" :value="charValue" :styleValue="styleValue"></IworkScrollChar>`,
+                        params: `
                         <pre>
                         参考首页:
                         charArr:字符数组
@@ -352,13 +359,13 @@ export default {
                             },3000)
                         } ,
                         </pre>`,
-                };
-                break;
-            case "/iworkTableTree":
-                this.descView = {
-                    title: this.$route.name,
-                    code: `<iworkTableTree :tablekeys="tablekeys" :tablekeysDesc="tablekeysDesc" :tablevalue="tablevalue" :isNotClose="isNotClose" :isShowOprt="isShowOprt" :isSelection="isSelection" :oprtEvent="oprtEvent"></iworkTableTree>`,
-                    params: `
+                    };
+                    break;
+                case "/iworkTableTree":
+                    this.descView = {
+                        title: this.$route.name,
+                        code: `<iworkTableTree :tablekeys="tablekeys" :tablekeysDesc="tablekeysDesc" :tablevalue="tablevalue" :isNotClose="isNotClose" :isShowOprt="isShowOprt" :isSelection="isSelection" :oprtEvent="oprtEvent"></iworkTableTree>`,
+                        params: `
                         <pre>
                         tablekeys：表格列key值数组，用于渲染表头和遍历数据
                         tablekeysDesc：表格列key值所对应的描述数组，用于渲染表头
@@ -409,24 +416,23 @@ export default {
                             }
                         ]
                         </pre>`,
-                        enclosure:" https://gitee.com/AnHuiNG/IWORK-VUE/raw/main/json/tree.json"
-                };
-                break;
-            case "/iworkImgIntercep":
-                this.descView = {
-                    title: this.$route.name,
-                    code: `<iwork-img-intercep :picture="picture" :wrapWidth="wrapWidth" :edgeMax="edgeMax" :computedUnitX="computedUnitX"
-            :computedUnitY="computedUnitY" :getExtractImg="getExtractImg"></iwork-img-intercep>`,
-                    params: `
-                        <pre>
+                        enclosure:
+                            " https://gitee.com/AnHuiNG/IWORK-VUE/raw/main/json/tree.json",
+                    };
+                    break;
+                case "/iworkImgIntercep":
+                    this.descView = {
+                        title: this.$route.name,
+                        code: `<iwork-img-intercep :picture="picture" :wrapWidth="wrapWidth" :edgeMax="edgeMax"  
+                        :getExtractImg="getExtractImg"></iwork-img-intercep>`,
+                        params: `
                         picture:图片
                         wrapWidth:图片显示宽度
-                        computedUnitX:放大缩小单位X轴
-                        computedUnitY:放大缩小单位Y轴
+                        bSRate:放大缩小倍率
                         edgeMax:可以移动到边缘的最大值
                         getExtractImg:返回的截取的base64
-                        enLarge:放大倍数
-                        enSmall:缩小倍数
+                        enLarge:图片可放大倍数
+                        enSmall:图片可缩小倍数
                         sAreaTp:截图区域 -- circle: 圆形 
                                         --  rect:  矩形
                         selector:针对多个组件共同使用需要设定父选择器
@@ -436,8 +442,6 @@ export default {
                         {
                             picture: require("../assets/img-intercep.jpg"),
                             wrapWidth:500,
-                            computedUnitX:7,
-                            computedUnitY:4,
                             edgeMax:10,
                             getExtractImg:function(imgBase64){
                                 console.log(imgBase64);
@@ -448,8 +452,6 @@ export default {
                             picture: require("../assets/picture-magnifier-car.jpg"),
                             selector:".iworkImgIntercep-P",
                             wrapWidth:500,
-                            computedUnitX:4.62,
-                            computedUnitY:10,
                             edgeMax:10,
                             getExtractImg:function(imgBase64){
                                 console.log(imgBase64);
@@ -460,20 +462,20 @@ export default {
                             wRectUnitNum:8
                         }
                         </pre>`,
-                };
-                break;
-            default:
-                this.descView = {
-                    title: "",
-                    desc: "",
-                };
-                break;
-        }
+                    };
+                    break;
+                default:
+                    this.descView = {
+                        title: "",
+                        desc: "",
+                    };
+                    break;
+            }
+        },
+        go(url) {
+            window.open(url, "_blank");
+        },
     },
-    go(url){
-        window.open(url,"_blank")
-    }
-  },
 };
 </script>
 
@@ -543,14 +545,14 @@ $rightWidth: calc(100% - 2%);
                 margin: 3vh 0;
                 color: var(--ninth);
                 pre {
-                text-align: left;
+                    text-align: left;
                 }
             }
-            .descViewEnclosure{
+            .descViewEnclosure {
                 text-align: left;
-                text-indent: .2rem;
-                font-size: .18rem;
-                a{
+                text-indent: 0.2rem;
+                font-size: 0.18rem;
+                a {
                     color: var(--theme12);
                     cursor: pointer;
                 }
