@@ -1,6 +1,6 @@
 {
   "name": "iwork-vue",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "private": false,
   "main": "dist/iworkVue.umd.js",
   "scripts": {
