@@ -426,6 +426,7 @@ export default {
                         code: `<iwork-img-intercep :picture="picture" :wrapWidth="wrapWidth" :edgeMax="edgeMax"  
                         :getExtractImg="getExtractImg"></iwork-img-intercep>`,
                         params: `
+                        <pre>
                         picture:图片
                         wrapWidth:图片显示宽度
                         bSRate:放大缩小倍率
