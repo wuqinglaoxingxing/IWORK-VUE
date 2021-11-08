@@ -1,0 +1,19 @@
+ul.iwork-select{
+    position: absolute;
+    border-radius: 8px;
+    box-shadow: 0 0 2px 2px #fff;
+    border: 1px #ccc solid;
+    &>li{
+        list-style: none;
+        line-height: .25rem;
+        height: .25rem;
+        font-size: 14px;
+        &:not(:last-child){
+            border-bottom: 1px solid #ccc;
+        }
+        &:hover{
+            background-color: #ccc;
+            color: #FFF;
+        }
+    }
+}

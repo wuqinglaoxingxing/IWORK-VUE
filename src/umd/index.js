@@ -1,5 +1,4 @@
 // 引入vue全局方法
-import globalMedthods from '../globalMedthods/globalMedthods'
 import iworkCalendar from '../components/iwork-calendar.vue'
 import iworkCodeRain from '../components/iwork-code-rain.vue'
 import iworkImgIntercep from '../components/iwork-img-intercep.vue'
