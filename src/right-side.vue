@@ -3,10 +3,117 @@
         <div class="rightSideView" v-if="!descView.title">
             <div class="routerViewWrap">
                 <div class="routerView">
-                    <keep-alive>
+                     <keep-alive>
                         <component v-bind:is="components[$route.path]"></component>
                         <!-- <router-view></router-view> -->
                     </keep-alive>
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                     <div style="background:red;height:500px;width:500px;overflow: auto;">
+                         <keep-alive>
+                        <component v-bind:is="components[$route.path]"></component>
+                        <!-- <router-view></router-view> -->
+                    </keep-alive>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p>11</p>
+                         <p></p>
+                         <p></p>
+                         <p></p>
+                         <p></p>
+                         <p></p>
+                         <p></p>
+                         <p></p>
+                         <p></p>
+                         <p></p>
+                         <p></p>
+                         <p></p>
+                         <p></p>
+                     </div>
                     <!-- <router-view></router-view> -->
                 </div>
             </div>
@@ -483,6 +590,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+p{
+    display: block;
+    height: 10px;
+}
 $rightWidth: calc(100% - 2%);
 .rightSideWrap {
     position: absolute;

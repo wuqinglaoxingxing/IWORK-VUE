@@ -22,6 +22,21 @@ export default {
         el.$list = binding.value.list
     },
     inserted: function (el,binding) {
+        let findScrollEl = function(el){
+            let pEl = el.parentNode
+            while(pEl!==document.body){
+                const scrollHeight = pEl.scrollHeight
+                const seeHeight =  pEl.getBoundingClientRect().height
+                console.log(pEl);
+                console.log(scrollHeight,seeHeight,document.body.clientHeight);
+                // 找到最近具有滚动条的元素
+                if(scrollHeight>seeHeight){
+                    break
+                }
+                pEl = pEl.parentNode
+            }
+            return pEl
+        }
         let open = function(el){
             // 获取输入框位置
             const {bottom,height,left, top,width} = el.getBoundingClientRect()
@@ -42,8 +57,12 @@ export default {
                     ul.appendChild(li)
                 })
                 document.body.appendChild(ul)
+                let scrollEl =  findScrollEl(el)
+                const top = ul.style.top
+                scrollEl.addEventListener("scroll",function(){
+                    ul.style.top = (parseInt(top) - this.scrollTop)+"px"
+                })
             }
-            
 
         }
         // 给input绑定事件用于下拉框
