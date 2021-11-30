@@ -247,7 +247,6 @@ export default {
         changeSelected(value) {
             let self = this;
             value.selected = !value.selected;
-            debugger;
             if (value.selected) {
                 // true: 所有父级勾选，所有子集不操作
                 // 如果存在父级

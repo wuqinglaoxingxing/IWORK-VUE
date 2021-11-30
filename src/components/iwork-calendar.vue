@@ -465,23 +465,23 @@ export default {
             }
             switch (this.level) {
                 case 1:
-                    parseInt(this.dateShowObj.year) == currentDate
-                        ? (returnFlg = true)
-                        : (returnFlg = false);
+                    returnFlg = parseInt(this.dateShowObj.year) == currentDate
+                        ? true
+                        : false
                     break;
                 case 2:
-                    parseInt(this.dateShowObj.year) == this.year &&
+                    returnFlg = parseInt(this.dateShowObj.year) == this.year &&
                     parseInt(this.dateShowObj.month) == currentDate
-                        ? (returnFlg = true)
-                        : (returnFlg = false);
+                        ? true
+                        : false
                     break;
                 case 3:
-                    parseInt(this.dateShowObj.year) == this.year &&
+                    returnFlg = parseInt(this.dateShowObj.year) == this.year &&
                     parseInt(this.dateShowObj.month) == this.month &&
                     parseInt(this.dateShowObj.day) == currentDate.NUMBER &&
                     currentDate.SYMBOL == "CURRENT"
-                        ? (returnFlg = true)
-                        : (returnFlg = false);
+                        ? true
+                        : false
                     break;
                 default:
                     return false;

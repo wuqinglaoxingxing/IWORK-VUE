@@ -143,8 +143,8 @@ export function getRandomNumber(n) {
         var dic = Math.random() + "";
         str += dic.charAt(3);
     }
-    return str;
-};
+    return str
+}
 
 // 生成随机ID
 const getRandomUniqueID = function () {
