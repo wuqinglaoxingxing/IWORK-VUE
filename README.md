@@ -23,4 +23,4 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
- "eslint:recommended"
+ "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"
