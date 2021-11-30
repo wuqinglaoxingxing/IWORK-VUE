@@ -51,9 +51,5 @@ export default new Router({
             path: '/iworkImgIntercep',
             name: '图片拖拽放大及截图',
         },
-        {
-            path: '/iworkSelect',
-            name: '下拉选择框',
-        },
     ]
 })

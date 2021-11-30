@@ -168,8 +168,6 @@ export default {
                     import("@/components-views/iwork-table-tree.vue"),
                 "/iworkImgIntercep": () =>
                     import("@/components-views/iwork-img-intercep.vue"),
-                "/iworkSelect": () =>
-                    import("@/components-views/iwork-select.vue"),
             },
         };
     },

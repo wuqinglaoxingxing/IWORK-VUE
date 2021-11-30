@@ -34,7 +34,6 @@ export default {
         { path: "/iworkScrollChar", desc: "滚动字符" },
         { path: "/iworkTableTree", desc: "树状表格" },
         { path: "/iworkImgIntercep", desc: "图片拖拽放大及截图" },
-        { path: "/iworkSelect", desc: "下拉选择框" }
       ],
     };
   },
