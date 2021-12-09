@@ -1,26 +1,24 @@
-# iwork-vue
+# 🌟 iwork-vue   
 
-## Project setup
-```
-npm install
-```
+A component libraries 
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 🚀 How to use?
 
-### Compiles and minifies for production
-```
-npm run build
-```
+npm i iwork-vue  
+or  
+yarn iwork-vue
 
-### Lints and fixes files
-```
-npm run lint
-```
+## 📒 Content Introduction
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+├── iworkUpload             
+├── iworkTaiji              
+├── iworkTableTree          
+├── iworkCalendar           
+├── iworkCodeRain      
+├── iworkImgIntercep        
+├── iworkLuckDraw           
+├── iworkPictureMagnifier   
+└── iworkScrollChar         
 
- "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"
+```
